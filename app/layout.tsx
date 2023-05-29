@@ -1,5 +1,7 @@
 import React, { ReactNode } from 'react';
 import '@styles/globals.css'
+import Nav from '@components/Nav';
+import Footer from '@components/Footer';
 
 export const metadeta = {
     title: "Gestpro",
@@ -19,7 +21,9 @@ const RootLayout = ({children}: RootLayoutProps) => {
             <div className='gradient'/>
         </div>
         <main className='app'>
-            {children}
+          <Nav/>
+          {children}
+          <Footer/>
         </main>
         </body>
     </html>
