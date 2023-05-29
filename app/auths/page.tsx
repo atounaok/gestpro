@@ -31,15 +31,15 @@ const Auth = () => {
         id="name"
         value={name}/>
         <Input 
-        label='email'
+        label='Email'
         onChange={()=> {}}
-        id="name"
-        value={name}/>
+        id="email"
+        value={email}/>
         <Input 
-        label='password'
+        label='Password'
         onChange={()=> {}}
-        id="name"
-        value={name}/>
+        id="password"
+        value={password}/>
         <button>
           {isLogin? 'Login' : 'Register'}
         </button>
