@@ -2,7 +2,7 @@ import bcrypt from 'bcrypt'
 import prismadb from '@/lib/prismadb'
 
 
-export const POST = async (req: Request) => {
+export async function POST(req: Request){
     if(req.method !== 'POST'){
         console.log("Il est entré")
         return new Response('Not ok', { status: 405 })

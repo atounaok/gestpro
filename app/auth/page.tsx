@@ -38,7 +38,7 @@ const Auth = () => {
   //Inscription
   const register = useCallback(async () => {
     try {
-      await fetch('/api/register', {
+      await fetch('/api/users', {
         method: 'POST',
         body: JSON.stringify({
           email,
@@ -46,8 +46,7 @@ const Auth = () => {
           password
         })
       });
-
-      alert('Utilisateur créé: {name}')
+      login();
     } catch (error) {
       console.log(error)
     }

@@ -59,7 +59,7 @@ const Nav = () => {
               </div>    
               ) : (
                 <div className='flex flex-col'> 
-                      <Link href="/auths" 
+                      <Link href="/auth" 
                         onClick={() => setNav(false)}
                         className='mt-5 w-full text-left text-gray-700 hover:text-gray-500 font-medium'>
                         Sign In
