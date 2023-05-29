@@ -1,10 +1,11 @@
 'use client'
 
 import Input from '@components/Input';
-import { signIn } from 'next-auth/react';
-import React, { useState, useCallback } from 'react'
+import { ClientSafeProvider, getProviders, LiteralUnion, signIn, useSession } from 'next-auth/react';
+import React, { useState, useCallback, useEffect } from 'react'
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
+import { BuiltInProviderType } from 'next-auth/providers';
 
 
 const Auth = () => {
@@ -18,6 +19,17 @@ const Auth = () => {
   const toggleIsLogin = useCallback(()=>{
     setIsLogin((currentIsLogin) => currentIsLogin === 'login' ? 'register' : 'login')
   }, [])
+
+  const { data: session } = useSession();
+  const [providers, setProviders] = useState<Record<LiteralUnion<BuiltInProviderType, string>, ClientSafeProvider> | null>(null);
+
+ useEffect(() => {
+   const setUpProviders = async () => {
+     const response = await getProviders();
+     setProviders(response)
+   }
+   setUpProviders();
+}, [])
 
   //Connexion
   const login = useCallback(async () => {
@@ -84,6 +96,23 @@ const Auth = () => {
         className='bg-[#141414] py-3 text-white rounded-md w-full mt-10 hover:bg-gray-900 transition'>
           {isLogin === 'login' ? 'Login' : 'Sign up'}
       </button>
+
+      <>
+        {
+          providers && 
+          Object.values(providers).map((provider) => (
+            <button
+            type='button'
+            key={provider.name}
+            onClick={() => {
+              signIn(provider.id)
+            }}
+            className='black_btn'>
+              Sign In with {provider.name}
+            </button>
+          ))
+        }
+      </>
 
       <p className='text-neutral-500 mt-12'>
           {isLogin === 'login' ? 'First time using Gestpro?' : 'Already have an account?'}  

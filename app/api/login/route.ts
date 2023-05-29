@@ -17,6 +17,7 @@ export async function POST(request: Request){
 
     if(user && user.hashedPassword && await compare(body.password, user.hashedPassword)){
         const {hashedPassword, ...userWithoutPass} = user;
+        
         return new Response(JSON.stringify(userWithoutPass));
     }else{
         return new Response(JSON.stringify(null));

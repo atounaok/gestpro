@@ -1,16 +1,26 @@
 'use client'
 
-import React from 'react'
+import React, { SetStateAction } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { RxHamburgerMenu } from 'react-icons/rx'
 import { AiOutlineClose } from 'react-icons/ai'
 import { useState, useEffect } from 'react'
-import { signIn, signOut, useSession, getProviders } from 'next-auth/react'
+import { signIn, signOut, useSession, getProviders, ClientSafeProvider, LiteralUnion } from 'next-auth/react'
+import { BuiltInProviderType } from 'next-auth/providers'
 
 const Nav = () => {
-  const [providers, setProviders] = useState(null)
-  const [isLogged, setIslogged] = useState(false)
+  const { data: session } = useSession();
+  const [providers, setProviders] = useState<Record<LiteralUnion<BuiltInProviderType, string>, ClientSafeProvider> | null>(null);
+  const [isLogged, setIslogged] = useState(session && session?.user? false: true)
+
+ useEffect(() => {
+   const setUpProviders = async () => {
+     const response = await getProviders();
+     setProviders(response)
+   }
+   setUpProviders();
+}, [])
 
   const [nav, setNav] = useState(false)
 
@@ -41,7 +51,7 @@ const Nav = () => {
           </div>
           <div className='py-4 flex flex-col'>
             <div className=''>
-              {isLogged? (
+              {session?.user ? (
                 <div className='flex flex-col'> 
 
                 <Link href="/"
@@ -50,21 +60,29 @@ const Nav = () => {
                   My projects
                 </Link>
 
-                <Link href="/auth"
-                  onClick={() => setNav(false)}
+                <button
+                  onClick={() => {
+                    setNav(false);
+                    signOut();
+                  }}
                   className='mt-5 text-left w-full text-gray-700 hover:text-gray-500 font-medium'>
                   Sign Out
-                </Link>
+                </button>
 
               </div>    
               ) : (
-                <div className='flex flex-col'> 
-                      <Link href="/auth" 
-                        onClick={() => setNav(false)}
-                        className='mt-5 w-full text-left text-gray-700 hover:text-gray-500 font-medium'>
-                        Sign In
-                      </Link>
-                </div> 
+                <>
+                  <button
+                  
+                  className='mt-5 w-full text-left text-gray-700 hover:text-gray-500 font-medium'
+                  onClick={() => {
+                    setNav(false)
+                    signIn();
+                  }}
+                  >
+                  Sign In
+                  </button>
+                </>
               )}
             </div>
             <div className='pt-40'>
@@ -81,7 +99,13 @@ const Nav = () => {
             <Link href="/" className='py-1 px-3 hover:bg-[#f9f9f9] hover:text-[#141414]'>
               <p className=''>My projects</p>
             </Link>
-            <Link href="/auth" className='py-1 px-3 ms-5 hover:bg-[#f9f9f9] hover:text-[#141414]'>
+            <Link href="/" 
+              onClick={() => {
+                setNav(false);
+                signOut();
+                setIslogged(false);
+              }}
+              className='py-1 px-3 ms-5 hover:bg-[#f9f9f9] hover:text-[#141414]'>
               <p className=''>Sign Out</p>
             </Link>
           </ul>
