@@ -20,7 +20,7 @@ const RootLayout = ({children}: RootLayoutProps) => {
         <div className='main'>
             <div className='gradient'/>
         </div>
-        <main className='app'>
+        <main className='app h-screen'>
           <Nav/>
           {children}
           <Footer/>

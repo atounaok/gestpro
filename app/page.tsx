@@ -8,4 +8,5 @@ const Home = () => {
   )
 }
 
+// /api/<int:id>/user
 export default Home
