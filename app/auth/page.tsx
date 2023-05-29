@@ -47,7 +47,7 @@ const Auth = () => {
         })
       });
 
-      login();
+      alert('Utilisateur créé: {name}')
     } catch (error) {
       console.log(error)
     }

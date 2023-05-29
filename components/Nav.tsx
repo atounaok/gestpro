@@ -50,7 +50,7 @@ const Nav = () => {
                   My projects
                 </Link>
 
-                <Link href="/auths"
+                <Link href="/auth"
                   onClick={() => setNav(false)}
                   className='mt-5 text-left w-full text-gray-700 hover:text-gray-500 font-medium'>
                   Sign Out
@@ -81,13 +81,13 @@ const Nav = () => {
             <Link href="/" className='py-1 px-3 hover:bg-[#f9f9f9] hover:text-[#141414]'>
               <p className=''>My projects</p>
             </Link>
-            <Link href="/auths" className='py-1 px-3 ms-5 hover:bg-[#f9f9f9] hover:text-[#141414]'>
+            <Link href="/auth" className='py-1 px-3 ms-5 hover:bg-[#f9f9f9] hover:text-[#141414]'>
               <p className=''>Sign Out</p>
             </Link>
           </ul>
         ): (
           <ul className='md:flex hidden justify-between'>
-            <Link href="/auths" className='py-1 px-3 ms-5 hover:bg-[#f9f9f9] hover:text-[#141414]'
+            <Link href="/auth" className='py-1 px-3 ms-5 hover:bg-[#f9f9f9] hover:text-[#141414]'
               onClick={() => {}}>
               <p className=''>Sign In</p>
             </Link>
