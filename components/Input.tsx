@@ -20,14 +20,13 @@ const Input: React.FunctionComponent<InputProps> = ({
             className='
 
                 block
-                rounded-md
                 px-6
                 pt-6
                 pb-1
                 w-full
                 text-md
-                text-white
-                bg-neutral-700
+                text-[#141414]
+                bg-neutral-200
                 appearance-none
                 focus:outline-none
                 focus:ring-0

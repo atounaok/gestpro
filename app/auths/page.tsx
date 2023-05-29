@@ -1,10 +1,16 @@
 'use client'
 
 import Input from '@components/Input';
+import { signIn } from 'next-auth/react';
 import React, { useState, useCallback } from 'react'
+import Router from 'next/router';
+import { useRouter } from 'next/navigation';
+import axios from 'axios';
+import Image from 'next/image'
 
 
 const Auth = () => {
+  const router = useRouter();
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
@@ -15,35 +21,75 @@ const Auth = () => {
     setIsLogin((currentIsLogin) => currentIsLogin === 'login' ? 'register' : 'login')
   }, [])
 
+  //Connexion
   const login = useCallback(async () => {
+    try {
+      await signIn('credentials', {
+        email,
+        password,
+        redirect: false,
+        callbackUrl: '/',
+      });
 
-  }, [])
+      router.push('/');
+    } catch (error) {
+      console.log(error)
+    }
+  }, [email, password, router])
 
+  //Inscription
   const register = useCallback(async () => {
+    try {
+      await axios.post('/api/register', {
+        email,
+        name,
+        password
+      });
 
-  }, [])
+      login();
+    } catch (error) {
+      console.log(error)
+    }
+  }, [email, name, password, login])
+
 
   return (
     <div className='h-full'>
-      <Input 
-        label='Username'
-        onChange={()=> {}}
-        id="name"
-        value={name}/>
-        <Input 
-        label='Email'
-        onChange={()=> {}}
-        id="email"
-        value={email}/>
-        <Input 
-        label='Password'
-        onChange={()=> {}}
-        id="password"
-        value={password}/>
-        <button>
-          {isLogin? 'Login' : 'Register'}
-        </button>
-        <p></p>
+      <h2 className='text-4xl mb-8 font-semibold'>
+        {isLogin === 'login' ? 'Sign in' : 'Register'}
+      </h2>
+      <div>
+        {isLogin === 'register' && (
+          <Input
+              label='Username'
+              onChange={(e:any) => setName(e.target.value)}
+              id="name"
+              value={name}
+        />)}
+
+          <Input 
+          label='Email'
+          onChange={(e:any) => setEmail(e.target.value)}
+          id="email"
+          value={email}/>
+
+          <Input 
+          label='Password'
+          onChange={(e:any) => setPassword(e.target.value)}
+          id="password"
+          value={password}/>
+      </div>
+        
+      <button onClick={isLogin === 'login' ? login : register} className='bg-[#141414] py-3 text-white rounded-md w-full mt-10 hover:bg-gray-900 transition'>
+          {isLogin === 'login' ? 'Login' : 'Sign up'}
+      </button>
+
+      <p className='text-neutral-500 mt-12'>
+          {isLogin === 'login' ? 'First time using Netflix?' : 'Already have an account?'}  
+          <span onClick={toggleIsLogin} className='text-white ml-1 hover:underline hover:text-gray-200 cursor-pointer'>
+              {isLogin === 'login' ? 'Create an account' : 'Login'}    
+          </span>    
+      </p>
     </div>
   )
 }
