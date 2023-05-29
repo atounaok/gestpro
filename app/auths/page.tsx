@@ -3,10 +3,8 @@
 import Input from '@components/Input';
 import { signIn } from 'next-auth/react';
 import React, { useState, useCallback } from 'react'
-import Router from 'next/router';
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
-import Image from 'next/image'
 
 
 const Auth = () => {
