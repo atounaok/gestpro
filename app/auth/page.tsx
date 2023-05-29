@@ -38,10 +38,13 @@ const Auth = () => {
   //Inscription
   const register = useCallback(async () => {
     try {
-      await axios.post('/api/register', {
-        email,
-        name,
-        password
+      await fetch('/api/register', {
+        method: 'POST',
+        body: JSON.stringify({
+          email,
+          name,
+          password
+        })
       });
 
       login();
@@ -78,13 +81,14 @@ const Auth = () => {
           value={password}/>
       </div>
         
-      <button onClick={isLogin === 'login' ? login : register} className='bg-[#141414] py-3 text-white rounded-md w-full mt-10 hover:bg-gray-900 transition'>
+      <button onClick={isLogin === 'login' ? login : register} 
+        className='bg-[#141414] py-3 text-white rounded-md w-full mt-10 hover:bg-gray-900 transition'>
           {isLogin === 'login' ? 'Login' : 'Sign up'}
       </button>
 
       <p className='text-neutral-500 mt-12'>
-          {isLogin === 'login' ? 'First time using Netflix?' : 'Already have an account?'}  
-          <span onClick={toggleIsLogin} className='text-white ml-1 hover:underline hover:text-gray-200 cursor-pointer'>
+          {isLogin === 'login' ? 'First time using Gestpro?' : 'Already have an account?'}  
+          <span onClick={toggleIsLogin} className='text-blue-700 ml-1 hover:underline hover:text-blue-400 cursor-pointer'>
               {isLogin === 'login' ? 'Create an account' : 'Login'}    
           </span>    
       </p>

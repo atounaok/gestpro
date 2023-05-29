@@ -11,26 +11,46 @@ datasource db {
 }
 
 model User {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-  name String
-  image String?
-  email String? @unique
-  emailVerified DateTime?
+  id             String    @id @default(auto()) @map("_id") @db.ObjectId
+  name           String
+  image          String?
+  email          String?   @unique
+  emailVerified  DateTime?
   hashedPassword String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
   // Dépendances utiles pour notre app (token, accounts?, favoris?, providers?, etc...)
+
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.String
+  access_token      String? @db.String
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.String
+  session_state     String?
 
   // Session
   Session Session[]
-  //accounts Account[]
+
+  @@unique([provider, providerAccountId])
 }
 
 model Session {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-  session_token String @unique
-  userId String @db.ObjectId
-  expires DateTime
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  session_token String   @unique
+  userId        String   @db.ObjectId
+  expires       DateTime
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model verificationToken {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
 }

@@ -10,7 +10,7 @@ import { signIn, signOut, useSession, getProviders } from 'next-auth/react'
 
 const Nav = () => {
   const [providers, setProviders] = useState(null)
-  const [isLogged, setIslogged] = useState(true)
+  const [isLogged, setIslogged] = useState(false)
 
   const [nav, setNav] = useState(false)
 

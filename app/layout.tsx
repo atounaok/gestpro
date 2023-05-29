@@ -15,7 +15,7 @@ export const metadeta = {
 
 interface RootLayoutProps {
     children: ReactNode;
-  }
+}
 
 
 const RootLayout = ({children}: RootLayoutProps) => {
