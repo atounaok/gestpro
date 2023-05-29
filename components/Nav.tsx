@@ -11,9 +11,9 @@ const Nav = () => {
   const [toggleDropdown, setToggleDropdown] = useState(false)
 
   return (
-    <nav className='flex-between pt-4 w-full mb-16 bg-[#141414] text-[#f9f9f9]'>
+    <nav className='flex-between py-4 px-2 sm:px-4 w-full mb-16 bg-[#141414] text-[#f9f9f9]'>
       <Link href="/" className=''>
-        Gestpro
+        <p className='font-semibold hover:text-blue-100'>Gestpro</p>
       </Link>
     </nav>
   )

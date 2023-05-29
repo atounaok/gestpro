@@ -21,15 +21,12 @@ interface RootLayoutProps {
 const RootLayout = ({children}: RootLayoutProps) => {
   return (
     <html lang='en'>
-        <body className={raleway.className}>
-        <div className='main'>
-            <div className='gradient'/>
-        </div>
-        <main className='app bg-[#f9f9f9]'>
-          <Nav/>
-          {children}
-          <Footer/>
-        </main>
+        <body className={`${raleway.className} m-0 p-0 bg-[#f9f9f9]`}>
+          <main className='app'>
+            <Nav/>
+            {children}
+            <Footer/>
+          </main>
         </body>
     </html>
   )
