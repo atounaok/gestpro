@@ -10,8 +10,7 @@ import { signIn, signOut, useSession, getProviders } from 'next-auth/react'
 
 const Nav = () => {
   const [providers, setProviders] = useState(null)
-  const [toggleDropdown, setToggleDropdown] = useState(false)
-  const [isLogged, setIslogged] = useState(false)
+  const [isLogged, setIslogged] = useState(true)
 
   const [nav, setNav] = useState(false)
 
@@ -41,38 +40,30 @@ const Nav = () => {
             </div>
           </div>
           <div className='py-4 flex flex-col'>
-            <div className='uppercase'>
+            <div className=''>
               {isLogged? (
-                <div className='dropdown'> 
+                <div className='flex flex-col'> 
 
-                <Link href="/profile"
-                className='text-gray-700 hover:text-gray-500 font-medium'
-                onClick={() => setToggleDropdown(false)}>
+                <Link href="/"
+                className='w-full text-gray-700 hover:text-gray-500 font-medium'
+                onClick={() => setNav(false)}>
                   My projects
                 </Link>
 
-                <button 
-                type='button'
-                onClick={() => {
-                  setToggleDropdown(false);
-                  signOut();
-                }}
-                className='mt-5 w-full text-gray-700 hover:text-gray-500 font-medium'>
+                <Link href="/auths"
+                  onClick={() => setNav(false)}
+                  className='mt-5 text-left w-full text-gray-700 hover:text-gray-500 font-medium'>
                   Sign Out
-                </button>
+                </Link>
 
               </div>    
               ) : (
-                <div className='dropdown'> 
-                      <button 
-                      type='button'
-                      onClick={() => {
-                        setToggleDropdown(false);
-                        signOut();
-                      }}
-                      className='mt-5 w-full text-left text-gray-700 hover:text-gray-500 font-medium'>
+                <div className='flex flex-col'> 
+                      <Link href="/auths" 
+                        onClick={() => setNav(false)}
+                        className='mt-5 w-full text-left text-gray-700 hover:text-gray-500 font-medium'>
                         Sign In
-                      </button>
+                      </Link>
                 </div> 
               )}
             </div>
@@ -83,7 +74,6 @@ const Nav = () => {
         </div>
       </div>
 
-      
       {/* Desktop Navigation */}
       <div className=''>
         {isLogged? (
@@ -91,13 +81,14 @@ const Nav = () => {
             <Link href="/" className='py-1 px-3 hover:bg-[#f9f9f9] hover:text-[#141414]'>
               <p className=''>My projects</p>
             </Link>
-            <Link href="/" className='py-1 px-3 ms-5 hover:bg-[#f9f9f9] hover:text-[#141414]'>
+            <Link href="/auths" className='py-1 px-3 ms-5 hover:bg-[#f9f9f9] hover:text-[#141414]'>
               <p className=''>Sign Out</p>
             </Link>
           </ul>
         ): (
           <ul className='md:flex hidden justify-between'>
-            <Link href="/" className='py-1 px-3 ms-5 hover:bg-[#f9f9f9] hover:text-[#141414]'>
+            <Link href="/auths" className='py-1 px-3 ms-5 hover:bg-[#f9f9f9] hover:text-[#141414]'
+              onClick={() => {}}>
               <p className=''>Sign In</p>
             </Link>
           </ul>
@@ -106,7 +97,6 @@ const Nav = () => {
         <RxHamburgerMenu className='md:hidden cursor-pointer hover:text-lg' size={20} 
           onClick={handleNav}/>
       </div> 
-
 
     </nav>
   )
