@@ -5,6 +5,9 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { RxHamburgerMenu } from 'react-icons/rx'
 import { AiOutlineClose } from 'react-icons/ai'
+import { IoIosLogOut } from 'react-icons/io'
+import { GrProjects } from 'react-icons/gr'
+import { CgProfile } from 'react-icons/cg'
 import { useState, useEffect } from 'react'
 import { signIn, signOut, useSession, getProviders, ClientSafeProvider, LiteralUnion } from 'next-auth/react'
 import { BuiltInProviderType } from 'next-auth/providers'
@@ -56,19 +59,36 @@ const Nav = () => {
                 <div className='flex flex-col'> 
 
                 <Link href="/"
-                className='w-full text-gray-700 hover:text-gray-500 font-medium'
+                className='
+                  w-full 
+                text-gray-700 
+                  font-light
+                  flex
+                  items-center
+                  p-2
+                  hover:bg-gray-200 
+                  hover:cursor-pointer 
+                  rounded-md'
                 onClick={() => setNav(false)}>
-                  My projects
+                  <GrProjects className='me-1 text-md'/>
+                  <p>My projects</p>
                 </Link>
 
-                <button
-                  onClick={() => {
-                    setNav(false);
-                    signOut();
-                  }}
-                  className='mt-5 text-left w-full text-gray-700 hover:text-gray-500 font-medium'>
-                  Sign Out
-                </button>
+                <Link href="/profile"
+                className='
+                  w-full 
+                text-gray-700 
+                  font-light
+                  flex
+                  items-center
+                  p-2
+                  hover:bg-gray-200 
+                  hover:cursor-pointer 
+                  rounded-md'
+                onClick={() => setNav(false)}>
+                  <CgProfile className='me-1 text-xl'/>
+                  My profile
+                </Link>
 
               </div>    
               ) : (
@@ -88,6 +108,17 @@ const Nav = () => {
             </div>
             <div className='pt-40'>
               <p className='uppercase tracking-widest text-[#141414]'>Lets go</p>
+              <div className='flex items-center  hover:bg-gray-200 hover:cursor-pointer p-2 rounded-md'>
+                <IoIosLogOut className='text-[#141414] text-2xl me-1'/>
+                <button
+                    onClick={() => {
+                      setNav(false);
+                      signOut();
+                    }}
+                    className='text-left w-full text-gray-700 font-light'>
+                    Sign Out
+                  </button>
+              </div>
             </div>
           </div>
         </div>
