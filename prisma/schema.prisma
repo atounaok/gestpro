@@ -19,8 +19,15 @@ model User {
   hashedPassword String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  // Dépendances utiles pour notre app (token, accounts?, favoris?, providers?, etc...)
+  favoriteIds String[] @db.ObjectId
+  Sessions Session[]
+  accounts Account[]
+}
 
+model Account {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  userId String @db.ObjectId
+  type String
   provider String
   providerAccountId String
   refresh_token String? @db.String
@@ -31,9 +38,7 @@ model User {
   id_token String? @db.String
   session_state String?
 
-
-  // Session
-  Session Session[]
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
 }
@@ -54,4 +59,14 @@ model verificationToken {
   expires DateTime
 
   @@unique([identifier, token])
+}
+
+model Movie {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  title String
+  description String
+  videoUrl String
+  thumbnailUrl String
+  genre String
+  duration String
 }

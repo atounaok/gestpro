@@ -10,9 +10,10 @@ import { signIn, signOut, useSession, getProviders, ClientSafeProvider, LiteralU
 import { BuiltInProviderType } from 'next-auth/providers'
 
 const Nav = () => {
-  const { data: session } = useSession();
+  // const { data: session } = useSession();
   const [providers, setProviders] = useState<Record<LiteralUnion<BuiltInProviderType, string>, ClientSafeProvider> | null>(null);
-  const [isLogged, setIslogged] = useState(session && session?.user? false: true)
+  // const [isLogged, setIslogged] = useState(session && session?.user? false: true)
+  const [isLogged, setIslogged] = useState(false)
 
  useEffect(() => {
    const setUpProviders = async () => {
@@ -51,7 +52,7 @@ const Nav = () => {
           </div>
           <div className='py-4 flex flex-col'>
             <div className=''>
-              {session?.user ? (
+              {isLogged ? (
                 <div className='flex flex-col'> 
 
                 <Link href="/"
