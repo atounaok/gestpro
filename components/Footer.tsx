@@ -2,14 +2,17 @@ import React from 'react'
 
 const Footer = () => {
   return (
-    <footer >
-      <div className='flex-around '>
-        <div>
-          <p >Wily Tatow</p>
-          <p >Abdelbrahim Tounao Kiri</p>
-        </div>
-        
-        <p >&copy; 2023 Copyright</p>
+    <footer className='sticky'>
+      <div 
+        className='
+          flex 
+          flex-col 
+          items-center 
+          font-thin
+          text-md
+          '>
+        <p>Wily Tatow & Abdelbrahim Tounao Kiri</p>
+        <p>Copyright &copy; 2023</p>
       </div>
     </footer>
   )
