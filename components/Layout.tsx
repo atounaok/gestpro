@@ -13,9 +13,11 @@ const raleway = Raleway({
 
 const Layout = ({ children }: RootLayoutProps) => {
   return (
-    <div className={raleway.className}>
+    <div className={raleway.className + 'h-full'}>
         <Nav/>
+        <div className='h-screen flex flex-col justify-center'>
         {children}
+        </div>
         <Footer/>
     </div>
   )

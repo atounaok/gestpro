@@ -41,7 +41,7 @@ const Nav = () => {
   }
 
   return (
-    <nav className='flex-between py-4 px-2 sm:px-4 w-full bg-[#141414] text-[#f9f9f9]'>
+    <nav className='flex-between py-4 px-2 sm:px-4 w-full fixed bg-[#141414] text-[#f9f9f9]'>
       <Link href="/" className=''>
         <p className='font-semibold hover:text-blue-100'>Gestpro</p>
       </Link>

@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+body{
+  @apply h-screen;
+}
+
 .main {
   width: 100vw;
   min-height: 100vh;
