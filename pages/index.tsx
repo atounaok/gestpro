@@ -31,9 +31,9 @@ const Home = () => {
         <h1 className='text-2xl md:text-5xl md:mb-20 font-bold text-left max-w-[85%] md:text-center'>
           <TypewriterComponent
             options={{
-              strings: ["Commencer à gérer vos projets avec nous.", "Créez un projet"],
+              strings: ["Commencer à gérer vos projets avec nous.", "Créez un projet dès maintenant."],
               autoStart: true,
-              loop: true
+              loop: true,
             }}/>
         </h1>
         <p className='max-w-[50%] text-lg font-thin text-left'>

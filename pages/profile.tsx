@@ -45,7 +45,7 @@ const Profile = () => {
 
   return (
     <div className='h-screen flex flex-col'>
-        <div className='h-[35%] bg-[#141414] flex flex-col justify-center items-center hover:drop-shadow-2xl'>
+        <div className='h-[35%] bg-[#141414] flex flex-col justify-center items-center '>
             <Image src={user?.image} width={80} height={80} alt='user image' 
             className='
                 object-contain
