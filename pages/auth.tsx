@@ -29,7 +29,7 @@ export async function getServerSideProps(context: NextPageContext) {
 
 const Auth = () => {
     const router = useRouter();
-    
+
     const [email, setEmail] = useState('');
     const [name, setName] = useState('');
     const [password, setPassword] = useState('');
@@ -144,8 +144,8 @@ const Auth = () => {
                 </div>
 
                 <p className='text-neutral-500 mt-12'>
-                    {variant === 'login' ? 'First time using Netflix?' : 'Already have an account?'}  
-                    <span onClick={toggleVariant} className='text-white ml-1 hover:underline hover:text-gray-200 cursor-pointer'>
+                    {variant === 'login' ? 'First time using Gestpro?' : 'Already have an account?'}  
+                    <span onClick={toggleVariant} className='text-black ml-1 hover:underline hover:text-gray-500 cursor-pointer'>
                         {variant === 'login' ? 'Create an account' : 'Login'}    
                     </span>    
                 </p>
