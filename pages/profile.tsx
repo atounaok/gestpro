@@ -43,7 +43,6 @@ const Profile = () => {
         setIsInfos((prev) => !prev)
     }
 
-    console.log(user)
   return (
     <div className='h-screen flex flex-col'>
         <div className='h-[35%] bg-[#141414] flex flex-col justify-center items-center hover:drop-shadow-2xl'>

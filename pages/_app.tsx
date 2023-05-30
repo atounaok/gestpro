@@ -1,15 +1,7 @@
-import React, { ReactNode } from 'react';
+import React from 'react';
 import '@styles/globals.css'
-import Nav from '@components/Nav';
-import Footer from '@components/Footer';
-import { Raleway } from 'next/font/google';
-import Providers from '@components/Providers';
 import type { AppProps } from 'next/app'
 import Layout from '@components/Layout';
-
-const raleway = Raleway({
-  subsets: ['latin'],
-});
 
 export const metadeta = {
     title: "Gestpro",
@@ -18,7 +10,7 @@ export const metadeta = {
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <Layout>
+    <Layout >
       <Component {...pageProps} />
     </Layout>
   )

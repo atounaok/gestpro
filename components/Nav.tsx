@@ -5,15 +5,19 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { RxHamburgerMenu } from 'react-icons/rx'
 import { AiOutlineClose } from 'react-icons/ai'
+import { VscSignIn } from 'react-icons/vsc'
 import { IoIosLogOut } from 'react-icons/io'
 import { GrProjects } from 'react-icons/gr'
-import { CgProfile } from 'react-icons/cg'
+import { CiUser } from 'react-icons/ci'
 import { useState, useEffect } from 'react'
 import { signIn, signOut, useSession, getProviders, ClientSafeProvider, LiteralUnion } from 'next-auth/react'
 import { BuiltInProviderType } from 'next-auth/providers'
+import useCurrentUser from '@hooks/useCurrentUser'
+
+
 
 const Nav = () => {
-  // const { data: session } = useSession();
+  //const { data: user } = useCurrentUser();
   const [providers, setProviders] = useState<Record<LiteralUnion<BuiltInProviderType, string>, ClientSafeProvider> | null>(null);
   // const [isLogged, setIslogged] = useState(session && session?.user? false: true)
   const [isLogged, setIslogged] = useState(true)
@@ -27,6 +31,10 @@ const Nav = () => {
 }, [])
 
   const [nav, setNav] = useState(false)
+
+  // useEffect(()=> {
+  //   setIslogged(isLogged)
+  // }, [user, isLogged])
 
   const handleNav = () => {
       setNav(!nav)
@@ -44,10 +52,10 @@ const Nav = () => {
           :'fixed p-10 left-[-100%] top-0 ease-in duration-500' }>
           <div>
             <div className='flex w-full items-center justify-between'>
-              <Link href="/" className=''>
+              <Link href="/" onClick={() => setNav(false)}>
                 <p className='font-semibold text-[#141414]'>Gestpro</p>
               </Link>
-              <AiOutlineClose className='cursor-pointer text-[#141414]' onClick={handleNav} />
+              <AiOutlineClose className='cursor-pointer  text-[#141414]' onClick={handleNav} />
             </div>
             <div className='border-b border-gray-300 my-4'>
               <p className='w-[85%] md:w-[90%] py-4 text-[#141414]'>Toujours présent pour vous!</p>
@@ -58,57 +66,54 @@ const Nav = () => {
               {isLogged ? (
                 <div className='flex flex-col'> 
 
-                <Link href="/"
-                className='
-                  w-full 
-                text-gray-700 
-                  font-light
-                  flex
-                  items-center
-                  p-2
-                  hover:bg-gray-200 
-                  hover:cursor-pointer 
-                  rounded-md'
-                onClick={() => setNav(false)}>
-                  <GrProjects className='me-1 text-md'/>
-                  <p>My projects</p>
-                </Link>
+                  <Link href="/projects"
+                  className='
+                    w-full 
+                  text-gray-700 
+                    font-light
+                    flex
+                    items-center
+                    p-2
+                    hover:bg-gray-200 
+                    hover:cursor-pointer 
+                    rounded-md'
+                  onClick={() => setNav(false)}>
+                    <GrProjects className='me-2 text-md'/>
+                    <p>My projects</p>
+                  </Link>
 
-                <Link href="/profile"
-                className='
-                  w-full 
-                text-gray-700 
-                  font-light
-                  flex
-                  items-center
-                  p-2
-                  hover:bg-gray-200 
-                  hover:cursor-pointer 
-                  rounded-md'
-                onClick={() => setNav(false)}>
-                  <CgProfile className='me-1 text-xl'/>
-                  My profile
-                </Link>
-
-              </div>    
+                </div>    
               ) : (
                 <>
-                  <button
-                  
-                  className='mt-5 w-full text-left text-gray-700 hover:text-gray-500 font-medium'
-                  onClick={() => {
-                    setNav(false)
-                    signIn();
-                  }}
-                  >
-                  Sign In
-                  </button>
                 </>
               )}
             </div>
             <div className='pt-40'>
               <p className='uppercase tracking-widest text-[#141414]'>Lets go</p>
-              <div className='flex items-center  hover:bg-gray-200 hover:cursor-pointer p-2 rounded-md'>
+              
+              <Link href="/profile"
+                className='
+                  w-full 
+                text-gray-700 
+                  font-light
+                  flex
+                  items-center
+                  p-2
+                  hover:bg-gray-200 
+                  hover:cursor-pointer 
+                  rounded-md'
+                onClick={() => setNav(false)}>
+                  <div className='me-1 p-0'><CiUser className='text-xl'/></div>
+                  <p>My profile</p>
+                </Link>
+
+              <div 
+                className='
+                flex 
+                items-center  
+                hover:bg-gray-200 
+                hover:cursor-pointer 
+                p-2 rounded-md'>
                 <IoIosLogOut className='text-[#141414] text-2xl me-1'/>
                 <button
                     onClick={() => {
@@ -119,6 +124,7 @@ const Nav = () => {
                     Sign Out
                   </button>
               </div>
+              
             </div>
           </div>
         </div>
@@ -142,15 +148,10 @@ const Nav = () => {
             </Link>
           </ul>
         ): (
-          <ul className='md:flex hidden justify-between'>
-            <Link href="/auth" className='py-1 px-3 ms-5 hover:bg-[#f9f9f9] hover:text-[#141414]'
-              onClick={() => {}}>
-              <p className=''>Sign In</p>
-            </Link>
-          </ul>
+            <></>
         )}
 
-        <RxHamburgerMenu className='md:hidden cursor-pointer hover:text-lg' size={20} 
+        <RxHamburgerMenu className={isLogged ? 'md:hidden cursor-pointer hover:text-lg' : 'hidden'} size={20} 
           onClick={handleNav}/>
       </div> 
 
