@@ -27,3 +27,44 @@
 .flex-between {
   @apply flex justify-between items-center;
 }
+
+.flex-around {
+  @apply flex justify-around items-center;
+}
+
+footer{
+  background-color: #141414;
+  color: #f9f9f9;
+  
+  @apply font-semibold
+  
+  
+}
+footer  div{
+  
+@apply py-4
+}
+
+
+.login-separator-wrapper {
+  margin-bottom: 32px;
+  
+ 
+}
+
+.login-separator-component {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 40px;
+}
+
+.separator-line {
+  display: block;
+  height: 1px;
+  background-color: rgba(0, 0, 0, 0.541);
+  margin: 10px 0;
+  width: 50%;
+  
+  
+}

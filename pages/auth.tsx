@@ -73,7 +73,7 @@ const Auth = () => {
       <div className="">
         <div className='flex justify-center'>
             <div className='px-16 py-16 self-center mt-2 lg:w-2/5 lg:max-w-md rounded-md w-full'>
-                <h2 className='text-white text-4xl mb-8 font-semibold'>
+                <h2 className='text-black text-4xl mb-8 font-semibold'>
                     {variant === 'login' ? 'Sign in' : 'Register'}
                 </h2>
                 <div className='flex flex-col gap-4'>
@@ -104,6 +104,13 @@ const Auth = () => {
                 <button onClick={variant === 'login' ? login : register} className='bg-gray-900 py-3 text-white rounded-md w-full mt-10 hover:bg-red-700 transition'>
                     {variant === 'login' ? 'Login' : 'Sign up'}
                 </button>
+
+                <div className="login-separator-component ">
+                    <span className="separator-line " />
+                    <h2 className='whitespace-nowrap mx-2  font-semibold'>Or {variant === 'login' ? 'Login' : 'Sign up'} with</h2>
+                    <span className="separator-line" />
+                </div>
+
 
                 <div className='flex flex-row items-center gap-4 mt-8 justify-center'>
                     <div onClick={() => signIn('google', { callbackUrl: '/profiles' })} 
