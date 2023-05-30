@@ -16,6 +16,7 @@ const Input: React.FunctionComponent<InputProps> = ({
         <input
             id={id}
             value={value}
+            type={type}
             onChange={onChange}
             className='
                 block
