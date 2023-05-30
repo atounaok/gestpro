@@ -44,7 +44,7 @@ const Auth = () => {
           await signIn('credentials', {
               email,
               password,
-              callbackUrl: '/profiles'
+              callbackUrl: '/profile'
           });
 
       } catch (error) {
@@ -106,7 +106,7 @@ const Auth = () => {
                 </button>
 
                 <div className='flex flex-row items-center gap-4 mt-8 justify-center'>
-                    <div onClick={() => signIn('google', { callbackUrl: '/profiles' })} 
+                    <div onClick={() => signIn('google', { callbackUrl: '/profile' })} 
                     className='
                         w-10
                         h-10
@@ -121,7 +121,7 @@ const Auth = () => {
                     '>
                         <FcGoogle size={30}/>
                     </div>
-                    <div onClick={() => signIn('github', { callbackUrl: '/profiles' })}
+                    <div onClick={() => signIn('github', { callbackUrl: '/profile' })}
                     className='
                         w-10
                         h-10
