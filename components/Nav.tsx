@@ -13,7 +13,7 @@ const Nav = () => {
   // const { data: session } = useSession();
   const [providers, setProviders] = useState<Record<LiteralUnion<BuiltInProviderType, string>, ClientSafeProvider> | null>(null);
   // const [isLogged, setIslogged] = useState(session && session?.user? false: true)
-  const [isLogged, setIslogged] = useState(false)
+  const [isLogged, setIslogged] = useState(true)
 
  useEffect(() => {
    const setUpProviders = async () => {
