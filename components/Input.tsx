@@ -18,7 +18,6 @@ const Input: React.FunctionComponent<InputProps> = ({
             value={value}
             onChange={onChange}
             className='
-
                 block
                 px-6
                 pt-6
