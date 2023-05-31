@@ -51,7 +51,7 @@ const Projects = () => {
           gap-4'>
           {
             projets.length > 0 ?
-            projets.map((projet, index) => {
+            projets.map((projet: any, index: any) => {
               return (
                 <Link href={'/projects/' + projet.id} key={index} 
                   className='
