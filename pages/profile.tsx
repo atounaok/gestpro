@@ -1,5 +1,4 @@
 import useCurrentUser from '@hooks/useCurrentUser';
-import { Session } from 'inspector';
 import { NextPageContext } from 'next'
 import { getSession } from 'next-auth/react'
 import React, { useState } from 'react'

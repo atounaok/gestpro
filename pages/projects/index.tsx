@@ -4,7 +4,7 @@ import React from 'react'
 import { MdOutlineCreateNewFolder } from 'react-icons/md'
 
 const Projects = () => {
-  const projets = [
+  const projets: any = [
     {id: 1, nom: "Projet 1"},
     {id: 2, nom: "Projet 2"},
     {id: 3, nom: "Projet 3"},
