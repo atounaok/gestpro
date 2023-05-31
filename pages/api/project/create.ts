@@ -8,6 +8,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     try {
         const { name, userId } = req.body;
+        console.log(req.body);
         console.log("entré")
         const project = await prismadb.project.create({
             data: {

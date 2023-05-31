@@ -6,8 +6,9 @@ import React, { useCallback, useState } from 'react'
 import { MdOutlineCreateNewFolder } from 'react-icons/md'
 import { Container, FormControl, FormErrorMessage, FormLabel, Heading, Input } from '@chakra-ui/react';
 import { Button as ChakraButton} from '@chakra-ui/react';
+import { createProject } from '@lib/requests';
 
-const initValues = { name: "title" }
+const initValues = { userId: "647611728c88f4840ca4e63c", name: "title" }
 
 const initState = {values: initValues, isLoading: false}
 
@@ -33,7 +34,8 @@ const Projects = () => {
     setState((prev) => ({
       ...prev,
       isLoading: true
-    }))
+    }));
+    await createProject(values)
   }
 
   const name = "Mon pro"
