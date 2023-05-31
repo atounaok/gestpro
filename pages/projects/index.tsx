@@ -35,7 +35,16 @@ const Projects = () => {
       ...prev,
       isLoading: true
     }));
-    await createProject(values)
+
+    try {
+      await createProject(values)
+      setState((prev) => ({
+        ...prev,
+        isLoading: false
+      }));
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   const name = "Mon pro"
@@ -95,7 +104,6 @@ const Projects = () => {
 
               <p className='text-lg'>Create</p>
             </Button>
-
             <UncontrolledPopover placement="bottom-start" target="createPopoverButton">
               <PopoverBody className='bg-[#f9f9f9] py-3 px-4 border'>
                 <Container className='flex flex-col justify-center items-center'>
@@ -117,7 +125,6 @@ const Projects = () => {
                     colorScheme="blue"
                     variant="outline"
                     className='border w-full py-1 hover:bg-gray-200'>
-                    {" "}
                     <p className='text-lg text-center'>Create</p>
                   </ChakraButton>
                 </Container>
@@ -159,7 +166,9 @@ const Projects = () => {
                     )
                   })
                 }
-                <Link href={'/projects/'} 
+                <Button 
+                  id="createPopoverButtonLg"
+                  type='button'
                   className='
                   card 
                   h-[200px] 
@@ -170,7 +179,33 @@ const Projects = () => {
                   p-3 border
                   hover:shadow-xl'>
                   Create new table
-                </Link>
+                </Button>
+                <UncontrolledPopover placement="right-end" target="createPopoverButtonLg">
+                  <PopoverBody className='bg-[#f9f9f9] py-3 px-4 border'>
+                    <Container className='flex flex-col justify-center items-center'>
+                      <div className='flex justify-start items-start w-full border-b'><Heading className='text-xl mb-2 font-semibold'>Create a table</Heading></div>
+                      
+                      <FormControl isRequired isInvalid={touched.name && !values.name} className='my-4'>
+                        <FormLabel>Table name</FormLabel>
+                        <Input className='px-2 py-1'onBlur={onBlur}
+                        name='name' errorBorderColor='red.300'
+                        type="text" value={values.name} onChange={handleChange}/>
+                          <FormErrorMessage className='text-red-500'>Name required</FormErrorMessage>
+                      </FormControl>
+
+                      <ChakraButton
+                        type='submit'
+                        disabled={!values.name}
+                        onClick={onCreate}
+                        isLoading={isLoading}
+                        colorScheme="blue"
+                        variant="outline"
+                        className='border w-full py-1 hover:bg-gray-200'>
+                        <p className='text-lg text-center'>Create</p>
+                      </ChakraButton>
+                    </Container>
+                  </PopoverBody>
+                </UncontrolledPopover>
               </div>
             )
             
