@@ -7,7 +7,7 @@ import { MdOutlineCreateNewFolder } from 'react-icons/md'
 import { Container, FormControl, FormErrorMessage, FormLabel, Heading, Input } from '@chakra-ui/react';
 import { Button as ChakraButton} from '@chakra-ui/react';
 
-const initValues = { name: "" }
+const initValues = { name: "title" }
 
 const initState = {values: initValues, isLoading: false}
 
@@ -113,8 +113,9 @@ const Projects = () => {
                     onClick={onCreate}
                     isLoading={isLoading}
                     colorScheme="blue"
-                    variant="outline">
-                      {" "}
+                    variant="outline"
+                    className='border w-full py-1 hover:bg-gray-200'>
+                    {" "}
                     <p className='text-lg text-center'>Create</p>
                   </ChakraButton>
                 </Container>
