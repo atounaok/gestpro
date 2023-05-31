@@ -1,6 +1,8 @@
 import Input from '@components/Input'
 import axios from 'axios'
 import email from 'next-auth/providers/email'
+// reactstrap components
+import { Button, PopoverBody, UncontrolledPopover } from "reactstrap";
 import Link from 'next/link'
 import React, { useCallback } from 'react'
 import { MdOutlineCreateNewFolder } from 'react-icons/md'
@@ -46,19 +48,54 @@ const Projects = () => {
               id="searchProject"
               type="search"
             />
-            <Link href="/projects" 
-              onClick={create}
+
+            <Button
+              id="createPopoverButton"
+              type='button'
               className='
             bg-[#141414] 
               py-2 px-6 
               text-[#f9f9f9]
               flex items-center
               hover:shadow-xl'>
+
               <MdOutlineCreateNewFolder 
               className={projets.length > 0 ? 'text-2xl me-2' 
               : 'text-2xl me-2 animate-pulse'}/>
+
               <p className='text-lg'>Create</p>
-            </Link>
+            </Button>
+
+            <UncontrolledPopover placement="bottom-start" target="createPopoverButton">
+              <PopoverBody className='bg-[#f9f9f9] py-3 px-4 border'>
+                <form method='POST' action={create} className='flex flex-col justify-center items-center'>
+                  <div className='flex justify-start items-start w-full border-b'><h3 className='text-xl mb-2 font-semibold'>Create a table</h3></div>
+                  
+                  <div className='my-4'>
+                    <Input label='Table name'
+                    onChange={() => {}}
+                    id="tablename"
+                    type="text"/>
+                  </div>
+
+                  <Button
+                    id="createPopoverButton"
+                    type='submit'
+                    className=' w-full
+                  bg-[#f9f9f9] 
+                    py-2 px-6 mt-4
+                    text-[#141414]
+                    flex items-center
+                    justify-center
+                    border hover:bg-gray-200
+                    hover:shadow-xl'>
+
+                    <p className='text-lg text-center'>Create</p>
+                  </Button>
+                </form>
+              </PopoverBody>
+            </UncontrolledPopover>
+            
           </div>
         </div>
         <div 
