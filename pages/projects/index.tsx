@@ -9,7 +9,7 @@ import { Container, FormControl, FormErrorMessage, FormLabel, Heading, Input } f
 
 const initValues = { name: "" }
 
-const initState = {values: initValues}
+const initState = {values: initValues, isLoading: false}
 
 const Projects = () => {
   const [state, setState] = useState(initState)
