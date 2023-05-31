@@ -8,6 +8,8 @@ const Projects = () => {
     {id: 2, nom: "Projet 2"},
     {id: 3, nom: "Projet 3"},
     {id: 4, nom: "Projet 4"},
+    {id: 4, nom: "Projet 4"},
+    {id: 4, nom: "Projet 4"},
   ]
   return (
     <div className='flex justify-between h-full'>
@@ -27,8 +29,15 @@ const Projects = () => {
             />
           </div>
         </div>
-        <div className='border h-full p-6  flex flex-col md:flex-row justify-between'>
+        <div 
+          className='
+          border
+          p-6 flex-wrap 
+          flex flex-col 
+          md:flex-row 
+          gap-4'>
           {
+            projets.length > 0 ?
             projets.map((projet, index) => {
               return (
                 <Link href={'/projects/' + projet.id} key={index} 
@@ -45,6 +54,12 @@ const Projects = () => {
                 </Link>
               )
             })
+
+            :
+
+            (
+              <div className='text-center w-full text-gray-500'>Vous n'avez aucun projet...</div>
+            )
           }
         </div>
       </div>
