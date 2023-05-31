@@ -28,7 +28,7 @@ const Projects = () => {
               id="searchProject"
               type="search"
             />
-            <Link href="/create" 
+            <Link href="/projects/create" 
               className='
             bg-[#141414] 
               py-2 px-6 
