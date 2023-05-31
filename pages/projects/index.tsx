@@ -34,8 +34,10 @@ const Projects = () => {
               py-2 px-6 
               text-[#f9f9f9]
               flex items-center
-              hover:shadow-2xl'>
-              <MdOutlineCreateNewFolder className='text-2xl me-2'/>
+              hover:shadow-xl'>
+              <MdOutlineCreateNewFolder 
+              className={projets.length > 0 ? 'text-2xl me-2' 
+              : 'text-2xl me-2 animate-pulse'}/>
               <p className='text-lg'>Create</p>
             </Link>
           </div>
