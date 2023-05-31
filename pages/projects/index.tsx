@@ -15,8 +15,13 @@ const initState = {values: initValues}
 
 const Projects = () => {
   const [state, setState] = useState(initState)
+  const [touched, setTouched] = useState({})
 
   const { values } = state
+
+  const onBlur = ({target}: any) => setTouched((prev) => ({...prev, 
+    [target.name]: true
+  }))
 
   const handleChange = ({target}: any) => setState((prev) => ({
     ...prev,
@@ -89,9 +94,9 @@ const Projects = () => {
                 <Container className='flex flex-col justify-center items-center'>
                   <div className='flex justify-start items-start w-full border-b'><Heading className='text-xl mb-2 font-semibold'>Create a table</Heading></div>
                   
-                  <FormControl isRequired isInvalid={!values.name} className='my-4'>
+                  <FormControl isRequired isInvalid={touched.name && !values.name} className='my-4'>
                     <FormLabel>Table name</FormLabel>
-                    <Input className='px-2 py-1'
+                    <Input className='px-2 py-1'onBlur={onBlur}
                     name='name' errorBorderColor='red.300'
                     type="text" value={values.name} onChange={handleChange}/>
                       <FormErrorMessage className='text-red-500'>Name required</FormErrorMessage>
