@@ -134,7 +134,7 @@ useEffect(() => {
               hover:shadow-xl'>
 
               <MdOutlineCreateNewFolder 
-              className={projets.length > 0 ? 'text-2xl me-2' 
+              className={state.projets.length > 0 ? 'text-2xl me-2' 
               : 'text-2xl me-2 animate-pulse'}/>
 
               <p className='text-lg'>Create</p>
