@@ -12,6 +12,7 @@ import { NextPageContext } from 'next';
 import { getSession } from 'next-auth/react';
 import useCurrentUser from '@hooks/useCurrentUser';
 import { RiDeleteBin5Line } from 'react-icons/ri'
+import { AiOutlineUsergroupAdd } from 'react-icons/ai'
 
 const initValues = { userId: "", name: "title" }
 const initState = {values: initValues, isLoading: false, projets: []}
@@ -197,13 +198,14 @@ useEffect(() => {
                         p-3 border
                         hover:shadow-xl'>
                         <Link href={'/projects/' + projet.id} key={index}  
-                        className='w-full h-full flex text-center items-center justify-center'>
+                        className='w-full h-full flex text-center 
+                        items-center justify-center'>
                           {projet.name}
                         </Link>
 
                         <div className='border-t w-full p-1 flex items-center justify-between'>
-                          <p>m</p>
-                          <RiDeleteBin5Line className='cursor-pointer rounded-full p-1 text-2xl text-red-400 hover:bg-gray-200' onClick={() => {alert('btn supprimer cliqué')}}/>
+                          <AiOutlineUsergroupAdd className='cursor-pointer text-xl text-[#141414] hover:text-gray-400' onClick={() => {alert('btn partager cliqué')}}/>
+                          <RiDeleteBin5Line className='cursor-pointer text-xl  text-red-400 hover:text-red-200' onClick={() => {alert('btn supprimer cliqué')}}/>
                         </div>
                       </div>
                     )
