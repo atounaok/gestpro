@@ -41,7 +41,7 @@ const Nav = () => {
   }
 
   return (
-    <nav className='flex-between py-4 px-2 sm:px-4 w-full fixed bg-[#141414] text-[#f9f9f9]'>
+    <nav className='flex-between py-4 px-2 sm:px-4 w-full bg-[#141414] text-[#f9f9f9]'>
       <Link href="/" className=''>
         <p className='font-semibold hover:text-blue-100'>Gestpro</p>
       </Link>
@@ -79,7 +79,7 @@ const Nav = () => {
                     rounded-md'
                   onClick={() => setNav(false)}>
                     <GrProjects className='me-2 text-md'/>
-                    <p>My projects</p>
+                    <p>Workspace</p>
                   </Link>
 
                 </div>    
@@ -134,8 +134,8 @@ const Nav = () => {
       <div className=''>
         {isLogged? (
           <ul className='md:flex hidden justify-between'>
-            <Link href="/" className='py-1 px-3 hover:bg-[#f9f9f9] hover:text-[#141414]'>
-              <p className=''>My projects</p>
+            <Link href="/projects" className='py-1 px-3 hover:bg-[#f9f9f9] hover:text-[#141414]'>
+              <p className=''>Workspace</p>
             </Link>
             <Link href="/" 
               onClick={() => {

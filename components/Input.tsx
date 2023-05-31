@@ -3,13 +3,15 @@ import React from 'react'
 interface InputProps {
     id: string;
     onChange: any;
-    value: string;
+    value?: string;
     label: string;
     type?: string;
+    width?: number;
+    height?: number;
 }
 
 const Input: React.FunctionComponent<InputProps> = ({
-    id, onChange, value, label, type
+    id, onChange, value, label, type, width, height
 }) => {
   return (
     <div className='relative'>
@@ -18,6 +20,8 @@ const Input: React.FunctionComponent<InputProps> = ({
             value={value}
             type={type}
             onChange={onChange}
+            width={width && width + "px"}
+            height={height && height + "px"}
             className='
                 block
                 px-6
