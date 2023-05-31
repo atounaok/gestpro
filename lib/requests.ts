@@ -1,4 +1,3 @@
-
 export const createProject = async (data: any) => {
      await fetch('/api/project/create', {
         method: 'POST',
@@ -36,5 +35,21 @@ export const getLastId = async (userId: any) => {
         return data;
     } catch (error) {
         console.log('Erreur dans getProjects:' + error)
+    }
+}
+
+export const deleteProjects = async (projetId: any) => {
+    try {
+        await fetch(`/api/project/delete?id=${projetId}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                Accept: 'application/json',
+            },
+        });
+
+        return getProjects()
+    } catch (error) {
+        console.log(error)
     }
 }

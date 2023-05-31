@@ -8,7 +8,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     try {
         const { userId } = req.query;
-        console.log("entré dans get last id")
+
         const project = await prismadb.project.findFirst({
             where:{
                 userId: userId as string, 

@@ -11,7 +11,7 @@ import { Button as ChakraButton} from '@chakra-ui/react';
 
 import useCurrentUser from '@hooks/useCurrentUser';
 import Inpute from '@components/Input'
-import { createProject, getLastId, getProjects } from '@lib/requests';
+import { createProject, deleteProjects, getLastId, getProjects } from '@lib/requests';
 
 import { RiDeleteBin5Line } from 'react-icons/ri'
 import { AiOutlineUsergroupAdd } from 'react-icons/ai'
@@ -48,6 +48,7 @@ const Projects = () => {
   const router = useRouter();
   const [state, setState] = useState(initState)
   const [touched, setTouched] = useState({})
+  // const [projets, setProjets] = useState([])
 
   const { values, isLoading } = state
 
@@ -90,8 +91,8 @@ const Projects = () => {
     }
   }
 
-// Obtenir les projets
-const projets = useCallback(async () => {
+// Fonction pour obtenir les projets
+const obtenirProjets = useCallback(async () => {
   try {
     const projects = await getProjects();
 
@@ -102,25 +103,29 @@ const projets = useCallback(async () => {
   } catch (error) {
     console.log('Obtention projets erreur:' + error);
   }
-}, []); // Empty dependency array to ensure the callback is created only once
+}, [])
+
+
+ // Empty dependency array to ensure the callback is created only once
 
 // Supprimer un projet
 const handleDelete = async (projetId: string) => {
   try {
-    alert('')
-  } catch (error) {
-    
-  }
-}
-
-// Appeler projets lors du rendu initial
-useEffect(() => {
-  try {
-    projets();
+    await deleteProjects(projetId);
+    window.location.reload();
   } catch (error) {
     console.log(error)
   }
-}, [projets]); // Include 'projets' in the dependency array
+}
+
+// Obtenir les projets initialement
+useEffect(() => {
+  try {
+    let projets = obtenirProjets();
+  } catch (error) {
+    console.log(error)
+  }
+}, [obtenirProjets]); // Include 'projets' in the dependency array
 
   
   return (
