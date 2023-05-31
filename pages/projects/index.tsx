@@ -169,8 +169,9 @@ useEffect(() => {
                   <FormControl isRequired isInvalid={touched.name && !values.name} className='my-4'>
                     <FormLabel>Table name</FormLabel>
                     <Input className='px-2 py-1'onBlur={onBlur}
-                    name='name' errorBorderColor='red.300'
+                    name='name' errorBorderColor='red.300' onFocus={(e) => e.target.select()}
                     type="text" value={values.name} onChange={handleChange}/>
+
                       <FormErrorMessage className='text-red-500'>Name required</FormErrorMessage>
                   </FormControl>
 
@@ -254,7 +255,7 @@ useEffect(() => {
                       <FormControl isRequired isInvalid={touched.name && !values.name} className='my-4'>
                         <FormLabel>Table name</FormLabel>
                         <Input className='px-2 py-1'onBlur={onBlur}
-                        name='name' errorBorderColor='red.300'
+                        name='name' errorBorderColor='red.300' onFocus={(e) => e.target.select()}
                         type="text" value={values.name} onChange={handleChange}/>
                           <FormErrorMessage className='text-red-500'>Name required</FormErrorMessage>
                       </FormControl>
