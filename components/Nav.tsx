@@ -143,7 +143,7 @@ const Nav = () => {
                 signOut();
                 setIslogged(false);
               }}
-              className='py-1 px-3 ms-5 hover:bg-[#f9f9f9] hover:text-[#141414]'>
+              className='py-1 px-3 ms-5 hover:text-red-200'>
               <p className=''>Sign Out</p>
             </Link>
           </ul>
