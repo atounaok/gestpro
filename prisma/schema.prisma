@@ -11,32 +11,33 @@ datasource db {
 }
 
 model User {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-  name String
-  image String?
-  email String? @unique
-  emailVerified DateTime?
+  id             String    @id @default(auto()) @map("_id") @db.ObjectId
+  name           String
+  image          String?
+  email          String?   @unique
+  emailVerified  DateTime?
   hashedPassword String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  favoriteIds String[] @db.ObjectId
-  Sessions Session[]
-  accounts Account[]
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+  favoriteIds    String[]  @db.ObjectId
+  Sessions       Session[]
+  accounts       Account[]
+  projects       Project[]
 }
 
 model Account {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-  userId String @db.ObjectId
-  type String
-  provider String
+  id                String  @id @default(auto()) @map("_id") @db.ObjectId
+  userId            String  @db.ObjectId
+  type              String
+  provider          String
   providerAccountId String
-  refresh_token String? @db.String
-  access_token String? @db.String
-  expires_at Int?
-  token_type String?
-  scope String?
-  id_token String? @db.String
-  session_state String?
+  refresh_token     String? @db.String
+  access_token      String? @db.String
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.String
+  session_state     String?
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
@@ -44,19 +45,65 @@ model Account {
 }
 
 model Session {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-  session_token String @unique
-  userId String @db.ObjectId
-  expires DateTime
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  session_token String   @unique
+  userId        String   @db.ObjectId
+  expires       DateTime
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model verificationToken {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
   identifier String
-  token String @unique
-  expires DateTime
+  token      String   @unique
+  expires    DateTime
 
   @@unique([identifier, token])
+}
+
+model Project {
+  id     String  @id @default(auto()) @map("_id") @db.ObjectId
+  userId String  @db.ObjectId
+  name   String
+  image  String?
+
+  listes Listes[]
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Listes {
+  id        String  @id @default(auto()) @map("_id") @db.ObjectId
+  projectId String? @db.ObjectId
+  name      String
+
+  project Project? @relation(fields: [projectId], references: [id], onDelete: SetNull)
+}
+
+model Task {
+  id     String  @id @default(auto()) @map("_id") @db.ObjectId
+  listId String  @db.ObjectId
+  name   String
+  desc   String?
+
+  checkList CheckList[]
+}
+
+model CheckList {
+  id        String  @id @default(auto()) @map("_id") @db.ObjectId
+  taskId    String? @db.ObjectId
+  completed Boolean @default(false)
+  todo      Todo[]
+
+  task Task? @relation(fields: [taskId], references: [id], onDelete: SetNull)
+}
+
+model Todo {
+  id          String  @id @default(auto()) @map("_id") @db.ObjectId
+  checkListId String? @db.ObjectId
+  done        Boolean @default(false)
+  name        String
+
+  CheckList CheckList? @relation(fields: [checkListId], references: [id], onDelete: SetNull)
 }
