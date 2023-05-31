@@ -1,4 +1,4 @@
-export const createProject = async (data) => fetch('/api/project/create', {
+export const createProject = async (data: any) => fetch('/api/project/create', {
     method: 'POST',
     body: JSON.stringify(data),
     headers: {

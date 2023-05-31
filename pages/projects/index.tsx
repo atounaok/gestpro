@@ -34,6 +34,7 @@ export async function getServerSideProps(context: NextPageContext) {
 
 
 const Projects = () => {
+  // Obtenir user dans la session
   const { data: user } = useCurrentUser();
   const [state, setState] = useState(initState)
   const [touched, setTouched] = useState({})
@@ -70,6 +71,8 @@ const Projects = () => {
       console.log(error)
     }
   }
+
+// Obtenir les projets 
   
   const projets: any = [
     {id: 1, nom: "Projet 1"},
