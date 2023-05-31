@@ -5,7 +5,7 @@ import Link from 'next/link'
 import React, { useCallback, useState } from 'react'
 import { MdOutlineCreateNewFolder } from 'react-icons/md'
 import { Container, FormControl, FormErrorMessage, FormLabel, Heading, Input } from '@chakra-ui/react';
-
+import { Button as ChakraButton} from '@chakra-ui/react';
 
 const initValues = { name: "" }
 
@@ -38,7 +38,7 @@ const Projects = () => {
 
   const name = "Mon pro"
   const userId = '647611728c88f4840ca4e63c'
-    // Register
+    // creer
     const create = useCallback(async () => {
       try {
         await axios.post('/api/project/create', {
@@ -107,21 +107,16 @@ const Projects = () => {
                       <FormErrorMessage className='text-red-500'>Name required</FormErrorMessage>
                   </FormControl>
 
-                  <Button
+                  <ChakraButton
                     type='submit'
                     disabled={!values.name}
                     onClick={onCreate}
                     isLoading={isLoading}
-                    className=' w-full
-                  bg-[#f9f9f9] 
-                    py-2 px-6 mt-4
-                    text-[#141414]
-                    flex items-center
-                    justify-center
-                    border'>
+                    colorScheme="blue"
+                    variant="outline">
                       {" "}
                     <p className='text-lg text-center'>Create</p>
-                  </Button>
+                  </ChakraButton>
                 </Container>
               </PopoverBody>
             </UncontrolledPopover>
