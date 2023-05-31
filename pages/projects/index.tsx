@@ -1,23 +1,21 @@
 import Inpute from '@components/Input'
 import axios from 'axios'
-import email from 'next-auth/providers/email'
 import { Button, PopoverBody, UncontrolledPopover } from "reactstrap";
 import Link from 'next/link'
 import React, { useCallback, useState } from 'react'
 import { MdOutlineCreateNewFolder } from 'react-icons/md'
 import { Container, FormControl, FormErrorMessage, FormLabel, Heading, Input } from '@chakra-ui/react';
 
+
 const initValues = { name: "" }
 
-
 const initState = {values: initValues}
-
 
 const Projects = () => {
   const [state, setState] = useState(initState)
   const [touched, setTouched] = useState({})
 
-  const { values } = state
+  const { values, isLoading } = state
 
   const onBlur = ({target}: any) => setTouched((prev) => ({...prev, 
     [target.name]: true
@@ -30,6 +28,13 @@ const Projects = () => {
       [target.name]: target.value,
     }
   }))
+
+  const onCreate = async () => {
+    setState((prev) => ({
+      ...prev,
+      isLoading: true
+    }))
+  }
 
   const name = "Mon pro"
   const userId = '647611728c88f4840ca4e63c'
@@ -104,15 +109,17 @@ const Projects = () => {
 
                   <Button
                     type='submit'
+                    disabled={!values.name}
+                    onClick={onCreate}
+                    isLoading={isLoading}
                     className=' w-full
                   bg-[#f9f9f9] 
                     py-2 px-6 mt-4
                     text-[#141414]
                     flex items-center
                     justify-center
-                    border hover:bg-gray-200
-                    hover:shadow-xl'>
-
+                    border'>
+                      {" "}
                     <p className='text-lg text-center'>Create</p>
                   </Button>
                 </Container>
