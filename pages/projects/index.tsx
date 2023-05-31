@@ -7,12 +7,34 @@ import { MdOutlineCreateNewFolder } from 'react-icons/md'
 import { Container, FormControl, FormErrorMessage, FormLabel, Heading, Input } from '@chakra-ui/react';
 import { Button as ChakraButton} from '@chakra-ui/react';
 import { createProject } from '@lib/requests';
+import { NextPageContext } from 'next';
+import { getSession } from 'next-auth/react';
+import useCurrentUser from '@hooks/useCurrentUser';
 
-const initValues = { userId: "647611728c88f4840ca4e63c", name: "title" }
-
+const initValues = { userId: "", name: "title" }
 const initState = {values: initValues, isLoading: false}
 
+
+export async function getServerSideProps(context: NextPageContext) {
+  const session = await getSession(context);
+
+  if(!session){
+      return {
+          redirect: {
+              destination: '/auth',
+              permanent: false,
+          }
+      }
+  }
+
+  return {
+      props: {}
+  }
+}
+
+
 const Projects = () => {
+  const { data: user } = useCurrentUser();
   const [state, setState] = useState(initState)
   const [touched, setTouched] = useState({})
 
@@ -26,10 +48,12 @@ const Projects = () => {
     ...prev,
     values: {
       ...prev.values,
+      userId: user.id,
       [target.name]: target.value,
     }
   }))
 
+// Creer un projet
   const onCreate = async () => {
     setState((prev) => ({
       ...prev,
@@ -46,22 +70,6 @@ const Projects = () => {
       console.log(error)
     }
   }
-
-  const name = "Mon pro"
-  const userId = '647611728c88f4840ca4e63c'
-    // creer
-    const create = useCallback(async () => {
-      try {
-        await axios.post('/api/project/create', {
-          name,
-          userId,
-        });
-
-      } catch (error) {
-          console.log("Je suis ici")
-          console.log(error)
-      }
-  }, [name, userId]);
   
   const projets: any = [
     {id: 1, nom: "Projet 1"},
