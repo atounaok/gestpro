@@ -24,3 +24,17 @@ export const getProjects = async () => {
         console.log('Erreur dans getProjects:' + error)
     }
 }
+
+export const getLastId = async (userId: any) => {
+    try {
+        const res = await fetch(`/api/project/getId?userId=${userId}`);
+
+        if(!res.ok){
+            throw new Error('Une erreur est subvenue lors de la récupération des projets')
+        }
+        const data = await res.json();
+        return data;
+    } catch (error) {
+        console.log('Erreur dans getProjects:' + error)
+    }
+}

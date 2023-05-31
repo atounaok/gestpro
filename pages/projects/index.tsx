@@ -7,7 +7,7 @@ import React, { useCallback, useEffect, useState } from 'react'
 import { MdOutlineCreateNewFolder } from 'react-icons/md'
 import { Container, FormControl, FormErrorMessage, FormLabel, Heading, Input } from '@chakra-ui/react';
 import { Button as ChakraButton} from '@chakra-ui/react';
-import { createProject, getProjects } from '@lib/requests';
+import { createProject, getLastId, getProjects } from '@lib/requests';
 import { NextPageContext } from 'next';
 import { getSession } from 'next-auth/react';
 import useCurrentUser from '@hooks/useCurrentUser';
@@ -77,7 +77,10 @@ const Projects = () => {
         isLoading: false
       }));
 
-      window.location.reload();
+      const idProject = await getLastId(user.id);
+      console.log(idProject)
+      router.push(`/projects/${idProject}`);
+      //window.location.reload();
     } catch (error) {
       console.log(error)
     }
