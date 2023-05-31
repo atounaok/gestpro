@@ -186,7 +186,7 @@ useEffect(() => {
                 {
                   state.projets.map((projet: any, index: any) => {
                     return (
-                      <div href={'/projects/' + projet.id} key={index} 
+                      <div key={index} 
                         className='
                         card
                         h-[200px] 
