@@ -40,7 +40,7 @@ const Home = () => {
           Nous sommes 
           toujours présent pour 
           vous assurer une bonne 
-          gestion de vos projets. <span className='text-red-100'>
+          gestion de vos projets. <span className='text-red-200'>
           La gestion
           de vos projets n'aura jamais été aussi simple
           avec nous! <span>😎</span>

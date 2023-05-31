@@ -39,7 +39,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
         <Layout >
-          <NextNProgress/>
+          <NextNProgress color="radial-gradient(rgb(254, 202, 202), rgb(220, 38, 38))"/>
           <Component {...pageProps} />
         </Layout>
     </>
