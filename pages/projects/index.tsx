@@ -1,19 +1,24 @@
-import Inpute from '@components/Input'
-import axios from 'axios'
-import { Button, PopoverBody, UncontrolledPopover } from "reactstrap";
+//Imports
+import { NextPageContext } from 'next';
+import { getSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import Link from 'next/link'
 import React, { useCallback, useEffect, useState } from 'react'
-import { MdOutlineCreateNewFolder } from 'react-icons/md'
+
 import { Container, FormControl, FormErrorMessage, FormLabel, Heading, Input } from '@chakra-ui/react';
+import { Button, PopoverBody, UncontrolledPopover } from "reactstrap";
 import { Button as ChakraButton} from '@chakra-ui/react';
-import { createProject, getLastId, getProjects } from '@lib/requests';
-import { NextPageContext } from 'next';
-import { getSession } from 'next-auth/react';
+
 import useCurrentUser from '@hooks/useCurrentUser';
+import Inpute from '@components/Input'
+import { createProject, getLastId, getProjects } from '@lib/requests';
+
 import { RiDeleteBin5Line } from 'react-icons/ri'
 import { AiOutlineUsergroupAdd } from 'react-icons/ai'
+import { MdOutlineCreateNewFolder } from 'react-icons/md'
 
+
+// Variables créées
 const initValues = { userId: "", name: "title" }
 const initState = {values: initValues, isLoading: false, projets: []}
 
@@ -78,9 +83,8 @@ const Projects = () => {
       }));
 
       const idProject = await getLastId(user.id);
-      console.log(idProject)
+
       router.push(`/projects/${idProject}`);
-      //window.location.reload();
     } catch (error) {
       console.log(error)
     }
