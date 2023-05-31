@@ -66,10 +66,13 @@ const Projects = () => {
         ...values,
         userId: user.id, // Assurez-vous que user.id contient la valeur correcte
       });
+
       setState((prev) => ({
         ...prev,
         isLoading: false
       }));
+
+      window.location.reload(); // Recharger la page après la création réussie
     } catch (error) {
       console.log(error)
     }
