@@ -6,3 +6,17 @@ export const createProject = async (data: any) => fetch('/api/project/create', {
         Accept: 'application/json',
     },
 });
+
+export const getProjects = async () => {
+    try {
+        const res = await fetch('/api/project/get');
+
+        if(!res.ok){
+            throw new Error('Une erreur est subvenue lors de la récupération des projets')
+        }
+        const data = await res.json();
+        return data;
+    } catch (error) {
+        console.log('Erreur dans getProjects:' + error)
+    }
+}

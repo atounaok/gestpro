@@ -2,17 +2,17 @@ import Inpute from '@components/Input'
 import axios from 'axios'
 import { Button, PopoverBody, UncontrolledPopover } from "reactstrap";
 import Link from 'next/link'
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { MdOutlineCreateNewFolder } from 'react-icons/md'
 import { Container, FormControl, FormErrorMessage, FormLabel, Heading, Input } from '@chakra-ui/react';
 import { Button as ChakraButton} from '@chakra-ui/react';
-import { createProject } from '@lib/requests';
+import { createProject, getProjects } from '@lib/requests';
 import { NextPageContext } from 'next';
 import { getSession } from 'next-auth/react';
 import useCurrentUser from '@hooks/useCurrentUser';
 
 const initValues = { userId: "", name: "title" }
-const initState = {values: initValues, isLoading: false}
+const initState = {values: initValues, isLoading: false, projets: []}
 
 
 export async function getServerSideProps(context: NextPageContext) {
@@ -62,7 +62,10 @@ const Projects = () => {
     }));
 
     try {
-      await createProject(values)
+      await createProject({
+        ...values,
+        userId: user.id, // Assurez-vous que user.id contient la valeur correcte
+      });
       setState((prev) => ({
         ...prev,
         isLoading: false
@@ -72,16 +75,33 @@ const Projects = () => {
     }
   }
 
-// Obtenir les projets 
+// Obtenir les projets
+const projets = useCallback(async () => {
+  try {
+    const projects = await getProjects();
+    setState((prev) => ({
+      ...prev,
+      projets: projects,
+    }));
+  } catch (error) {
+    console.log('Obtention projets erreur:' + error);
+  }
+}, []); // Empty dependency array to ensure the callback is created only once
+
+// Appeler projets lors du rendu initial
+useEffect(() => {
+  projets();
+}, [projets]); // Include 'projets' in the dependency array
+
   
-  const projets: any = [
-    {id: 1, nom: "Projet 1"},
-    {id: 2, nom: "Projet 2"},
-    {id: 3, nom: "Projet 3"},
-    {id: 4, nom: "Projet 4"},
-    {id: 4, nom: "Projet 4"},
-    {id: 4, nom: "Projet 4"},
-  ]
+  // const projets: any = [
+  //   {id: 1, nom: "Projet 1"},
+  //   {id: 2, nom: "Projet 2"},
+  //   {id: 3, nom: "Projet 3"},
+  //   {id: 4, nom: "Projet 4"},
+  //   {id: 4, nom: "Projet 4"},
+  //   {id: 4, nom: "Projet 4"},
+  // ]
   return (
     <div className='flex justify-between h-full'>
       <div className='border min-h-full w-full md:w-[20%] bg-gray-100'>
@@ -151,7 +171,7 @@ const Projects = () => {
           flex flex-col 
           md:flex-row'>
           {
-            projets.length > 0 ?
+            state.projets.length > 0 ?
             (
               <div className='
               w-full
@@ -160,7 +180,7 @@ const Projects = () => {
               md:flex-row 
               gap-4'>
                 {
-                  projets.map((projet: any, index: any) => {
+                  state.projets.map((projet: any, index: any) => {
                     return (
                       <Link href={'/projects/' + projet.id} key={index} 
                         className='
@@ -172,7 +192,8 @@ const Projects = () => {
                         items-center 
                         p-3 border
                         hover:shadow-xl'>
-                        {projet.nom}
+                        {projet.name}
+                        projet
                       </Link>
                     )
                   })
