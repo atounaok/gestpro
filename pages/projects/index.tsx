@@ -104,6 +104,15 @@ const projets = useCallback(async () => {
   }
 }, []); // Empty dependency array to ensure the callback is created only once
 
+// Supprimer un projet
+const handleDelete = async (projetId: string) => {
+  try {
+    alert('')
+  } catch (error) {
+    
+  }
+}
+
 // Appeler projets lors du rendu initial
 useEffect(() => {
   try {
@@ -212,7 +221,7 @@ useEffect(() => {
 
                         <div className='border-t w-full p-1 flex items-center justify-between'>
                           <AiOutlineUsergroupAdd className='cursor-pointer text-xl text-[#141414] hover:text-gray-400' onClick={() => {alert('btn partager cliqué')}}/>
-                          <RiDeleteBin5Line className='cursor-pointer text-xl  text-red-400 hover:text-red-200' onClick={() => {alert('btn supprimer cliqué')}}/>
+                          <RiDeleteBin5Line className='cursor-pointer text-xl  text-red-400 hover:text-red-200' onClick={() => handleDelete(projet.id)}/>
                         </div>
                       </div>
                     )
