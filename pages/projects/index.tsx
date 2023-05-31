@@ -64,29 +64,51 @@ const Projects = () => {
         <div 
           className='
           border
-          p-6 flex-wrap 
+          p-6
           flex flex-col 
-          md:flex-row 
-          gap-4'>
+          md:flex-row'>
           {
             projets.length > 0 ?
-            projets.map((projet: any, index: any) => {
-              return (
-                <Link href={'/projects/' + projet.id} key={index} 
+            (
+              <div className='
+              w-full
+              flex-wrap 
+              flex flex-col 
+              md:flex-row 
+              gap-4'>
+                {
+                  projets.map((projet: any, index: any) => {
+                    return (
+                      <Link href={'/projects/' + projet.id} key={index} 
+                        className='
+                        card 
+                        h-[200px] 
+                        w-[24%] 
+                        flex 
+                        justify-center 
+                        items-center 
+                        p-3 border
+                        hover:shadow-xl'>
+                        {projet.nom}
+                      </Link>
+                    )
+                  })
+                }
+                <Link href={'/projects/'} 
                   className='
                   card 
                   h-[200px] 
                   w-[24%] 
-                  flex 
+                  flex text-gray-400
                   justify-center 
                   items-center 
                   p-3 border
                   hover:shadow-xl'>
-                  {projet.nom}
+                  Create new table
                 </Link>
-              )
-            })
-
+              </div>
+            )
+            
             :
 
             (
