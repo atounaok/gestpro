@@ -203,7 +203,7 @@ useEffect(() => {
 
                         <div className='border-t w-full p-1 flex items-center justify-between'>
                           <p>m</p>
-                          <RiDeleteBin5Line className='cursor-pointer' onClick={() => {alert('btn supprimer cliqué')}}/>
+                          <RiDeleteBin5Line className='cursor-pointer rounded-full p-1 text-2xl text-red-400 hover:bg-gray-200' onClick={() => {alert('btn supprimer cliqué')}}/>
                         </div>
                       </div>
                     )
