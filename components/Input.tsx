@@ -34,7 +34,7 @@ const Input: React.FunctionComponent<InputProps> = ({
                 appearance-none
                 focus:outline-none
                 focus:ring-0
-                peer'
+                peer hover:shadow-sm'
             placeholder=''
             />
         <label

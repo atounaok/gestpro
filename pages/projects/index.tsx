@@ -19,7 +19,7 @@ const Projects = () => {
       </div>
 
       <div className='flex flex-col sm:w-full border p-8'>
-        <div className='flex flex-col w-full border p-3'>
+        <div className='flex flex-col w-full border p-6'>
           <h2 className='text-2xl font-semibold mb-2'>Menu title</h2>
           <div className='flex justify-between items-center'>
             <Input
