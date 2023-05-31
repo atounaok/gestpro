@@ -4,6 +4,7 @@ import type { AppProps } from 'next/app'
 import Layout from '@components/Layout';
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
+import NextNProgress from 'nextjs-progressbar';
 
 function Loading(){
   const router = useRouter();
@@ -38,7 +39,8 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
         <Layout >
-        <Loading/><Component {...pageProps} />
+          <NextNProgress/>
+          <Component {...pageProps} />
         </Layout>
     </>
   )
