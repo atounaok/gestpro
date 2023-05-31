@@ -1,13 +1,31 @@
-import Input from '@components/Input'
+import Inpute from '@components/Input'
 import axios from 'axios'
 import email from 'next-auth/providers/email'
-// reactstrap components
 import { Button, PopoverBody, UncontrolledPopover } from "reactstrap";
 import Link from 'next/link'
-import React, { useCallback } from 'react'
+import React, { useCallback, useState } from 'react'
 import { MdOutlineCreateNewFolder } from 'react-icons/md'
+import { Container, FormControl, FormErrorMessage, FormLabel, Heading, Input } from '@chakra-ui/react';
+
+const initValues = { name: "" }
+
+
+const initState = {values: initValues}
+
 
 const Projects = () => {
+  const [state, setState] = useState(initState)
+
+  const { values } = state
+
+  const handleChange = ({target}: any) => setState((prev) => ({
+    ...prev,
+    values: {
+      ...prev.values,
+      [target.name]: target.value,
+    }
+  }))
+
   const name = "Mon pro"
   const userId = '647611728c88f4840ca4e63c'
     // Register
@@ -42,7 +60,7 @@ const Projects = () => {
         <div className='flex flex-col w-full border p-6'>
           <h2 className='text-2xl font-semibold mb-2'>Menu title</h2>
           <div className='flex justify-between items-center'>
-            <Input
+            <Inpute
               label='Rechercher'
               onChange={() => {}}
               id="searchProject"
@@ -68,18 +86,18 @@ const Projects = () => {
 
             <UncontrolledPopover placement="bottom-start" target="createPopoverButton">
               <PopoverBody className='bg-[#f9f9f9] py-3 px-4 border'>
-                <form method='POST' action={create} className='flex flex-col justify-center items-center'>
-                  <div className='flex justify-start items-start w-full border-b'><h3 className='text-xl mb-2 font-semibold'>Create a table</h3></div>
+                <Container className='flex flex-col justify-center items-center'>
+                  <div className='flex justify-start items-start w-full border-b'><Heading className='text-xl mb-2 font-semibold'>Create a table</Heading></div>
                   
-                  <div className='my-4'>
-                    <Input label='Table name'
-                    onChange={() => {}}
-                    id="tablename"
-                    type="text"/>
-                  </div>
+                  <FormControl isRequired isInvalid={!values.name} className='my-4'>
+                    <FormLabel>Table name</FormLabel>
+                    <Input className='px-2 py-1'
+                    name='name' errorBorderColor='red.300'
+                    type="text" value={values.name} onChange={handleChange}/>
+                      <FormErrorMessage className='text-red-500'>Name required</FormErrorMessage>
+                  </FormControl>
 
                   <Button
-                    id="createPopoverButton"
                     type='submit'
                     className=' w-full
                   bg-[#f9f9f9] 
@@ -92,7 +110,7 @@ const Projects = () => {
 
                     <p className='text-lg text-center'>Create</p>
                   </Button>
-                </form>
+                </Container>
               </PopoverBody>
             </UncontrolledPopover>
             
