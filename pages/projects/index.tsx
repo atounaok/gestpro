@@ -1,6 +1,7 @@
 import Inpute from '@components/Input'
 import axios from 'axios'
 import { Button, PopoverBody, UncontrolledPopover } from "reactstrap";
+import { useRouter } from 'next/router';
 import Link from 'next/link'
 import React, { useCallback, useEffect, useState } from 'react'
 import { MdOutlineCreateNewFolder } from 'react-icons/md'
@@ -10,6 +11,7 @@ import { createProject, getProjects } from '@lib/requests';
 import { NextPageContext } from 'next';
 import { getSession } from 'next-auth/react';
 import useCurrentUser from '@hooks/useCurrentUser';
+import { RiDeleteBin5Line } from 'react-icons/ri'
 
 const initValues = { userId: "", name: "title" }
 const initState = {values: initValues, isLoading: false, projets: []}
@@ -36,6 +38,8 @@ export async function getServerSideProps(context: NextPageContext) {
 const Projects = () => {
   // Obtenir user dans la session
   const { data: user } = useCurrentUser();
+
+  const router = useRouter();
   const [state, setState] = useState(initState)
   const [touched, setTouched] = useState({})
 
@@ -72,7 +76,7 @@ const Projects = () => {
         isLoading: false
       }));
 
-      window.location.reload(); // Recharger la page après la création réussie
+      window.location.reload();
     } catch (error) {
       console.log(error)
     }
@@ -82,6 +86,7 @@ const Projects = () => {
 const projets = useCallback(async () => {
   try {
     const projects = await getProjects();
+
     setState((prev) => ({
       ...prev,
       projets: projects,
@@ -93,18 +98,14 @@ const projets = useCallback(async () => {
 
 // Appeler projets lors du rendu initial
 useEffect(() => {
-  projets();
+  try {
+    projets();
+  } catch (error) {
+    console.log(error)
+  }
 }, [projets]); // Include 'projets' in the dependency array
 
   
-  // const projets: any = [
-  //   {id: 1, nom: "Projet 1"},
-  //   {id: 2, nom: "Projet 2"},
-  //   {id: 3, nom: "Projet 3"},
-  //   {id: 4, nom: "Projet 4"},
-  //   {id: 4, nom: "Projet 4"},
-  //   {id: 4, nom: "Projet 4"},
-  // ]
   return (
     <div className='flex justify-between h-full'>
       <div className='border min-h-full w-full md:w-[20%] bg-gray-100'>
@@ -185,19 +186,26 @@ useEffect(() => {
                 {
                   state.projets.map((projet: any, index: any) => {
                     return (
-                      <Link href={'/projects/' + projet.id} key={index} 
+                      <div href={'/projects/' + projet.id} key={index} 
                         className='
-                        card 
+                        card
                         h-[200px] 
                         w-[24%] 
-                        flex 
+                        flex flex-col
                         justify-center 
                         items-center 
                         p-3 border
                         hover:shadow-xl'>
-                        {projet.name}
-                        projet
-                      </Link>
+                        <Link href={'/projects/' + projet.id} key={index}  
+                        className='w-full h-full flex text-center items-center justify-center'>
+                          {projet.name}
+                        </Link>
+
+                        <div className='border-t w-full p-1 flex items-center justify-between'>
+                          <p>m</p>
+                          <RiDeleteBin5Line className='cursor-pointer' onClick={() => {alert('btn supprimer cliqué')}}/>
+                        </div>
+                      </div>
                     )
                   })
                 }
