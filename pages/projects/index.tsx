@@ -219,7 +219,7 @@ useEffect(() => {
                         items-center 
                         p-3 border
                         hover:shadow-xl'>
-                        <Link href={'/projects/' + projet.id} key={index}  
+                        <Link href={'/projects/' + projet.id} passHref key={index}  
                         className='w-full h-full flex text-center 
                         items-center justify-center'>
                           {projet.name}

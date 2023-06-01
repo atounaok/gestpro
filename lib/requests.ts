@@ -24,6 +24,20 @@ export const getProjects = async () => {
     }
 }
 
+export const getProjectById = async (id: any) => {
+    try {
+        const res = await fetch(`/api/project/getById?id=${id}`);
+
+        if(!res.ok){
+            throw new Error('Une erreur est subvenue lors de la récupération des projets')
+        }
+        
+        return res.json();
+    } catch (error) {
+        console.log('Erreur dans getProjects:' + error)
+    }
+}
+
 export const getLastId = async (userId: any) => {
     try {
         const res = await fetch(`/api/project/getLastId?userId=${userId}`);
