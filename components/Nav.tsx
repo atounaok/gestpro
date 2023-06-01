@@ -17,12 +17,16 @@ import { Button, Container, Input, PopoverBody, UncontrolledPopover } from "reac
 import { Heading, FormControl, FormLabel, FormErrorMessage } from '@chakra-ui/react'
 import { NextPageContext } from 'next'
 import { userAgent } from 'next/server'
+import { RiArrowDropDownLine, RiArrowDropUpLine } from 'react-icons/ri'
 
 
 const Nav = () => {
   const { data: session } = useSession()
   const [providers, setProviders] = useState<Record<LiteralUnion<BuiltInProviderType, string>, ClientSafeProvider> | null>(null);
-
+  const [arrowUp, setArrowUp] = useState(false)
+  const handleArrow = () => {
+    setArrowUp((prev) => !prev)
+  }
  useEffect(() => {
    const setUpProviders = async () => {
      const response = await getProviders();
@@ -137,13 +141,11 @@ const Nav = () => {
 
             <Button 
               id="profileImg"
-              type='button'
-              className='
-              flex ms-4
-              justify-center 
-              items-center 
-               bg-contain'>
-              <Image className='rounded-md hover:opacity-80 border-none' src={session?.user?.image || '/public/assets/default-user-icon.png'} width={30} height={30} alt="user img"/>
+              type='button' onClick={handleArrow}
+              className={session.user.image ? 'flex ms-4 justify-center items-center bg-contain' : 'ms-4 py-1 px-3 rounded-md hover:text-[#141414] hover:bg-[#f9f9f9]'}>
+                {session.user.image ? <Image className='rounded-md hover:opacity-80 border-none' src={session?.user?.image ? session?.user?.image : '/public/assets/images/default-user-icon.png'} width={30} height={30} alt="user img"/> : <div className='flex justify-between items-center'>{
+                  !arrowUp? <RiArrowDropDownLine className='text-2xl p-0 me-1'/> : <RiArrowDropUpLine className='text-2xl p-0 me-1'/>
+                }<p>Profile</p></div>}
             </Button>
             <UncontrolledPopover placement="bottom-start" target="profileImg">
               <PopoverBody className='bg-[#f9f9f9] py-3 px-4 border rounded-md'>
