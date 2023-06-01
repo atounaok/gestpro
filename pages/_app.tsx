@@ -7,30 +7,6 @@ import { useState, useEffect } from 'react';
 import NextNProgress from 'nextjs-progressbar';
 import { SessionProvider, useSession } from 'next-auth/react';
 
-function Loading(){
-  const router = useRouter();
-  const [loading, setLoading] = useState(false);
-  useEffect(() => {
-    const handleStrart = (url: string) => (url !== router.asPath) && setLoading(true);
-    const handleComplete = (url: string) => (url === router.asPath) &&setTimeout(()=> {setLoading(false)}, 2000);
-
-    router.events.on('routeChangeStart', handleStrart);
-    router.events.on('routeChangeComplete', handleComplete);
-    router.events.on('routeChangeError', handleComplete);
-
-    return () => {
-      router.events.off('routeChangeStart', handleStrart);
-      router.events.off('routeChangeComplete', handleComplete);
-      router.events.off('routeChangeError', handleComplete);
-    }
-  })
-  return loading? loading && (
-    <div className=''>
-      loading...
-    </div>
-  ) : null
-}
-
 export const metadeta = {
     title: "Gestpro",
     description: 'Here to help you finish your projects'
@@ -39,13 +15,12 @@ export const metadeta = {
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
-    <SessionProvider>
-        <Layout >
-          <NextNProgress color="radial-gradient(rgb(254, 202, 202), rgb(220, 38, 38))"/>
-          <Component {...pageProps} />
-        </Layout>
-    </SessionProvider>
-
+      <SessionProvider>
+          <Layout>
+            <NextNProgress color="radial-gradient(rgb(254, 202, 202), rgb(220, 38, 38))"/>
+            <Component {...pageProps} />
+          </Layout>
+      </SessionProvider>
     </>
   )
 }

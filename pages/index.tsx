@@ -24,7 +24,6 @@ export async function getServerSideProps(context: NextPageContext){
 }
 
 const Home = () => {
-  const { data: user } = useCurrentUser();
   return (
     <div className='h-full'>
       <div className='w-full flex-col text-center flex items-center justify-around h-full text-white bg-[#141414] '>
