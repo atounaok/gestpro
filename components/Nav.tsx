@@ -1,6 +1,6 @@
 'use client'
 
-import React, { SetStateAction } from 'react'
+import React, { SetStateAction, use } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { RxHamburgerMenu } from 'react-icons/rx'
@@ -10,18 +10,22 @@ import { IoIosLogOut } from 'react-icons/io'
 import { GrProjects } from 'react-icons/gr'
 import { CiUser } from 'react-icons/ci'
 import { useState, useEffect } from 'react'
-import { signIn, signOut, useSession, getProviders, ClientSafeProvider, LiteralUnion } from 'next-auth/react'
+import { signIn, signOut, useSession, getProviders, ClientSafeProvider, LiteralUnion, getSession, SessionProvider } from 'next-auth/react'
 import { BuiltInProviderType } from 'next-auth/providers'
 import useCurrentUser from '@hooks/useCurrentUser'
-
+import { Button, Container, Input, PopoverBody, UncontrolledPopover } from "reactstrap";
+import { Heading, FormControl, FormLabel, FormErrorMessage } from '@chakra-ui/react'
+import { NextPageContext } from 'next'
+import { userAgent } from 'next/server'
 
 
 const Nav = () => {
+  const { data: session } = useSession()
   //const { data: user } = useCurrentUser();
   const [providers, setProviders] = useState<Record<LiteralUnion<BuiltInProviderType, string>, ClientSafeProvider> | null>(null);
-  // const [isLogged, setIslogged] = useState(session && session?.user? false: true)
-  const [isLogged, setIslogged] = useState(true)
-
+  const [isLogged, setIslogged] = useState(session?.user? true: false)
+  //const [isLogged, setIslogged] = useState(true)
+  console.log(session?.user)
  useEffect(() => {
    const setUpProviders = async () => {
      const response = await getProviders();
@@ -41,7 +45,8 @@ const Nav = () => {
   }
 
   return (
-    <nav className='flex-between py-4 px-2 sm:px-4 w-full bg-[#141414] text-[#f9f9f9]'>
+    <SessionProvider session={session}>
+          <nav className='flex-between py-4 px-2 sm:px-4 w-full bg-[#141414] text-[#f9f9f9]'>
       <Link href="/" className=''>
         <p className='font-semibold hover:text-blue-100'>Gestpro</p>
       </Link>
@@ -132,20 +137,39 @@ const Nav = () => {
 
       {/* Desktop Navigation */}
       <div className=''>
-        {isLogged? (
-          <ul className='md:flex hidden justify-between'>
+        {session?.user ? (
+          <ul className='md:flex hidden items-center justify-between'>
             <Link href="/projects" className='py-1 px-3 hover:bg-[#f9f9f9] hover:text-[#141414]'>
               <p className=''>Workspace</p>
             </Link>
-            <Link href="/" 
-              onClick={() => {
-                setNav(false);
-                signOut();
-                setIslogged(false);
-              }}
-              className='py-1 px-3 ms-5 hover:text-red-200'>
-              <p className=''>Sign Out</p>
-            </Link>
+
+            <Button 
+              id="profileImg"
+              type='button'
+              className='
+              flex
+              justify-center 
+              items-center 
+              p-3 '>
+              <Image src={session?.user?.image || '/public/assets/default-user-icon.png'} width={30} height={30} alt="user img"/>
+            </Button>
+            <UncontrolledPopover placement="bottom-start" target="profileImg">
+              <PopoverBody className='bg-[#f9f9f9] py-3 px-4 border'>
+              
+              <Link href="/" 
+                onClick={() => {
+                  setNav(false);
+                  signOut();
+                  setIslogged(false);
+                }}
+                className='py-1 px-3 ms-5 hover:text-red-200'>
+                <p className=''>Sign Out</p>
+              </Link>
+              
+              </PopoverBody>
+            </UncontrolledPopover>
+
+
           </ul>
         ): (
             <></>
@@ -156,6 +180,8 @@ const Nav = () => {
       </div> 
 
     </nav>
+    </SessionProvider>
+
   )
 }
 

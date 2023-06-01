@@ -1,3 +1,4 @@
+import { SessionProvider, useSession } from 'next-auth/react';
 import { Raleway } from 'next/font/google';
 import React, { ReactNode } from 'react'
 import Footer from './Footer'
@@ -13,13 +14,13 @@ const raleway = Raleway({
 
 const Layout = ({ children }: RootLayoutProps) => {
   return (
-    <div className={raleway.className + 'min-h-full'}>
-      <Nav />
-      <div className='min-h-screen md:h-screen flex flex-col justify-center'>
-        {children}
+      <div className={raleway.className + 'min-h-full'}>
+        <Nav />
+        <div className='min-h-screen md:h-screen flex flex-col justify-center'>
+          {children}
+        </div>
+        <Footer />
       </div>
-      <Footer />
-    </div>
   )
 }
 

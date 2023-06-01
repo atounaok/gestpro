@@ -5,6 +5,7 @@ import Layout from '@components/Layout';
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
 import NextNProgress from 'nextjs-progressbar';
+import { SessionProvider, useSession } from 'next-auth/react';
 
 function Loading(){
   const router = useRouter();
@@ -38,10 +39,13 @@ export const metadeta = {
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
+    <SessionProvider>
         <Layout >
           <NextNProgress color="radial-gradient(rgb(254, 202, 202), rgb(220, 38, 38))"/>
           <Component {...pageProps} />
         </Layout>
+    </SessionProvider>
+
     </>
   )
 }
