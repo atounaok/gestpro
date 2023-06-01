@@ -82,7 +82,7 @@ const Nav = () => {
                     hover:bg-gray-200 
                     hover:cursor-pointer 
                     rounded-md'
-                  onClick={() => setNav(false)}>
+                    onClick={() => setNav(false)}>
                     <GrProjects className='me-2 text-md'/>
                     <p>Workspace</p>
                   </Link>
@@ -110,7 +110,7 @@ const Nav = () => {
                 onClick={() => setNav(false)}>
                   <div className='me-1 p-0'><CiUser className='text-xl'/></div>
                   <p>My profile</p>
-                </Link>
+              </Link>
 
               <div 
                 className='
@@ -147,24 +147,47 @@ const Nav = () => {
               id="profileImg"
               type='button'
               className='
-              flex
+              flex ms-2
               justify-center 
               items-center 
-              p-3 '>
+              rounded bg-contain'>
               <Image src={session?.user?.image || '/public/assets/default-user-icon.png'} width={30} height={30} alt="user img"/>
             </Button>
             <UncontrolledPopover placement="bottom-start" target="profileImg">
               <PopoverBody className='bg-[#f9f9f9] py-3 px-4 border'>
               
-              <Link href="/" 
-                onClick={() => {
-                  setNav(false);
-                  signOut();
-                  setIslogged(false);
-                }}
-                className='py-1 px-3 ms-5 hover:text-red-200'>
-                <p className=''>Sign Out</p>
+              <Link href="/profile"
+                className='
+                  w-full 
+                text-gray-700 
+                  font-light
+                  flex
+                  items-center
+                  p-2
+                  hover:bg-gray-200 
+                  hover:cursor-pointer 
+                  rounded-md'
+                onClick={() => setNav(false)}>
+                  <div className='me-1 p-0'><CiUser className='text-xl'/></div>
+                  <p>My profile</p>
               </Link>
+              <div 
+                className='
+                flex mt-3
+                items-center  
+                hover:bg-gray-200 
+                hover:cursor-pointer 
+                p-2 rounded-md'>
+                <IoIosLogOut className='text-[#141414] text-2xl me-1'/>
+                <button
+                    onClick={() => {
+                      setNav(false);
+                      signOut();
+                    }}
+                    className='text-left w-full text-gray-700 font-light'>
+                    Sign Out
+                  </button>
+              </div>
               
               </PopoverBody>
             </UncontrolledPopover>
