@@ -211,7 +211,7 @@ useEffect(() => {
                     return (
                       <div key={index} 
                         className='
-                        card
+                        card rounded-md
                         h-[200px] 
                         md:w-[24%] 
                         flex flex-col
@@ -237,7 +237,7 @@ useEffect(() => {
                   id="createPopoverButtonLg"
                   type='button'
                   className='
-                  card 
+                  card rounded-md
                   h-[200px] 
                   md:w-[24%] 
                   md:flex text-gray-400
