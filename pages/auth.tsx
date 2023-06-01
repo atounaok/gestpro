@@ -14,7 +14,7 @@ export async function getServerSideProps(context: NextPageContext) {
     if (session) {
       return {
         redirect: {
-          destination: '/',
+          destination: '/workspace',
           permanent: false,
         }
       }
@@ -44,7 +44,7 @@ const Auth = () => {
           await signIn('credentials', {
               email,
               password,
-              callbackUrl: '/profile'
+              callbackUrl: '/projects'
           });
 
       } catch (error) {
@@ -113,7 +113,7 @@ const Auth = () => {
 
 
                 <div className='flex flex-row items-center gap-4 mt-8 justify-center'>
-                    <div onClick={() => signIn('google', { callbackUrl: '/profile' })} 
+                    <div onClick={() => signIn('google', { callbackUrl: '/projects' })} 
                     className='
                         w-10
                         h-10
@@ -128,7 +128,7 @@ const Auth = () => {
                     '>
                         <FcGoogle size={30}/>
                     </div>
-                    <div onClick={() => signIn('github', { callbackUrl: '/profile' })}
+                    <div onClick={() => signIn('github', { callbackUrl: '/projects' })}
                     className='
                         w-10
                         h-10
