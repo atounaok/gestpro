@@ -130,14 +130,14 @@ useEffect(() => {
   
   return (
     <div className='flex justify-between h-full'>
-      <div className='border min-h-full w-full md:w-[20%] bg-gray-100'>
+      <div className='border hidden md:flex min-h-full w-full md:w-[20%] bg-gray-100'>
         Dos
       </div>
 
       <div className='flex flex-col sm:w-full border p-8'>
         <div className='flex flex-col w-full border p-6'>
           <h2 className='text-2xl font-semibold mb-2'>Menu title</h2>
-          <div className='flex justify-between items-center'>
+          <div className='flex flex-col md:flex-row justify-between gap-3 md:items-center'>
             <Inpute
               label='Rechercher'
               onChange={() => {}}
@@ -204,7 +204,7 @@ useEffect(() => {
               w-full
               flex-wrap 
               flex flex-col 
-              md:flex-row 
+              md:flex-row
               gap-4'>
                 {
                   state.projets.map((projet: any, index: any) => {
@@ -213,7 +213,7 @@ useEffect(() => {
                         className='
                         card
                         h-[200px] 
-                        w-[24%] 
+                        md:w-[24%] 
                         flex flex-col
                         justify-center 
                         items-center 
@@ -239,12 +239,12 @@ useEffect(() => {
                   className='
                   card 
                   h-[200px] 
-                  w-[24%] 
-                  flex text-gray-400
+                  md:w-[24%] 
+                  md:flex text-gray-400
                   justify-center 
                   items-center 
                   p-3 border
-                  hover:shadow-xl'>
+                  hover:shadow-xl hidden'>
                   Create new table
                 </Button>
                 <UncontrolledPopover placement="right-end" target="createPopoverButtonLg">

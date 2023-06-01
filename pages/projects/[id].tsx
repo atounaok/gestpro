@@ -85,6 +85,7 @@ const ProjectDetails = () => {
 
     await updateProjectName(id, target.value)
   };
+  
   return (
     <div className='flex justify-between h-full'>
       <div className='border min-h-full w-full md:w-[20%] bg-gray-100'>
