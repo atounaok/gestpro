@@ -7,7 +7,7 @@ import { getSession } from 'next-auth/react'
 import Link from 'next/link'
 import { useRouter } from 'next/router';
 import React, { useCallback, useEffect, useState } from 'react'
-import { MdOutlineCreateNewFolder } from 'react-icons/md'
+import {IoMdAdd} from 'react-icons/io'
 
 
 
@@ -91,6 +91,8 @@ const handleChange = async ({target}: React.ChangeEvent<HTMLInputElement>) => {
                 text-2xl 
                 font-semibold 
                 max-w-fit
+                px-2
+                py-1
                 border' 
                 onChange={handleChange}
                 onFocus={(e) => e.target.select()}
@@ -99,12 +101,14 @@ const handleChange = async ({target}: React.ChangeEvent<HTMLInputElement>) => {
         </div>
         <div 
           className='
-          
           p-6 flex-wrap 
           flex flex-col 
           md:flex-row 
           gap-4'>
-
+            <button className='flex items-center border rounded py-2 px-5 bg-gray-50 hover:bg-gray-200'>
+              <IoMdAdd/>
+              <p>Add another list</p>
+            </button>
         </div>
       </div>
     </div>
