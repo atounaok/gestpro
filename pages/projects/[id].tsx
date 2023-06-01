@@ -79,6 +79,7 @@ useEffect(() => {
                 font-semibold 
                 mb-2 w-fit 
                 hover:outline-1' 
+                onFocus={(e) => e.target.select()}
                 value={state.projet.name}/>
             <p></p>
           </div>
