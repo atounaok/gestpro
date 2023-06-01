@@ -67,7 +67,7 @@ useEffect(() => {
   return (
     <div className='flex justify-between h-full'>
       <div className='border min-h-full w-full md:w-[20%] bg-gray-100'>
-        {id}
+        dos
       </div>
 
       <div className='flex flex-col sm:w-full border p-8'>
