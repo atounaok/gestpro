@@ -4,7 +4,7 @@ import Footer from './Footer'
 import Nav from './Nav'
 
 interface RootLayoutProps {
-    children: ReactNode;
+  children: ReactNode;
 }
 
 const raleway = Raleway({
@@ -14,11 +14,11 @@ const raleway = Raleway({
 const Layout = ({ children }: RootLayoutProps) => {
   return (
     <div className={raleway.className + 'h-full'}>
-        <Nav/>
-        <div className='h-screen flex flex-col justify-center'>
+      <Nav />
+      <div className='h-screen flex flex-col justify-center'>
         {children}
-        </div>
-        <Footer/>
+      </div>
+      <Footer />
     </div>
   )
 }
