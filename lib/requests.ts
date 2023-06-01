@@ -10,6 +10,35 @@ export const createProject = async (data: any) => {
     });
 }
 
+// Pour créer une nouvelle liste dans un projet
+export const createProjectList = async (data: any) => {
+    await fetch('/api/project/createListe', {
+       method: 'POST',
+       body: JSON.stringify(data),
+       headers: {
+           'Content-Type': 'application/json',
+           Accept: 'application/json',
+       },
+       
+   });
+}
+
+//Pour Obtenir les listes
+export const getProjectsList = async () => {
+    try {
+        const res = await fetch('/api/project/getProjectList');
+
+        if(!res.ok){
+            throw new Error('Une erreur est subvenue lors de la récupération des listes')
+        }
+        const data = await res.json();
+        return data;
+    } catch (error) {
+        console.log('Erreur dans getProjects:' + error)
+    }
+}
+
+
 export const getProjects = async () => {
     try {
         const res = await fetch('/api/project/get');

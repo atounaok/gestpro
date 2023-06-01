@@ -164,7 +164,7 @@ useEffect(() => {
             <UncontrolledPopover placement="bottom-start" target="createPopoverButton">
               <PopoverBody className='bg-[#f9f9f9] py-3 px-4 border'>
                 <Container className='flex flex-col justify-center items-center'>
-                  <div className='flex justify-start items-start w-full border-b'><Heading className='text-xl mb-2 font-semibold'>Create a table</Heading></div>
+                  <div className='flex justify-start items-start w-full border-b'><Heading className='text-xl mb-2 font-semibold'>Create a project</Heading></div>
                   
                   <FormControl isRequired isInvalid={touched.name && !values.name} className='my-4'>
                     <FormLabel>Table name</FormLabel>
@@ -250,7 +250,8 @@ useEffect(() => {
                 <UncontrolledPopover placement="right-end" target="createPopoverButtonLg">
                   <PopoverBody className='bg-[#f9f9f9] py-3 px-4 border'>
                     <Container className='flex flex-col justify-center items-center'>
-                      <div className='flex justify-start items-start w-full border-b'><Heading className='text-xl mb-2 font-semibold'>Create a table</Heading></div>
+                      <div className='flex justify-start items-start w-full border-b'><Heading 
+                      className='text-xl mb-2 font-semibold'>Create a project</Heading></div>
                       
                       <FormControl isRequired isInvalid={touched.name && !values.name} className='my-4'>
                         <FormLabel>Table name</FormLabel>

@@ -37,6 +37,9 @@ export async function getServerSideProps(context: NextPageContext) {
   }
 }
 
+
+
+
 const ProjectDetails = () => {
   const router = useRouter()
   const { id } = router.query;
