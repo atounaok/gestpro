@@ -14,7 +14,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         console.log('Entré dans update voici id:'+ id)
         const projects = await prismadb.project.update({
             where: {
-                id: id
+                id: id as string
             },
             data: {
                 name: name,

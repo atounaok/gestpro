@@ -76,7 +76,6 @@ const handleChange = async ({target}: React.ChangeEvent<HTMLInputElement>) => {
   }))
 
   await updateProjectName(id, target.value)
-  console.log(target)
 };
   return (
     <div className='flex justify-between h-full'>
