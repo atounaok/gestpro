@@ -21,11 +21,8 @@ import { userAgent } from 'next/server'
 
 const Nav = () => {
   const { data: session } = useSession()
-  //const { data: user } = useCurrentUser();
   const [providers, setProviders] = useState<Record<LiteralUnion<BuiltInProviderType, string>, ClientSafeProvider> | null>(null);
-  const [isLogged, setIslogged] = useState(session?.user? true: false)
-  //const [isLogged, setIslogged] = useState(true)
-  console.log(session?.user)
+
  useEffect(() => {
    const setUpProviders = async () => {
      const response = await getProviders();
@@ -35,11 +32,6 @@ const Nav = () => {
 }, [])
 
   const [nav, setNav] = useState(false)
-
-  // useEffect(()=> {
-  //   setIslogged(isLogged)
-  // }, [user, isLogged])
-
   const handleNav = () => {
       setNav(!nav)
   }
@@ -68,7 +60,7 @@ const Nav = () => {
           </div>
           <div className='py-4 flex flex-col'>
             <div className=''>
-              {isLogged ? (
+              {session ? (
                 <div className='flex flex-col'> 
 
                   <Link href="/projects"
@@ -198,7 +190,7 @@ const Nav = () => {
             <></>
         )}
 
-        <RxHamburgerMenu className={isLogged ? 'md:hidden cursor-pointer hover:text-lg' : 'hidden'} size={20} 
+        <RxHamburgerMenu className={session ? 'md:hidden cursor-pointer hover:text-lg' : 'hidden'} size={20} 
           onClick={handleNav}/>
       </div> 
 
