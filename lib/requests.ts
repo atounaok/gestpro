@@ -67,3 +67,23 @@ export const deleteProjects = async (projetId: any) => {
         console.log(error)
     }
 }
+
+export const updateProjectName = async (projetId: any, name: string) => {
+    try {
+        const response = await fetch(`/api/project/update?id=${projetId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ name }),
+        });
+
+        if(!response.ok){
+            throw new Error('Erreur lors de la mise à jour du projet')
+        }
+
+        return getProjects()
+    } catch (error) {
+        console.log(error)
+    }
+}

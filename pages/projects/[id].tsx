@@ -1,7 +1,7 @@
 'use client'
 
 import Input from '@components/Input'
-import { getProjectById } from '@lib/requests'
+import { getProjectById, updateProjectName } from '@lib/requests'
 import { NextPageContext } from 'next'
 import { getSession } from 'next-auth/react'
 import Link from 'next/link'
@@ -67,13 +67,15 @@ useEffect(() => {
   }
 }, [obtenirProjet]);
 
-const handleChange = ({target}: React.ChangeEvent<HTMLInputElement>) => {
+const handleChange = async ({target}: React.ChangeEvent<HTMLInputElement>) => {
   setState((prev) => ({
     projet: {
       ...prev.projet,
       [target.name]: target.value,
     }
   }))
+
+  await updateProjectName(id, target.value)
   console.log(target)
 };
   return (
