@@ -13,7 +13,7 @@ import { MdOutlineCreateNewFolder } from 'react-icons/md'
 
 // Variables créées
 //const initValues = { userId: "", name: "title" }
-const initState = {projet: []}
+const initState = {projet: {name: ""}}
 
 export async function getServerSideProps(context: NextPageContext) {
   const session = await getSession(context);
@@ -43,8 +43,11 @@ const ProjectDetails = () => {
       const projects = await getProjectById(id);
 
       if(projects.name){
-         setState(() => ({
-           projet: projects,
+         setState((prev) => ({
+           projet: {
+            ...prev.projet,
+            name: projects.name
+           },
          }));
        }else{
          console.log('Aucun projet trouvé');
@@ -64,24 +67,33 @@ useEffect(() => {
   }
 }, [obtenirProjet]);
 
+const handleChange = ({target}: React.ChangeEvent<HTMLInputElement>) => {
+  setState((prev) => ({
+    projet: {
+      ...prev.projet,
+      [target.name]: target.value,
+    }
+  }))
+  console.log(target)
+};
   return (
     <div className='flex justify-between h-full'>
       <div className='border min-h-full w-full md:w-[20%] bg-gray-100'>
         dos
       </div>
 
-      <div className='flex flex-col sm:w-full border p-8'>
-        <div className='flex flex-col w-full border-b p-6'>
-          <div className='flex flex-col justify-between items-center'>
+      <div className='flex flex-col sm:w-full border px-8 py-4'>
+        <div className='flex flex-col w-full border-b justify-center items-start p-3'>
+          <div className='flex'>
             <input 
               className='
                 text-2xl 
                 font-semibold 
-                mb-2 w-fit 
-                hover:outline-1' 
+                max-w-fit
+                border' 
+                onChange={handleChange}
                 onFocus={(e) => e.target.select()}
-                value={state.projet.name}/>
-            <p></p>
+                value={state.projet.name} name="name"/>
           </div>
         </div>
         <div 
