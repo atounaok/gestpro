@@ -131,7 +131,7 @@ const Nav = () => {
       <div className=''>
         {session?.user ? (
           <ul className='md:flex hidden items-center justify-between'>
-            <Link href="/projects" className='py-1 px-3 hover:bg-[#f9f9f9] hover:text-[#141414]'>
+            <Link href="/projects" className='py-1 rounded-md px-3 hover:bg-[#f9f9f9] hover:text-[#141414]'>
               <p className=''>Workspace</p>
             </Link>
 
@@ -139,15 +139,14 @@ const Nav = () => {
               id="profileImg"
               type='button'
               className='
-              flex ms-2
+              flex ms-4
               justify-center 
               items-center 
-              rounded bg-contain'>
-              <Image src={session?.user?.image || '/public/assets/default-user-icon.png'} width={30} height={30} alt="user img"/>
+               bg-contain'>
+              <Image className='rounded-md hover:opacity-80 border-none' src={session?.user?.image || '/public/assets/default-user-icon.png'} width={30} height={30} alt="user img"/>
             </Button>
             <UncontrolledPopover placement="bottom-start" target="profileImg">
-              <PopoverBody className='bg-[#f9f9f9] py-3 px-4 border'>
-              
+              <PopoverBody className='bg-[#f9f9f9] py-3 px-4 border rounded-md'>
               <Link href="/profile"
                 className='
                   w-full 

@@ -24,7 +24,7 @@ const Input: React.FunctionComponent<InputProps> = ({
             height={height && height + "px"}
             className='
                 block
-                px-6
+                px-6 rounded-md
                 pt-6
                 pb-1
                 w-full

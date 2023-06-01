@@ -85,7 +85,7 @@ const ProjectDetails = () => {
 
     await updateProjectName(id, target.value)
   };
-  
+
   return (
     <div className='flex justify-between h-full'>
       <div className='border min-h-full w-full md:w-[20%] bg-gray-100'>
@@ -100,7 +100,7 @@ const ProjectDetails = () => {
                 text-2xl 
                 font-semibold 
                 max-w-fit
-                px-2
+                px-2 rounded-md
                 py-1
                 border'
               onChange={handleChange}

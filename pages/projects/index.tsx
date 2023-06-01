@@ -150,7 +150,7 @@ useEffect(() => {
               type='button'
               className='
             bg-[#141414] 
-              py-2 px-6 
+              py-2 px-6 rounded-md
               text-[#f9f9f9]
               flex items-center
               hover:shadow-xl'>
@@ -162,13 +162,13 @@ useEffect(() => {
               <p className='text-lg'>Create</p>
             </Button>
             <UncontrolledPopover placement="bottom-start" target="createPopoverButton">
-              <PopoverBody className='bg-[#f9f9f9] py-3 px-4 border'>
+              <PopoverBody className='bg-[#f9f9f9] py-3 px-4 border rounded-md'>
                 <Container className='flex flex-col justify-center items-center'>
                   <div className='flex justify-start items-start w-full border-b'><Heading className='text-xl mb-2 font-semibold'>Create a project</Heading></div>
                   
-                  <FormControl isRequired isInvalid={touched.name && !values.name} className='my-4'>
+                  <FormControl isRequired isInvalid={touched.name && !values.name} className='my-4 '>
                     <FormLabel>Table name</FormLabel>
-                    <Input className='px-2 py-1'onBlur={onBlur}
+                    <Input className='px-2 py-1 rounded-md'onBlur={onBlur}
                     name='name' errorBorderColor='red.300' onFocus={(e) => e.target.select()}
                     type="text" value={values.name} onChange={handleChange}/>
 
@@ -182,7 +182,7 @@ useEffect(() => {
                     isLoading={isLoading}
                     colorScheme="blue"
                     variant="outline"
-                    className='border w-full py-1 hover:bg-gray-200'>
+                    className='border rounded-md w-full py-1 hover:bg-gray-200'>
                     <p className='text-lg text-center'>Create</p>
                   </ChakraButton>
                 </Container>
