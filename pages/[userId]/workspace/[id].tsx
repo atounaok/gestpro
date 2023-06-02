@@ -20,6 +20,7 @@ import { createTask } from '@lib/task/requests';
 import { IoMdAdd } from 'react-icons/io'
 import { BiDotsHorizontalRounded } from 'react-icons/bi'
 import { CiSquareRemove } from 'react-icons/ci'
+import AuthRedirect from '@components/AuthRedirect';
 
 
 
@@ -54,6 +55,9 @@ export async function getServerSideProps(context: NextPageContext) {
 
 
 const ProjectDetails = () => {
+  // Si on n'a pas de user, on redirige vers login
+  AuthRedirect();
+  
   const router = useRouter()
   const { id } = router.query;
 

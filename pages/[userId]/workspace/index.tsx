@@ -21,6 +21,7 @@ import { createProject, deleteProject, getAllProjects, getLastProject } from '@l
 import { RiDeleteBin5Line } from 'react-icons/ri'
 import { AiOutlineUsergroupAdd } from 'react-icons/ai'
 import { MdOutlineCreateNewFolder } from 'react-icons/md'
+import AuthRedirect from '@components/AuthRedirect';
 
 // Variables créées
 const initValues = { userId: "", name: "title" }
@@ -28,18 +29,11 @@ const initState = {values: initValues, isLoading: false, projets: []}
 
 
 const Projects = () => {
-  const router = useRouter();
   // Obtenir le user dans la session
   const { data: user } = useCurrentUser();
 
   // Si on n'a pas de user, on redirige vers login
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      if(!user){
-        router.push('/auth')
-      }
-    }
-  }, [router, user]);
+  AuthRedirect();
 
 
   const [state, setState] = useState(initState)
