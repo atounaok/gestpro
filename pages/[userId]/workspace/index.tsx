@@ -18,7 +18,7 @@ import { createProject, deleteProject, getAllProjects, getLastProject } from '@l
 import { MdOutlineCreateNewFolder } from 'react-icons/md'
 import AuthRedirect from '@components/AuthRedirect';
 import Project from '@components/Project';
-import CreateProject from '@components/CreateProject';
+import CreateProjectButton from '@components/CreateProjectButton';
 
 // Variables créées
 const initValues = { userId: "", name: "title" }
@@ -205,48 +205,7 @@ useEffect(() => {
                     )
                   })
                 }
-                {/* <Button 
-                  id="createPopoverButtonLg"
-                  type='button'
-                  className='
-                  card rounded-md
-                  h-[200px] 
-                  md:w-[24%] 
-                  md:flex text-gray-400
-                  justify-center 
-                  items-center 
-                  p-3 border
-                  hover:shadow-xl hidden'>
-                  Create new table
-                </Button>
-                <UncontrolledPopover placement="right-end" target="createPopoverButtonLg">
-                  <PopoverBody className='bg-[#f9f9f9] py-3 px-4 border'>
-                    <Container className='flex flex-col justify-center items-center'>
-                      <div className='flex justify-start items-start w-full border-b'><Heading 
-                      className='text-xl mb-2 font-semibold'>Create a project</Heading></div>
-                      
-                      <FormControl isRequired isInvalid={touched.name && !values.name} className='my-4'>
-                        <FormLabel>Table name</FormLabel>
-                        <Input className='px-2 py-1'onBlur={onBlur}
-                        name='name' errorBorderColor='red.300' onFocus={(e) => e.target.select()}
-                        type="text" value={values.name} onChange={handleChange}/>
-                          <FormErrorMessage className='text-red-500'>Name required</FormErrorMessage>
-                      </FormControl>
-
-                      <ChakraButton
-                        type='submit'
-                        disabled={!values.name}
-                        onClick={onCreate}
-                        isLoading={isLoading}
-                        colorScheme="blue"
-                        variant="outline"
-                        className='border w-full py-1 hover:bg-gray-200'>
-                        <p className='text-lg text-center'>Create</p>
-                      </ChakraButton>
-                    </Container>
-                  </PopoverBody>
-                </UncontrolledPopover> */}
-                <CreateProject touched={touched} values={values} onBlur={onBlur} handleChange={handleChange} onCreate={onCreate} isLoading={isLoading} />
+                <CreateProjectButton touched={touched} values={values} onBlur={onBlur} handleChange={handleChange} onCreate={onCreate} isLoading={isLoading} />
               </div>
             )
             
