@@ -1,21 +1,26 @@
 'use client'
 
-import Input from '@components/Input'
-import { createTask, getProjectById, updateProjectName } from '@lib/requests'
+// Imports react
 import { NextPageContext } from 'next'
 import { getSession } from 'next-auth/react'
-import TextareaAutosize from 'react-textarea-autosize';
-import Link from 'next/link'
 import { useRouter } from 'next/router';
 import React, { useCallback, useEffect, useState } from 'react'
+
+// Imports third-party
+import TextareaAutosize from 'react-textarea-autosize';
+import { Button, PopoverBody, UncontrolledPopover } from "reactstrap";
+import { Button as ChakraButton, Container, FormControl } from '@chakra-ui/react';
+
+// Mes dépendances
+import Task from '@components/Task'
+import { getProjectById, updateProjectName } from '@lib/project/requests';
+import { createTask } from '@lib/task/requests';
+
+// Imports icones
 import { IoMdAdd } from 'react-icons/io'
 import { BiDotsHorizontalRounded } from 'react-icons/bi'
 import { CiSquareRemove } from 'react-icons/ci'
-import { TfiPencil } from 'react-icons/tfi'
-import { BsTextParagraph, BsCheck2Square } from 'react-icons/bs'
-import Task from '@components/Task'
-import { Button, PopoverBody, UncontrolledPopover } from "reactstrap";
-import { Button as ChakraButton, Container, FormControl, FormErrorMessage, Input as ChakraInput, Textarea } from '@chakra-ui/react';
+
 
 
 // Variables créées
@@ -87,6 +92,7 @@ const ProjectDetails = () => {
   const listId = '54758fc8acf6895bbcc46819'// J'ai besoin que tu finisse ajouter liste pour ça
   const addTask = async () => {
     try {
+      console.log("add task")
       setState((prev) => ({
         ...prev,
         isLoading: true,

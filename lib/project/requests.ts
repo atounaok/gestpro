@@ -1,5 +1,5 @@
 export const createProject = async (data: any) => {
-     await fetch('/api/project/create', {
+     await fetch('/api/workspace/project/create', {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {
@@ -10,50 +10,9 @@ export const createProject = async (data: any) => {
     });
 }
 
-// Pour créer une nouvelle liste dans un projet
-export const createProjectList = async (data: any) => {
-    await fetch('/api/project/createListe', {
-       method: 'POST',
-       body: JSON.stringify(data),
-       headers: {
-           'Content-Type': 'application/json',
-           Accept: 'application/json',
-       },
-       
-   });
-}
-
-// Pour créer une tâche dans une liste
-export const createTask = async (data: any) => {
-    await fetch('/api/project/task/createTask', {
-       method: 'POST',
-       body: JSON.stringify(data),
-       headers: {
-           'Content-Type': 'application/json',
-           Accept: 'application/json',
-       },
-   });
-}
-
-//Pour Obtenir les listes
-export const getProjectsList = async () => {
+export const getAllProjects = async () => {
     try {
-        const res = await fetch('/api/project/getProjectList');
-
-        if(!res.ok){
-            throw new Error('Une erreur est subvenue lors de la récupération des listes')
-        }
-        const data = await res.json();
-        return data;
-    } catch (error) {
-        console.log('Erreur dans getProjects:' + error)
-    }
-}
-
-
-export const getProjects = async () => {
-    try {
-        const res = await fetch('/api/project/get');
+        const res = await fetch('/api/workspace/project/getAll');
 
         if(!res.ok){
             throw new Error('Une erreur est subvenue lors de la récupération des projets')
@@ -67,7 +26,7 @@ export const getProjects = async () => {
 
 export const getProjectById = async (id: any) => {
     try {
-        const res = await fetch(`/api/project/getById?id=${id}`);
+        const res = await fetch(`/api/workspace/project/getById?id=${id}`);
 
         if(!res.ok){
             throw new Error('Une erreur est subvenue lors de la récupération des projets')
@@ -79,9 +38,9 @@ export const getProjectById = async (id: any) => {
     }
 }
 
-export const getLastId = async (userId: any) => {
+export const getLastProject = async (userId: any) => {
     try {
-        const res = await fetch(`/api/project/getLastId?userId=${userId}`);
+        const res = await fetch(`/api/workspace/project/getLast?userId=${userId}`);
 
         if(!res.ok){
             throw new Error('Une erreur est subvenue lors de la récupération des projets')
@@ -93,9 +52,9 @@ export const getLastId = async (userId: any) => {
     }
 }
 
-export const deleteProjects = async (projetId: any) => {
+export const deleteProject = async (projetId: any) => {
     try {
-        await fetch(`/api/project/delete?id=${projetId}`, {
+        await fetch(`/api/workspace/project/delete?id=${projetId}`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
@@ -103,15 +62,16 @@ export const deleteProjects = async (projetId: any) => {
             },
         });
 
-        return getProjects()
+        return getAllProjects()
     } catch (error) {
         console.log(error)
     }
 }
 
+// Temporary name
 export const updateProjectName = async (projetId: any, name: string) => {
     try {
-        const response = await fetch(`/api/project/update?id=${projetId}`, {
+        const response = await fetch(`/api/workspace/project/update?id=${projetId}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
@@ -123,7 +83,7 @@ export const updateProjectName = async (projetId: any, name: string) => {
             throw new Error('Erreur lors de la mise à jour du projet')
         }
 
-        return getProjects()
+        return getAllProjects()
     } catch (error) {
         console.log(error)
     }

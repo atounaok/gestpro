@@ -67,7 +67,7 @@ const Nav = () => {
               {session ? (
                 <div className='flex flex-col'> 
 
-                  <Link href="/projects"
+                  <Link href="/workspace"
                   className='
                     w-full 
                   text-gray-700 
@@ -135,7 +135,7 @@ const Nav = () => {
       <div className=''>
         {session?.user ? (
           <ul className='md:flex hidden items-center justify-between'>
-            <Link href="/projects" className='py-1 rounded-md px-3 hover:bg-[#f9f9f9] hover:text-[#141414]'>
+            <Link href="/workspace" className='py-1 rounded-md px-3 hover:bg-[#f9f9f9] hover:text-[#141414]'>
               <p className=''>Workspace</p>
             </Link>
 

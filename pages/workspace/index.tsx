@@ -1,22 +1,24 @@
-//Imports
+//Imports react
 import { NextPageContext } from 'next';
 import { getSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import Link from 'next/link'
 import React, { useCallback, useEffect, useState } from 'react'
 
+// Import third-party
 import { Container, FormControl, FormErrorMessage, FormLabel, Heading, Input } from '@chakra-ui/react';
 import { Button, PopoverBody, UncontrolledPopover } from "reactstrap";
 import { Button as ChakraButton} from '@chakra-ui/react';
 
+// Mes dépendances
 import useCurrentUser from '@hooks/useCurrentUser';
 import Inpute from '@components/Input'
-import { createProject, deleteProjects, getLastId, getProjects } from '@lib/requests';
+import { createProject, deleteProject, getAllProjects, getLastProject } from '@lib/project/requests';
 
+// Import icones
 import { RiDeleteBin5Line } from 'react-icons/ri'
 import { AiOutlineUsergroupAdd } from 'react-icons/ai'
 import { MdOutlineCreateNewFolder } from 'react-icons/md'
-
 
 // Variables créées
 const initValues = { userId: "", name: "title" }
@@ -83,9 +85,9 @@ const Projects = () => {
         isLoading: false
       }));
 
-      const idProject = await getLastId(user.id);
+      const idProject = await getLastProject(user.id);
 
-      router.push(`/projects/${idProject}`);
+      router.push(`/workspace/${idProject}`);
     } catch (error) {
       console.log(error)
     }finally{
@@ -99,7 +101,7 @@ const Projects = () => {
 // Fonction pour obtenir les projets
 const obtenirProjets = useCallback(async () => {
   try {
-    const projects = await getProjects();
+    const projects = await getAllProjects();
 
     setState((prev) => ({
       ...prev,
@@ -116,7 +118,7 @@ const obtenirProjets = useCallback(async () => {
 // Supprimer un projet
 const handleDelete = async (projetId: string) => {
   try {
-    await deleteProjects(projetId);
+    await deleteProject(projetId);
     window.location.reload();
   } catch (error) {
     console.log(error)
@@ -224,7 +226,7 @@ useEffect(() => {
                         items-center 
                         p-3 border
                         hover:shadow-xl'>
-                        <Link href={'/projects/' + projet.id} passHref key={index}  
+                        <Link href={'/workspace/' + projet.id} passHref key={index}  
                         className='w-full h-full flex text-center 
                         items-center justify-center'>
                           {projet.name}
