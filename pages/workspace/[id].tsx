@@ -92,7 +92,6 @@ const ProjectDetails = () => {
   const listId = '54758fc8acf6895bbcc46819'// J'ai besoin que tu finisse ajouter liste pour ça
   const addTask = async () => {
     try {
-      console.log("add task")
       setState((prev) => ({
         ...prev,
         isLoading: true,

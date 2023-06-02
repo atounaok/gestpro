@@ -8,6 +8,5 @@ export const createTask = async (data: any) => {
            Accept: 'application/json',
        },
    });
-   console.log("Creating task")
 }
 

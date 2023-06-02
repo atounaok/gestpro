@@ -16,8 +16,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
               name: name,
             },
         });
-        console.log(newTask)
-
+        
         return res.status(200).json(newTask);
     } catch (error) {
         console.log("Entré dans erreur task:")
