@@ -23,6 +23,18 @@ export const createProjectList = async (data: any) => {
    });
 }
 
+// Pour créer une tâche dans une liste
+export const createTask = async (data: any) => {
+    await fetch('/api/project/task/createTask', {
+       method: 'POST',
+       body: JSON.stringify(data),
+       headers: {
+           'Content-Type': 'application/json',
+           Accept: 'application/json',
+       },
+   });
+}
+
 //Pour Obtenir les listes
 export const getProjectsList = async () => {
     try {
@@ -116,3 +128,4 @@ export const updateProjectName = async (projetId: any, name: string) => {
         console.log(error)
     }
 }
+

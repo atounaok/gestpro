@@ -88,6 +88,11 @@ const Projects = () => {
       router.push(`/projects/${idProject}`);
     } catch (error) {
       console.log(error)
+    }finally{
+      setState((prev) => ({
+        ...prev,
+        isLoading: false
+      }));
     }
   }
 
