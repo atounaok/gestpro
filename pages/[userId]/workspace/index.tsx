@@ -61,7 +61,7 @@ const Projects = () => {
     try {
       await createProject({
         ...values,
-        userId: user.id, // Assurez-vous que user.id contient la valeur correcte
+        userId: user.id,
       });
 
       setState((prev) => ({
