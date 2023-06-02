@@ -44,7 +44,7 @@ const Auth = () => {
           await signIn('credentials', {
               email,
               password,
-              callbackUrl: '/projects'
+              callbackUrl: '/workspace'
           });
 
       } catch (error) {
@@ -106,14 +106,14 @@ const Auth = () => {
                 </button>
 
                 <div className="login-separator-component ">
-                    <span className="separator-line " />
+                    <span className="separator-line "/>
                     <h2 className='whitespace-nowrap mx-2  font-semibold'>Or {variant === 'login' ? 'Login' : 'Sign up'} with</h2>
-                    <span className="separator-line" />
+                    <span className="separator-line"/>
                 </div>
 
 
                 <div className='flex flex-row items-center gap-4 mt-8 justify-center'>
-                    <div onClick={() => signIn('google', { callbackUrl: '/projects' })} 
+                    <div onClick={() => signIn('google', { callbackUrl: '/workspace' })} 
                     className='
                         w-10
                         h-10
@@ -128,7 +128,7 @@ const Auth = () => {
                     '>
                         <FcGoogle size={30}/>
                     </div>
-                    <div onClick={() => signIn('github', { callbackUrl: '/projects' })}
+                    <div onClick={() => signIn('github', { callbackUrl: '/workspace' })}
                     className='
                         w-10
                         h-10
