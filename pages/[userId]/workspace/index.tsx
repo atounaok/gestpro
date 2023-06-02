@@ -1,10 +1,7 @@
 'use client'
 
 //Imports react
-import { NextPageContext } from 'next';
-import { getSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
-import Link from 'next/link'
 import React, { useCallback, useEffect, useState } from 'react'
 
 // Import third-party
@@ -18,10 +15,10 @@ import Inpute from '@components/Input'
 import { createProject, deleteProject, getAllProjects, getLastProject } from '@lib/project/requests';
 
 // Import icones
-import { RiDeleteBin5Line } from 'react-icons/ri'
-import { AiOutlineUsergroupAdd } from 'react-icons/ai'
 import { MdOutlineCreateNewFolder } from 'react-icons/md'
 import AuthRedirect from '@components/AuthRedirect';
+import Project from '@components/Project';
+import CreateProject from '@components/CreateProject';
 
 // Variables créées
 const initValues = { userId: "", name: "title" }
@@ -29,12 +26,12 @@ const initState = {values: initValues, isLoading: false, projets: []}
 
 
 const Projects = () => {
-  // Obtenir le user dans la session
-  const { data: user } = useCurrentUser();
-
   // Si on n'a pas de user, on redirige vers login
   AuthRedirect();
 
+  // Obtenir le user dans la session
+  const router = useRouter();
+  const { data: user } = useCurrentUser();
 
   const [state, setState] = useState(initState)
   const [touched, setTouched] = useState({})
@@ -74,7 +71,7 @@ const Projects = () => {
 
       const idProject = await getLastProject(user.id);
 
-      router.push(`/workspace/${idProject}`);
+      router.push(`/${user.id}/workspace/${idProject}`);
     } catch (error) {
       console.log(error)
     }finally{
@@ -105,6 +102,7 @@ const obtenirProjets = useCallback(async () => {
 // Supprimer un projet
 const handleDelete = async (projetId: string) => {
   try {
+    console.log('Entré dans handle delete')
     await deleteProject(projetId);
     window.location.reload();
   } catch (error) {
@@ -203,31 +201,11 @@ useEffect(() => {
                 {
                   state.projets.map((projet: any, index: any) => {
                     return (
-                      <div key={index} 
-                        className='
-                        card rounded-md
-                        h-[200px] 
-                        md:w-[24%] 
-                        flex flex-col
-                        justify-center 
-                        items-center 
-                        p-3 border
-                        hover:shadow-xl'>
-                        <Link href={'/workspace/' + projet.id} passHref key={index}  
-                        className='w-full h-full flex text-center 
-                        items-center justify-center'>
-                          {projet.name}
-                        </Link>
-
-                        <div className='border-t w-full p-1 flex items-center justify-between'>
-                          <AiOutlineUsergroupAdd className='cursor-pointer text-xl text-[#141414] hover:text-gray-400' onClick={() => {alert('btn partager cliqué')}}/>
-                          <RiDeleteBin5Line className='cursor-pointer text-xl  text-red-400 hover:text-red-200' onClick={() => handleDelete(projet.id)}/>
-                        </div>
-                      </div>
+                      <Project key={index} index={index} project={projet} onClick={() => {handleDelete(projet.id)}}/>
                     )
                   })
                 }
-                <Button 
+                {/* <Button 
                   id="createPopoverButtonLg"
                   type='button'
                   className='
@@ -267,7 +245,8 @@ useEffect(() => {
                       </ChakraButton>
                     </Container>
                   </PopoverBody>
-                </UncontrolledPopover>
+                </UncontrolledPopover> */}
+                <CreateProject touched={touched} values={values} onBlur={onBlur} handleChange={handleChange} onCreate={onCreate} isLoading={isLoading} />
               </div>
             )
             

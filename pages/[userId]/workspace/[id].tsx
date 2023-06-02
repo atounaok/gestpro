@@ -158,7 +158,7 @@ const ProjectDetails = () => {
   };
 
   return (
-    <div className='flex justify-between h-full'>
+    <div className='flex justify-between min-h-screen'>
       <div className='hidden md:flex border min-h-full w-full md:w-[20%] bg-gray-100'>
         dos
       </div>
