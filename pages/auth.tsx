@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import Image from 'next/image'
 import Input from '@/components/Input'
 import axios from 'axios';
@@ -6,27 +6,23 @@ import { getSession, signIn } from 'next-auth/react'
 import { FcGoogle } from 'react-icons/fc'
 import { FaGithub } from 'react-icons/fa'
 import { NextPageContext } from 'next';
-
-
-export async function getServerSideProps(context: NextPageContext) {
-    const session = await getSession(context);
-  
-    if (session) {
-      return {
-        redirect: {
-          destination: '/workspace',
-          permanent: false,
-        }
-      }
-    }
-  
-    return {
-      props: {}
-    }
-}
+import useCurrentUser from '@hooks/useCurrentUser';
+import { useRouter } from 'next/router';
 
 
 const Auth = () => {
+    const router = useRouter();
+    const { data: user } = useCurrentUser();
+
+    // Si on a un user, on redirige vers /userId/workspace
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            if(user){
+                router.push(`/${user.id}/workspace`)
+            }
+        }
+    }, [router, user]);
+    
     const [email, setEmail] = useState('');
     const [name, setName] = useState('');
     const [password, setPassword] = useState('');
@@ -44,7 +40,6 @@ const Auth = () => {
           await signIn('credentials', {
               email,
               password,
-              callbackUrl: '/workspace'
           });
 
       } catch (error) {
@@ -113,7 +108,7 @@ const Auth = () => {
 
 
                 <div className='flex flex-row items-center gap-4 mt-8 justify-center'>
-                    <div onClick={() => signIn('google', { callbackUrl: '/workspace' })} 
+                    <div onClick={() => signIn('google')} 
                     className='
                         w-10
                         h-10
@@ -128,7 +123,7 @@ const Auth = () => {
                     '>
                         <FcGoogle size={30}/>
                     </div>
-                    <div onClick={() => signIn('github', { callbackUrl: '/workspace' })}
+                    <div onClick={() => signIn('github')}
                     className='
                         w-10
                         h-10

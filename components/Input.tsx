@@ -14,7 +14,7 @@ const Input: React.FunctionComponent<InputProps> = ({
     id, onChange, value, label, type, width, height
 }) => {
   return (
-    <div className='relative'>
+    <div className='sm:relative'>
         <input
             id={id}
             value={value}
@@ -24,23 +24,22 @@ const Input: React.FunctionComponent<InputProps> = ({
             height={height && height + "px"}
             className='
                 block
-                px-6 rounded-md
-                pt-6
-                pb-1
+                px-3 sm:px-6 rounded-md
+                py-2 sm:pt-6 sm:pb-1
                 w-full
                 text-md
                 text-[#141414]
                 bg-neutral-200
                 appearance-none
                 focus:outline-none
-                focus:ring-0
+                focus:ring-0 sm:placeholder-transparent
                 peer hover:shadow-sm'
-            placeholder=''
+            placeholder={label}
             />
         <label
         htmlFor={id}
-         className='
-            absolute
+         className='hidden sm:absolute
+            sm:flex
             text-md
             text-zinc-400
             transform

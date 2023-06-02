@@ -21,7 +21,7 @@ import { RiArrowDropDownLine, RiArrowDropUpLine } from 'react-icons/ri'
 
 
 const Nav = () => {
-  const { data: session } = useSession()
+  const { data: user } = useCurrentUser()
   const [providers, setProviders] = useState<Record<LiteralUnion<BuiltInProviderType, string>, ClientSafeProvider> | null>(null);
   const [arrowUp, setArrowUp] = useState(false)
   const handleArrow = () => {
@@ -41,7 +41,6 @@ const Nav = () => {
   }
 
   return (
-    <SessionProvider session={session}>
           <nav className='flex-between py-4 px-2 sm:px-4 w-full bg-[#141414] text-[#f9f9f9]'>
       <Link href="/" className=''>
         <p className='font-semibold hover:text-blue-100'>Gestpro</p>
@@ -64,10 +63,10 @@ const Nav = () => {
           </div>
           <div className='py-4 flex flex-col'>
             <div className=''>
-              {session ? (
+              {user ? (
                 <div className='flex flex-col'> 
 
-                  <Link href="/workspace"
+                  <Link href={`/${user.id}/workspace`}
                   className='
                     w-full 
                   text-gray-700 
@@ -133,17 +132,17 @@ const Nav = () => {
 
       {/* Desktop Navigation */}
       <div className=''>
-        {session?.user ? (
+        {user ? (
           <ul className='md:flex hidden items-center justify-between'>
-            <Link href="/workspace" className='py-1 rounded-md px-3 hover:bg-[#f9f9f9] hover:text-[#141414]'>
+            <Link href={`/${user.id}/workspace`} className='py-1 rounded-md px-3 hover:bg-[#f9f9f9] hover:text-[#141414]'>
               <p className=''>Workspace</p>
             </Link>
 
             <Button 
               id="profileImg"
               type='button' onClick={handleArrow}
-              className={session.user.image ? 'flex ms-4 justify-center items-center bg-contain' : 'ms-4 py-1 px-3 rounded-md hover:text-[#141414] hover:bg-[#f9f9f9]'}>
-                {session.user.image ? <Image className='rounded-md hover:opacity-80 border-none' src={session?.user?.image ? session?.user?.image : '/public/assets/images/default-user-icon.png'} width={30} height={30} alt="user img"/> : <div className='flex justify-between items-center'>{
+              className={user.image ? 'flex ms-4 justify-center items-center bg-contain' : 'ms-4 py-1 px-3 rounded-md hover:text-[#141414] hover:bg-[#f9f9f9]'}>
+                {user.image ? <Image className='rounded-md hover:opacity-80 border-none' src={user?.image ? user?.image : '/public/assets/images/default-user-icon.png'} width={30} height={30} alt="user img"/> : <div className='flex justify-between items-center'>{
                   !arrowUp? <RiArrowDropDownLine className='text-2xl p-0 me-1'/> : <RiArrowDropUpLine className='text-2xl p-0 me-1'/>
                 }<p>Profile</p></div>}
             </Button>
@@ -191,12 +190,11 @@ const Nav = () => {
             <></>
         )}
 
-        <RxHamburgerMenu className={session ? 'md:hidden cursor-pointer hover:text-lg' : 'hidden'} size={20} 
+        <RxHamburgerMenu className={user ? 'md:hidden cursor-pointer hover:text-lg' : 'hidden'} size={20} 
           onClick={handleNav}/>
       </div> 
 
     </nav>
-    </SessionProvider>
 
   )
 }

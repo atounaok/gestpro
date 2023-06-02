@@ -1,3 +1,5 @@
+'use client'
+
 //Imports react
 import { NextPageContext } from 'next';
 import { getSession } from 'next-auth/react';
@@ -25,32 +27,23 @@ const initValues = { userId: "", name: "title" }
 const initState = {values: initValues, isLoading: false, projets: []}
 
 
-export async function getServerSideProps(context: NextPageContext) {
-  const session = await getSession(context);
-
-  if(!session){
-      return {
-          redirect: {
-              destination: '/auth',
-              permanent: false,
-          }
-      }
-  }
-
-  return {
-      props: {}
-  }
-}
-
-
 const Projects = () => {
-  // Obtenir user dans la session
+  const router = useRouter();
+  // Obtenir le user dans la session
   const { data: user } = useCurrentUser();
 
-  const router = useRouter();
+  // Si on n'a pas de user, on redirige vers login
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      if(!user){
+        router.push('/auth')
+      }
+    }
+  }, [router, user]);
+
+
   const [state, setState] = useState(initState)
   const [touched, setTouched] = useState({})
-  // const [projets, setProjets] = useState([])
 
   const { values, isLoading } = state
 
@@ -136,12 +129,12 @@ useEffect(() => {
 
   
   return (
-    <div className='flex justify-between h-full'>
-      <div className='border hidden md:flex min-h-full w-full md:w-[20%] bg-gray-100'>
+    <div className='min-h-screen flex justify-between'>
+      <div className='border hidden md:flex w-full md:w-[20%] bg-gray-100'>
         Dos
       </div>
 
-      <div className='flex flex-col sm:w-full border p-8'>
+      <div className='flex flex-col w-full border p-8'>
         <div className='flex flex-col w-full border p-6'>
           <h2 className='text-2xl font-semibold mb-2'>Menu title</h2>
           <div className='flex flex-col md:flex-row justify-between gap-3 md:items-center'>
