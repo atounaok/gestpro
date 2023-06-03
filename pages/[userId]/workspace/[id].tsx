@@ -81,7 +81,14 @@ const ProjectDetails = () => {
   const obtenirTasks = useCallback(async () => {
     try {
       const allTasks = await getAllTasks(id);
-      console.log('Taskss: ' + allTasks)
+
+      if (allTasks) {
+        setState((prev) => ({
+          ...prev,
+          tasks: allTasks, 
+        }));
+      }
+
     } catch (error) {
       console.log('Obtention projets erreur:' + error);
     }
@@ -190,11 +197,13 @@ const ProjectDetails = () => {
 
             <div className='my-2'>
               <ul className='flex flex-col gap-2'>
-
-                <Task title="Créer un projet" totalItems="3" completedItems="0" />
-                <Task title="Authentification" totalItems="3" completedItems="0" />
-                <Task title="Gestion de session" totalItems="3" completedItems="0" />
-
+                {
+                  state.tasks.map((task, index) => {
+                    return (
+                      <Task key={index} title={task?.name} totalItems="3" completedItems="0" />
+                    )
+                  })
+                }
               </ul>
             </div>
 

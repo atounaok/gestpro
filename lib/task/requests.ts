@@ -13,14 +13,7 @@ export const createTask = async (data: any) => {
 // Temporaire car il faudra liste plus tard
 export const getAllTasks = async (projectId: any) => {
     try {
-        const res = await fetch(`/api/workspace/task/getAll`, {
-            method: 'GET',
-            body: JSON.stringify(projectId),
-            headers: {
-                'Content-Type': 'application/json',
-                Accept: 'application/json',
-            },
-        });
+        const res = await fetch(`/api/workspace/task/getAll?projectId=${projectId}`);
 
         if(!res.ok){
             throw new Error('Une erreur est subvenue lors de la récupération des projets')

@@ -7,14 +7,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
 
     try {
-        const { projectId } = req.body;
+        const { projectId } = req.query;
         
         const tasks = await prismadb.task.findMany({
             where: {
-                projectId: projectId,
+                projectId: projectId as string,
             }
         })
-        console.log(tasks)
+
         return res.status(200).json(tasks);
     } catch (error) {
         console.log("Entré dans erreur tasks:")
