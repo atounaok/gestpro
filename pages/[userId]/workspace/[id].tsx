@@ -49,6 +49,7 @@ const ProjectDetails = () => {
 
   const [state, setState] = useState(initState)
   const [touched, setTouched] = useState({})
+  const [isPopoverOpen, setIsPopoverOpen] = useState(false); 
 
   const onBlur = ({target}: any) => setTouched((prev) => ({...prev, 
     [target.name]: true
@@ -108,7 +109,8 @@ const ProjectDetails = () => {
         listId: listId,
         name: state.values.task.name,
       });
-  
+      
+      obtenirTasks();
       console.log('Voici la nouvelle tache: ' + newTask);
     } catch (error) {
       console.log(error);
@@ -117,6 +119,8 @@ const ProjectDetails = () => {
         ...prev,
         isLoading: false,
       }));
+
+      setIsPopoverOpen(false); 
     }
   };
 
@@ -210,12 +214,14 @@ const ProjectDetails = () => {
             <div className='flex justify-between items-center px-1 mt-1'>
               <div className='w-full'>
                 <Button id="addTaskBtn"
-                  type='button'
+                  type='button' onClick={() => {
+                    setIsPopoverOpen(!isPopoverOpen);
+                  }}
                   className='flex items-center justify-start cursor-pointer px-1 rounded-lg py-1 w-full hover:bg-gray-200'>
                   <IoMdAdd />
                   <h4 className='ms-2 font-thin text-sm'>Ajouter une carte</h4>
                 </Button>
-                <UncontrolledPopover placement="bottom-start" target="addTaskBtn">
+                <UncontrolledPopover isOpen={isPopoverOpen} placement="bottom-start" target="addTaskBtn">
                   <PopoverBody className='bg-[#f9f9f9] py-3 px-4 border rounded-md'>
                     <Container className='flex flex-col justify-center items-center'>                    
                       <FormControl isRequired isInvalid={touched.name && !state.values.task.name} className='my-4 '>
