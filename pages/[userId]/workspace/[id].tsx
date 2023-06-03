@@ -214,9 +214,7 @@ const ProjectDetails = () => {
             <div className='flex justify-between items-center px-1 mt-1'>
               <div className='w-full'>
                 <Button id="addTaskBtn"
-                  type='button' onClick={() => {
-                    setIsPopoverOpen(!isPopoverOpen);
-                  }}
+                  type='button' onClick={() => {setIsPopoverOpen(!isPopoverOpen)}}
                   className='flex items-center justify-start cursor-pointer px-1 rounded-lg py-1 w-full hover:bg-gray-200'>
                   <IoMdAdd />
                   <h4 className='ms-2 font-thin text-sm'>Ajouter une carte</h4>
