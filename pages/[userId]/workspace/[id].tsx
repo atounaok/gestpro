@@ -9,6 +9,7 @@ import React, { useCallback, useEffect, useState } from 'react'
 // Imports third-party
 import TextareaAutosize from 'react-textarea-autosize';
 import { Button, PopoverBody, UncontrolledPopover } from "reactstrap";
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { Button as ChakraButton, Container, FormControl } from '@chakra-ui/react';
 
 // Mes dépendances
@@ -94,6 +95,23 @@ const ProjectDetails = () => {
       console.log('Obtention projets erreur:' + error);
     }
   }, [id])
+
+  // Quand on drop la task: 
+  const handleDragEnd = (result: any) => {
+    if (!result.destination) {
+      return;
+    }
+
+    const { source, destination } = result;
+    const tasksCopy = [...state.tasks];
+    const [movedTask] = tasksCopy.splice(source.index, 1);
+    tasksCopy.splice(destination.index, 0, movedTask);
+
+    setState((prev) => ({
+      ...prev,
+      tasks: tasksCopy,
+    }));
+  };
 
   // Ajouter un tâche
   const listId = '54758fc8acf6895bbcc46819'// J'ai besoin que tu finisse ajouter liste pour ça
@@ -200,15 +218,37 @@ const ProjectDetails = () => {
             </div>
 
             <div className='my-2'>
-              <ul className='flex flex-col gap-2'>
-                {
-                  state.tasks.map((task, index) => {
-                    return (
-                      <Task key={index} title={task?.name} totalItems="3" completedItems="0" />
-                    )
-                  })
-                }
+            <DragDropContext onDragEnd={handleDragEnd}>
+          <Droppable droppableId='tasks'>
+            {(provided) => (
+              <ul
+                className='flex flex-col gap-2'
+                {...provided.droppableProps}
+                ref={provided.innerRef}
+              >
+                {state.tasks.map((task, index) => (
+                  <Draggable key={task?.id} draggableId={task?.id} index={index}>
+                    {(provided) => (
+                      <li
+                        {...provided.draggableProps}
+                        {...provided.dragHandleProps}
+                        ref={provided.innerRef}
+                      >
+                        <Task
+                          key={index}
+                          title={task?.name}
+                          totalItems='3'
+                          completedItems='0'
+                        />
+                      </li>
+                    )}
+                  </Draggable>
+                ))}
+                {provided.placeholder}
               </ul>
+            )}
+          </Droppable>
+        </DragDropContext>
             </div>
 
             <div className='flex justify-between items-center px-1 mt-1'>
