@@ -85,7 +85,7 @@ const Projects = () => {
 // Fonction pour obtenir les projets
 const obtenirProjets = useCallback(async () => {
   try {
-    const projects = await getAllProjects();
+    const projects = await getAllProjects(user.id);
 
     setState((prev) => ({
       ...prev,
@@ -94,28 +94,28 @@ const obtenirProjets = useCallback(async () => {
   } catch (error) {
     console.log('Obtention projets erreur:' + error);
   }
-}, [])
+}, [user?.id])
 
 
  // Empty dependency array to ensure the callback is created only once
 
 // Supprimer un projet
-const handleDelete = async (projetId: string) => {
+const handleDelete = async (userId: string, projetId: string) => {
   if (window.confirm('Are you sure you wish to delete this item?')){
     try {
       await deleteProject(projetId);
+      await obtenirProjets();
       window.location.reload();
     } catch (error) {
       console.log(error)
     }
   }
-
 }
 
 // Obtenir les projets initialement
 useEffect(() => {
   try {
-    let projets = obtenirProjets();
+    let p = obtenirProjets();
   } catch (error) {
     console.log(error)
   }
@@ -203,7 +203,7 @@ useEffect(() => {
                 {
                   state.projets.map((projet: any, index: any) => {
                     return (
-                      <Project key={index} index={index} project={projet} onClick={() => {handleDelete(projet.id)}}/>
+                      <Project key={index} index={index} project={projet} onClick={() => {handleDelete(user.id, projet.id)}}/>
                     )
                   })
                 }

@@ -10,9 +10,9 @@ export const createProject = async (data: any) => {
     });
 }
 
-export const getAllProjects = async () => {
+export const getAllProjects = async (userId: string) => {
     try {
-        const res = await fetch('/api/workspace/project/getAll');
+        const res = await fetch(`/api/workspace/project/getAll?userId=${userId}`);
 
         if(!res.ok){
             throw new Error('Une erreur est subvenue lors de la récupération des projets')
@@ -61,8 +61,6 @@ export const deleteProject = async (projetId: any) => {
                 Accept: 'application/json',
             },
         });
-
-        return getAllProjects()
     } catch (error) {
         console.log(error)
     }
