@@ -101,13 +101,15 @@ const obtenirProjets = useCallback(async () => {
 
 // Supprimer un projet
 const handleDelete = async (projetId: string) => {
-  try {
-    console.log('Entré dans handle delete')
-    await deleteProject(projetId);
-    window.location.reload();
-  } catch (error) {
-    console.log(error)
+  if (window.confirm('Are you sure you wish to delete this item?')){
+    try {
+      await deleteProject(projetId);
+      window.location.reload();
+    } catch (error) {
+      console.log(error)
+    }
   }
+
 }
 
 // Obtenir les projets initialement
