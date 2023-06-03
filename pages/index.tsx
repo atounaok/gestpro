@@ -1,4 +1,4 @@
-import Redirect from '@components/AuthRedirect'
+import AuthRedirect from '@components/AuthRedirect'
 import useCurrentUser from '@hooks/useCurrentUser'
 import { NextPageContext } from 'next'
 import { getSession } from 'next-auth/react'
@@ -9,8 +9,8 @@ import { AiOutlineDownCircle, AiFillDownCircle } from 'react-icons/ai'
 import TypewriterComponent from 'typewriter-effect'
 
 const Home = () => {
-  // Si on n'a pas de user, on redirige vers login
-  Redirect();
+  AuthRedirect();
+
   return (
     <div className='h-full'>
       <div className='w-full flex-col text-center flex items-center justify-around min-h-screen text-white bg-[#141414] '>

@@ -14,13 +14,14 @@ import { Button as ChakraButton, Container, FormControl } from '@chakra-ui/react
 // Mes dépendances
 import Task from '@components/Task'
 import { getProjectById, updateProjectName } from '@lib/project/requests';
-import { createTask } from '@lib/task/requests';
+import { createTask, getAllTasks } from '@lib/task/requests';
 
 // Imports icones
 import { IoMdAdd } from 'react-icons/io'
 import { BiDotsHorizontalRounded } from 'react-icons/bi'
 import { CiSquareRemove } from 'react-icons/ci'
 import AuthRedirect from '@components/AuthRedirect';
+import useCurrentUser from '@hooks/useCurrentUser';
 
 
 
@@ -36,29 +37,14 @@ const initState = {
   isLoading: false,
 };
 
-export async function getServerSideProps(context: NextPageContext) {
-  const session = await getSession(context);
-
-  if (!session) {
-    return {
-      redirect: {
-        destination: '/auth',
-        permanent: false,
-      }
-    }
-  }
-
-  return {
-    props: {}
-  }
-}
-
 
 const ProjectDetails = () => {
   // Si on n'a pas de user, on redirige vers login
+  const router = useRouter()
+  const { data: user } = useCurrentUser();
+
   AuthRedirect();
   
-  const router = useRouter()
   const { id } = router.query;
 
   const [state, setState] = useState(initState)
@@ -87,6 +73,15 @@ const ProjectDetails = () => {
         console.log('Aucun projet trouvé');
       }
 
+    } catch (error) {
+      console.log('Obtention projets erreur:' + error);
+    }
+  }, [id])
+
+  const obtenirTasks = useCallback(async () => {
+    try {
+      const allTasks = await getAllTasks(id);
+      console.log('Taskss: ' + allTasks)
     } catch (error) {
       console.log('Obtention projets erreur:' + error);
     }
@@ -122,10 +117,11 @@ const ProjectDetails = () => {
   useEffect(() => {
     try {
       obtenirProjet();
+      obtenirTasks();
     } catch (error) {
       console.log(error)
     }
-  }, [obtenirProjet]);
+  }, [obtenirProjet, obtenirTasks]);
 
   // Modifier nom du projet
   const handleChange = async ({ target }: React.ChangeEvent<HTMLInputElement>) => {

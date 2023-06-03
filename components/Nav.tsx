@@ -1,26 +1,24 @@
 'use client'
 
-import React, { SetStateAction, use } from 'react'
+import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { RxHamburgerMenu } from 'react-icons/rx'
 import { AiOutlineClose } from 'react-icons/ai'
-import { VscSignIn } from 'react-icons/vsc'
 import { IoIosLogOut } from 'react-icons/io'
 import { GrProjects } from 'react-icons/gr'
 import { CiUser } from 'react-icons/ci'
 import { useState, useEffect } from 'react'
-import { signIn, signOut, useSession, getProviders, ClientSafeProvider, LiteralUnion, getSession, SessionProvider } from 'next-auth/react'
+import { signOut, getProviders, ClientSafeProvider, LiteralUnion } from 'next-auth/react'
 import { BuiltInProviderType } from 'next-auth/providers'
 import useCurrentUser from '@hooks/useCurrentUser'
-import { Button, Container, Input, PopoverBody, UncontrolledPopover } from "reactstrap";
-import { Heading, FormControl, FormLabel, FormErrorMessage } from '@chakra-ui/react'
-import { NextPageContext } from 'next'
-import { userAgent } from 'next/server'
+import { Button, PopoverBody, UncontrolledPopover } from "reactstrap";
 import { RiArrowDropDownLine, RiArrowDropUpLine } from 'react-icons/ri'
+import { useRouter } from 'next/router'
 
 
 const Nav = () => {
+  const router = useRouter();
   const { data: user } = useCurrentUser()
   const [providers, setProviders] = useState<Record<LiteralUnion<BuiltInProviderType, string>, ClientSafeProvider> | null>(null);
   const [arrowUp, setArrowUp] = useState(false)
@@ -119,6 +117,7 @@ const Nav = () => {
                     onClick={() => {
                       setNav(false);
                       signOut();
+                      router?.push('/auth');
                     }}
                     className='text-left w-full text-gray-700 font-light'>
                     Sign Out
@@ -175,6 +174,7 @@ const Nav = () => {
                     onClick={() => {
                       setNav(false);
                       signOut();
+                      router?.push('/auth');
                     }}
                     className='text-left w-full text-gray-700 font-light'>
                     Sign Out

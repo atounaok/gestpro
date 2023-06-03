@@ -9,7 +9,7 @@ const useCurrentUser = () => {
         data,
         error,
         isLoading,
-        mutate
+        mutate,
     }
 }
 

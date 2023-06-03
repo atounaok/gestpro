@@ -26,12 +26,12 @@ const initState = {values: initValues, isLoading: false, projets: []}
 
 
 const Projects = () => {
-  // Si on n'a pas de user, on redirige vers login
-  AuthRedirect();
-
   // Obtenir le user dans la session
   const router = useRouter();
   const { data: user } = useCurrentUser();
+
+  // Si on n'a pas de user, on redirige vers login
+  AuthRedirect();
 
   const [state, setState] = useState(initState)
   const [touched, setTouched] = useState({})
