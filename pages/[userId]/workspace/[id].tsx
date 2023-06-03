@@ -219,36 +219,36 @@ const ProjectDetails = () => {
 
             <div className='my-2'>
             <DragDropContext onDragEnd={handleDragEnd}>
-          <Droppable droppableId='tasks'>
-            {(provided) => (
-              <ul
-                className='flex flex-col gap-2'
-                {...provided.droppableProps}
-                ref={provided.innerRef}
-              >
-                {state.tasks.map((task, index) => (
-                  <Draggable key={task?.id} draggableId={task?.id} index={index}>
-                    {(provided) => (
-                      <li
-                        {...provided.draggableProps}
-                        {...provided.dragHandleProps}
-                        ref={provided.innerRef}
-                      >
-                        <Task
-                          key={index}
-                          title={task?.name}
-                          totalItems='3'
-                          completedItems='0'
-                        />
-                      </li>
-                    )}
-                  </Draggable>
-                ))}
-                {provided.placeholder}
-              </ul>
-            )}
-          </Droppable>
-        </DragDropContext>
+              <Droppable droppableId='tasks'>
+                {(provided) => (
+                  <ul
+                    className='flex flex-col gap-2'
+                    {...provided.droppableProps}
+                    ref={provided.innerRef}
+                  >
+                    {state.tasks.map((task, index) => (
+                      <Draggable key={task?.id} draggableId={task?.id} index={index}>
+                        {(provided) => (
+                          <li
+                            {...provided.draggableProps}
+                            {...provided.dragHandleProps}
+                            ref={provided.innerRef}
+                          >
+                            <Task
+                              key={index}
+                              title={task?.name}
+                              totalItems='3'
+                              completedItems='0'
+                            />
+                          </li>
+                        )}
+                      </Draggable>
+                    ))}
+                    {provided.placeholder}
+                  </ul>
+                )}
+              </Droppable>
+            </DragDropContext>
             </div>
 
             <div className='flex justify-between items-center px-1 mt-1'>
