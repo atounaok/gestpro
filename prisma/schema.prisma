@@ -65,7 +65,7 @@ model verificationToken {
 model Project {
   id     String  @id @default(auto()) @map("_id") @db.ObjectId
   userId String  @db.ObjectId
-  name   String
+  name   String 
   image  String?
 
   listes Listes[]

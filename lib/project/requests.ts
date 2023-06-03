@@ -38,6 +38,20 @@ export const getProjectById = async (id: any) => {
     }
 }
 
+export const getProjectByName = async (name: any) => {
+    try {
+        const res = await fetch(`/api/workspace/project/getByName?name=${name}`);
+
+        if(!res.ok){
+            throw new Error('Une erreur est subvenue lors de la récupération des projets')
+        }
+        
+        return res.json();
+    } catch (error) {
+        console.log('Erreur dans getProjects:' + error)
+    }
+}
+
 export const getLastProject = async (userId: any) => {
     try {
         const res = await fetch(`/api/workspace/project/getLast?userId=${userId}`);

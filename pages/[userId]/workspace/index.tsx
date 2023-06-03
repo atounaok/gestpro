@@ -12,7 +12,7 @@ import { Button as ChakraButton} from '@chakra-ui/react';
 // Mes dépendances
 import useCurrentUser from '@hooks/useCurrentUser';
 import Inpute from '@components/Input'
-import { createProject, deleteProject, getAllProjects, getLastProject } from '@lib/project/requests';
+import { createProject, deleteProject, getAllProjects, getLastProject, getProjectByName } from '@lib/project/requests';
 
 // Import icones
 import { MdOutlineCreateNewFolder } from 'react-icons/md'
@@ -42,14 +42,16 @@ const Projects = () => {
     [target.name]: true
   }))
 
-  const handleChange = ({target}: any) => setState((prev) => ({
-    ...prev,
-    values: {
-      ...prev.values,
-      userId: user.id,
-      [target.name]: target.value,
-    }
-  }))
+// Handle change de Create project
+const handleChange = ({target}: any) => setState((prev) => ({
+  ...prev,
+  values: {
+    ...prev.values,
+    userId: user.id,
+    [target.name]: target.value,
+  }
+}))
+
 
 // Creer un projet
   const onCreate = async () => {
@@ -63,11 +65,6 @@ const Projects = () => {
         ...values,
         userId: user.id,
       });
-
-      setState((prev) => ({
-        ...prev,
-        isLoading: false
-      }));
 
       const idProject = await getLastProject(user.id);
 
@@ -121,7 +118,27 @@ useEffect(() => {
   }
 }, [obtenirProjets]); // Include 'projets' in the dependency array
 
+// Handle change de barre de recherche
+const handleSearch = async ({target}: any) => {
+  const projects = await getProjectByName(target.value);
+
+  if (projects){
+    setState((prev) => ({
+      ...prev,
+      projets: projects,
+    }));
+  }else if(target.value.trim() !== ""){
+    setState((prev) => ({
+      ...prev,
+      projets: [],
+    }));
+  }
   
+  if(target.value.trim() === ""){
+    obtenirProjets();
+  }
+}
+
   return (
     <div className='min-h-screen flex justify-between'>
       <div className='border hidden md:flex w-full md:w-[20%] bg-gray-100'>
@@ -134,7 +151,7 @@ useEffect(() => {
           <div className='flex flex-col md:flex-row justify-between gap-3 md:items-center'>
             <Inpute
               label='Rechercher'
-              onChange={() => {}}
+              onChange={handleSearch}
               id="searchProject"
               type="search"
             />
@@ -185,6 +202,7 @@ useEffect(() => {
             
           </div>
         </div>
+
         <div 
           className='
           border rounded-b-md
