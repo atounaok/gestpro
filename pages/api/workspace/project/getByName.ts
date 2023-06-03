@@ -7,10 +7,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
 
     try {
-        const { name } = req.query;
+        const { userId, name } = req.query;
 
         const project = await prismadb.project.findMany({
             where:{
+                userId: userId as string,
                 name: {
                     startsWith: name as string,
                     mode: 'insensitive',

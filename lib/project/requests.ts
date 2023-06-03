@@ -38,9 +38,9 @@ export const getProjectById = async (id: any) => {
     }
 }
 
-export const getProjectByName = async (name: any) => {
+export const getProjectByName = async (userId: any, name: any) => {
     try {
-        const res = await fetch(`/api/workspace/project/getByName?name=${name}`);
+        const res = await fetch(`/api/workspace/project/getByName?userId=${userId}&&name=${name}`);
 
         if(!res.ok){
             throw new Error('Une erreur est subvenue lors de la récupération des projets')

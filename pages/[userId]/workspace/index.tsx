@@ -120,7 +120,7 @@ useEffect(() => {
 
 // Handle change de barre de recherche
 const handleSearch = async ({target}: any) => {
-  const projects = await getProjectByName(target.value);
+  const projects = await getProjectByName(user?.id, target.value);
 
   if (projects){
     setState((prev) => ({
