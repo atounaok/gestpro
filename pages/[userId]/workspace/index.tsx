@@ -128,8 +128,8 @@ useEffect(() => {
         Dos
       </div>
 
-      <div className='flex flex-col w-full border p-8'>
-        <div className='flex flex-col w-full border p-6'>
+      <div className='flex flex-col w-full p-8'>
+        <div className='flex flex-col w-full border rounded-t-md p-6'>
           <h2 className='text-2xl font-semibold mb-2'>Menu title</h2>
           <div className='flex flex-col md:flex-row justify-between gap-3 md:items-center'>
             <Inpute
@@ -187,8 +187,8 @@ useEffect(() => {
         </div>
         <div 
           className='
-          border
-          p-6
+          border rounded-b-md
+          p-6 border-t-0
           flex flex-col 
           md:flex-row'>
           {
