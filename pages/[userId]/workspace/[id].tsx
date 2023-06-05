@@ -18,7 +18,7 @@ import { getProjectById, updateProjectName } from '@lib/project/requests';
 import { createTask, getAllTasks } from '@lib/task/requests';
 
 // Imports icones
-import { IoMdAdd } from 'react-icons/io'
+import { IoMdAdd, IoMdRemove } from 'react-icons/io'
 import { BiDotsHorizontalRounded } from 'react-icons/bi'
 import { CiSquareRemove } from 'react-icons/ci'
 import AuthRedirect from '@components/AuthRedirect';
@@ -51,10 +51,23 @@ const ProjectDetails = () => {
   const [state, setState] = useState(initState)
   const [touched, setTouched] = useState({})
   const [isPopoverOpen, setIsPopoverOpen] = useState(false); 
+  const [cardFormOpen, setCardFormOpen] = useState(false);
 
-  const onBlur = ({target}: any) => setTouched((prev) => ({...prev, 
-    [target.name]: true
-  }))
+  const handleFormSubmit = (e: any) => {
+    if (e.keyCode === 13) {
+      if (e.target.value.trim() !== '') {
+        addTask();
+      }
+      setCardFormOpen(false);
+    }
+  };
+  const onBlur = (e: any) => {
+    if(e.target.value.trim() !== ''){
+      addTask()
+    }else{
+      setCardFormOpen(false);
+    }
+  }
 
   const obtenirProjet = useCallback(async () => {
     try {
@@ -114,6 +127,7 @@ const ProjectDetails = () => {
   };
 
   // Ajouter un tâche
+  
   const listId = '54758fc8acf6895bbcc46819'// J'ai besoin que tu finisse ajouter liste pour ça
   const addTask = async () => {
     try {
@@ -127,9 +141,9 @@ const ProjectDetails = () => {
         listId: listId,
         name: state.values.task.name,
       });
-      
+  
       obtenirTasks();
-      console.log('Voici la nouvelle tache: ' + newTask);
+      console.log('Voici la nouvelle tache : ' + newTask);
     } catch (error) {
       console.log(error);
     } finally {
@@ -137,8 +151,8 @@ const ProjectDetails = () => {
         ...prev,
         isLoading: false,
       }));
-
-      setIsPopoverOpen(false); 
+  
+      setCardFormOpen(false);
     }
   };
 
@@ -249,38 +263,38 @@ const ProjectDetails = () => {
                   )}
                 </Droppable>
               </DragDropContext>
+              <TextareaAutosize 
+                className={cardFormOpen ? 'mt-2 w-full min-h-[10vh] resize-none border shadow bg-whit p-2 rounded-md' : 
+                'hidden mt-2 w-full min-h-[10vh] resize-none border shadow bg-whit p-2 rounded-md'} 
+                onBlur={(e: any) => {
+                  if(e.target.value.trim() !== ''){ addTask() } else { setCardFormOpen(false) }
+                }} name='taskName'
+                placeholder='Enter a title for this card' onKeyDown={handleFormSubmit}
+                value={state.values.task.name} onChange={handleChangeTaskName}/>
             </div>
 
             <div className='flex justify-between items-center px-1 mt-1'>
               <div className='w-full'>
-                <Button id="addTaskBtn"
-                  type='button' onClick={() => {setIsPopoverOpen(!isPopoverOpen)}}
-                  className='flex items-center justify-start cursor-pointer px-1 rounded-lg py-1 w-full hover:bg-gray-200'>
-                  <IoMdAdd />
-                  <h4 className='ms-2 font-thin text-sm'>Ajouter une carte</h4>
+                <Button
+                  type='button' onClick={() => {setCardFormOpen((prev) => !prev)}}
+                  className='justify-start cursor-pointer px-1 rounded-md py-1 w-full hover:bg-gray-200'>
+                  {
+                    !cardFormOpen ? 
+                    (
+                      <div className='flex items-center'>
+                        <IoMdAdd className='text-green-500 text-xl'/>
+                        <h4 className='ms-2 font-light text-sm'>Add new card</h4>
+                      </div>
+                    ) 
+                    : 
+                    (
+                      <div className='flex items-center'>
+                        <IoMdRemove className='text-red-500'/>
+                        <h4 className='ms-2 font-light text-sm'>Cancel modifications</h4>
+                      </div>
+                    )
+                  }
                 </Button>
-                <UncontrolledPopover isOpen={isPopoverOpen} placement="bottom-start" target="addTaskBtn">
-                  <PopoverBody className='bg-[#f9f9f9] py-3 px-4 border rounded-md'>
-                    <Container className='flex flex-col justify-center items-center'>                    
-                      <FormControl isRequired isInvalid={touched.name && !state.values.task.name} className='my-4 '>
-                        <TextareaAutosize className='px-2 py-1 resize-none rounded-md'onBlur={onBlur}
-                        name='taskName'
-                        placeholder='Enter a title for this card' 
-                        value={state.values.task.name} onChange={handleChangeTaskName}/>
-                      </FormControl>
-
-                      <ChakraButton
-                        type='submit' onClick={addTask}
-                        disabled={!state.values.task.name}
-                        isLoading={state.isLoading}
-                        colorScheme="blue"
-                        variant="outline"
-                        className='border rounded-md w-full py-1 hover:bg-gray-200'>
-                        <p className='text-lg text-center'>Create</p>
-                      </ChakraButton>
-                    </Container>
-                  </PopoverBody>
-                </UncontrolledPopover>
               </div>
               <CiSquareRemove className='text-2xl me-1 text-red-400 hover:text-red-200 cursor-pointer' />
             </div>
