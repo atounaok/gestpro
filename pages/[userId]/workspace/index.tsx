@@ -102,7 +102,7 @@ const handleDelete = async (userId: string, projetId: string) => {
     try {
       await deleteProject(projetId);
       await obtenirProjets();
-      window.location.reload();
+      //window.location.reload();
     } catch (error) {
       console.log(error)
     }
