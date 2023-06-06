@@ -36,7 +36,7 @@ const Projects = () => {
 
   const [state, setState] = useState(initState)
   const [touched, setTouched] = useState({} as any)
-
+  const [date, setDate] = React.useState<Date | undefined>(new Date())
   const { values, isLoading } = state
 
   const onBlur = ({target}: any) => setTouched((prev: any) => ({...prev, 
@@ -143,7 +143,12 @@ const handleSearch = async ({target}: any) => {
   return (
     <div className='min-h-screen flex justify-between'>
       <div className='border hidden md:flex w-full md:w-[20%] bg-gray-100'>
-        Dos
+        <Calendar
+        mode="single"
+        selected={date}
+        onSelect={setDate}
+        className="rounded-md border"
+        />
       </div>
 
       <div className='flex flex-col w-full p-8'>

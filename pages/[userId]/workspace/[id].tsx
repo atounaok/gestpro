@@ -11,6 +11,7 @@ import TextareaAutosize from 'react-textarea-autosize';
 import { Button, PopoverBody, UncontrolledPopover } from "reactstrap";
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { Button as ChakraButton, Container, FormControl } from '@chakra-ui/react';
+import { Calendar } from "@/components/ui/calendar"
 
 // Mes dépendances
 import Task from '@components/Task'
@@ -52,6 +53,7 @@ const ProjectDetails = () => {
   const [touched, setTouched] = useState({})
   const [isPopoverOpen, setIsPopoverOpen] = useState(false); 
   const [cardFormOpen, setCardFormOpen] = useState(false);
+  const [date, setDate] = React.useState<Date | undefined>(new Date())
 
   const textarea_ref: any = useRef();
   useEffect(() => {
@@ -215,7 +217,12 @@ const ProjectDetails = () => {
   return (
     <div className='flex justify-between min-h-screen'>
       <div className='hidden md:flex border min-h-full w-full md:w-[20%] bg-gray-100'>
-        dos
+        <Calendar
+        mode="single"
+        selected={date}
+        onSelect={setDate}
+        className="rounded-md border"
+        />
       </div>
 
       <div className='flex flex-col sm:w-full border px-8 py-4'>
