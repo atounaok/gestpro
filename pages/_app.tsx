@@ -9,11 +9,6 @@ import { getSession, SessionProvider, useSession } from 'next-auth/react';
 import { NextPageContext } from 'next';
 import App from 'next/app';
 
-export const metadeta = {
-    title: "Gestpro",
-    description: 'Here to help you finish your projects'
-}
-
 function MyApp({ Component, pageProps }: AppProps, appContext: NextPageContext) {
 
   return (

@@ -4,7 +4,7 @@
 import { NextPageContext } from 'next'
 import { getSession } from 'next-auth/react'
 import { useRouter } from 'next/router';
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 
 // Imports third-party
 import TextareaAutosize from 'react-textarea-autosize';
@@ -47,23 +47,42 @@ const ProjectDetails = () => {
   AuthRedirect();
   
   const { id } = router.query;
-
+  const formRef: any = useRef(null)
   const [state, setState] = useState(initState)
   const [touched, setTouched] = useState({})
   const [isPopoverOpen, setIsPopoverOpen] = useState(false); 
   const [cardFormOpen, setCardFormOpen] = useState(false);
 
+  const textarea_ref: any = useRef();
+  useEffect(() => {
+    textarea_ref.current.focus();
+  });
+
   const handleFormSubmit = (e: any) => {
-    if (e.keyCode === 13) {
-      if (e.target.value.trim() !== '') {
-        addTask();
+    if (e.keyCode === 13 && e.target.value.trim() !== '') {
+      e.preventDefault();
+      try {
+        addTask(); 
+      } catch (error) {
+        console.log(error)
+      } finally {
+        setState((prev) => ({
+          ...prev,
+          values: {
+            ...prev.values,
+            task: {
+              name: '',
+            },
+          },
+        }));
       }
-      setCardFormOpen(false);
+
     }
   };
   const onBlur = (e: any) => {
     if(e.target.value.trim() !== ''){
-      addTask()
+      addTask();
+      setCardFormOpen(false);
     }else{
       setCardFormOpen(false);
     }
@@ -151,8 +170,6 @@ const ProjectDetails = () => {
         ...prev,
         isLoading: false,
       }));
-  
-      setCardFormOpen(false);
     }
   };
 
@@ -192,7 +209,6 @@ const ProjectDetails = () => {
         },
       },
     }));
-    console.log(state.values.task.name)
     //await updateProjectName(id, target.value)
   };
 
@@ -263,14 +279,14 @@ const ProjectDetails = () => {
                   )}
                 </Droppable>
               </DragDropContext>
-              <TextareaAutosize 
-                className={cardFormOpen ? 'mt-2 w-full min-h-[10vh] resize-none border shadow bg-whit p-2 rounded-md' : 
-                'hidden mt-2 w-full min-h-[10vh] resize-none border shadow bg-whit p-2 rounded-md'} 
-                onBlur={(e: any) => {
-                  if(e.target.value.trim() !== ''){ addTask() } else { setCardFormOpen(false) }
-                }} name='taskName'
-                placeholder='Enter a title for this card' onKeyDown={handleFormSubmit}
-                value={state.values.task.name} onChange={handleChangeTaskName}/>
+              <form>
+                <TextareaAutosize ref={textarea_ref}
+                  className={cardFormOpen ? 'mt-2 w-full min-h-[10vh] resize-none border shadow bg-whit p-2 rounded-md' : 
+                  'hidden mt-2 w-full min-h-[10vh] resize-none border shadow bg-whit p-2 rounded-md'} 
+                  onBlur={onBlur} name='taskName'
+                  placeholder='Enter a title for this card' onKeyDown={handleFormSubmit}
+                  value={state.values.task.name} onChange={handleChangeTaskName}/>
+              </form>
             </div>
 
             <div className='flex justify-between items-center px-1 mt-1'>

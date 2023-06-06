@@ -11,17 +11,6 @@ import { useRouter } from 'next/router';
 
 
 const Auth = () => {
-    const router = useRouter();
-    const { data: user } = useCurrentUser();
-
-     // Si on a un user, on redirige vers /userId/workspace
-    useEffect(() => {
-        if (typeof window !== 'undefined') {
-            if(user){
-                router.push(`/${user.id}/workspace`)
-            }
-        }
-    }, [router, user]);
     
     const [email, setEmail] = useState('');
     const [name, setName] = useState('');
