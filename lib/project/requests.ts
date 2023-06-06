@@ -81,7 +81,7 @@ export const deleteProject = async (projetId: any) => {
 }
 
 // Temporary name
-export const updateProjectName = async (projetId: any, name: string) => {
+export const updateProjectName = async (userId: any, projetId: any, name: string) => {
     try {
         const response = await fetch(`/api/workspace/project/update?id=${projetId}`, {
             method: 'PUT',
@@ -95,7 +95,7 @@ export const updateProjectName = async (projetId: any, name: string) => {
             throw new Error('Erreur lors de la mise à jour du projet')
         }
 
-        return getAllProjects()
+        return getAllProjects(userId)
     } catch (error) {
         console.log(error)
     }

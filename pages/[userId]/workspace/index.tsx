@@ -34,11 +34,11 @@ const Projects = () => {
   AuthRedirect();
 
   const [state, setState] = useState(initState)
-  const [touched, setTouched] = useState({})
+  const [touched, setTouched] = useState({} as any)
 
   const { values, isLoading } = state
 
-  const onBlur = ({target}: any) => setTouched((prev) => ({...prev, 
+  const onBlur = ({target}: any) => setTouched((prev: any) => ({...prev, 
     [target.name]: true
   }))
 
@@ -232,7 +232,7 @@ const handleSearch = async ({target}: any) => {
             :
 
             (
-              <div className='text-center w-full text-gray-500'>Vous n'avez aucun projet...</div>
+              <div className='text-center w-full text-gray-500'>Vous n&#39;avez aucun projet...</div>
             )
           }
         </div>

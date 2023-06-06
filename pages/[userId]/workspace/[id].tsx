@@ -179,7 +179,7 @@ const ProjectDetails = () => {
       },
     }));
 
-    await updateProjectName(id, target.value)
+    await updateProjectName(user.id, id, target.value)
   };
 
   const handleChangeTaskName = async ({ target }: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -240,8 +240,8 @@ const ProjectDetails = () => {
                       {...provided.droppableProps}
                       ref={provided.innerRef}
                     >
-                      {state.tasks.map((task, index) => (
-                        <Draggable key={task?.id} draggableId={task?.id} index={index}>
+                      {state.tasks.map((task: any, index: any) => (
+                        <Draggable key={index} draggableId={task.id} index={index}>
                           {(provided) => (
                             <li
                               {...provided.draggableProps}
@@ -250,7 +250,7 @@ const ProjectDetails = () => {
                             >
                               <Task
                                 key={index}
-                                title={task?.name}
+                                title={task.name}
                                 totalItems='3'
                                 completedItems='0'
                               />

@@ -26,7 +26,7 @@ const Footer = () => {
                   <div className='flex items-center'>
                     <TbMapPinFilled className='me-2'/>
                     <p>
-                      1660 Bd de l'Entente, Québec, QC G1S 4S3
+                      1660 Bd de l&#39; Entente, Québec, QC G1S 4S3
                     </p>
                   </div>
                   <div className='flex items-center'>
