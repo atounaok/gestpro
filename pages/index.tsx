@@ -14,10 +14,10 @@ const Home = () => {
   return (
     <div className='h-full'>
       <div className='w-full flex-col text-center flex items-center justify-around min-h-screen text-white bg-[#141414] '>
-        <h1 className='text-2xl md:text-5xl md:mb-20 font-bold text-left max-w-[85%] md:text-center'>
+        <h1 className='text-2xl md:text-5xl md:mb-20 font-bold max-w-[85%] md:text-center'>
           <TypewriterComponent
             options={{
-              strings: ["Commencez à gérer vos projets avec nous.", "Créez un projet dès maintenant."],
+              strings: ["Commencez à gérer vos projets avec nous."],
               autoStart: true,
               loop: true,
             }}/>
