@@ -79,3 +79,24 @@
     font-feature-settings: "rlig" 1, "calt" 1;
   }
 }
+
+.login-separator-wrapper {
+  margin-bottom: 32px;
+  
+ 
+}
+
+.login-separator-component {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 40px;
+}
+
+.separator-line {
+  display: block;
+  height: 1px;
+  background-color: rgba(0, 0, 0, 0.541);
+  margin: 10px 0;
+  width: 50%;
+}

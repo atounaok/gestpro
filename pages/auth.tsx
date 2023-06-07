@@ -91,7 +91,7 @@ const Auth = () => {
 
                 <div className="login-separator-component ">
                     <span className="separator-line "/>
-                    <h2 className='whitespace-nowrap mx-2  font-semibold'>Or {variant === 'login' ? 'Login' : 'Sign up'} with</h2>
+                    <h2 className='whitespace-nowrap mx-2  font-semibold'>Or continue with</h2>
                     <span className="separator-line"/>
                 </div>
 
@@ -129,7 +129,7 @@ const Auth = () => {
                     </div>
                 </div>
 
-                <p className='text-neutral-500 mt-12'>
+                <p className='text-neutral-500 mt-10 md:mt-12 text-sm md:text-base'>
                     {variant === 'login' ? 'First time using Gestpro?' : 'Already have an account?'}  
                     <span onClick={toggleVariant} className='text-black ml-1 hover:underline hover:text-gray-500 cursor-pointer'>
                         {variant === 'login' ? 'Create an account' : 'Login'}    

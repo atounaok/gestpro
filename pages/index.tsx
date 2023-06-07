@@ -33,7 +33,7 @@ const Home = () => {
           </span>
         </p>
         <Link href='#sec1'>
-          <AiFillDownCircle className='text-4xl md:text-6xl hover:text-blue-100 cursor-pointer animate-bounce'/>
+          <AiFillDownCircle className='text-4xl md:text-6xl hover:opacity-80 cursor-pointer animate-bounce'/>
         </Link>
       </div>
       <section id='sec1' className='min-h-screen bg-[#f9f9f9] flex items-center justify-center'>
