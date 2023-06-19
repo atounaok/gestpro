@@ -26,3 +26,15 @@ export const getAllLists = async () => {
     }
 }
 
+// // Pour créer une liste
+// export const createList = async (data: any) => {
+//     await fetch('/api/workspace/list/create', {
+//        method: 'POST',
+//        body: JSON.stringify(data),
+//        headers: {
+//            'Content-Type': 'application/json',
+//            Accept: 'application/json',
+//        },
+//    });
+// }
+

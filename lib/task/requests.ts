@@ -26,3 +26,5 @@ export const getAllTasks = async (projectId: any) => {
         console.log('Erreur dans getProjects:' + error)
     }
 }
+
+

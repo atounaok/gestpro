@@ -24,6 +24,7 @@ import { BiDotsHorizontalRounded } from 'react-icons/bi'
 import { CiSquareRemove } from 'react-icons/ci'
 import AuthRedirect from '@components/AuthRedirect';
 import useCurrentUser from '@hooks/useCurrentUser';
+import { createList, getAllLists } from '@lib/list/requests';
 
 
 
@@ -46,25 +47,27 @@ const ProjectDetails = () => {
   const { data: user } = useCurrentUser();
 
   AuthRedirect();
-  
+
   const { id } = router.query;
   const formRef: any = useRef(null)
   const [state, setState] = useState(initState)
   const [touched, setTouched] = useState({})
-  const [isPopoverOpen, setIsPopoverOpen] = useState(false); 
+  const [isPopoverOpen, setIsPopoverOpen] = useState(false);
   const [cardFormOpen, setCardFormOpen] = useState(false);
+  const [cardFormOpenList, setCardFormOpenList] = useState(false);
   const [date, setDate] = React.useState<Date | undefined>(new Date())
 
   const textarea_ref: any = useRef();
   useEffect(() => {
     textarea_ref.current.focus();
+    
   });
 
   const handleFormSubmit = (e: any) => {
     if (e.keyCode === 13 && e.target.value.trim() !== '') {
       e.preventDefault();
       try {
-        addTask(); 
+        addTask();
       } catch (error) {
         console.log(error)
       } finally {
@@ -75,18 +78,56 @@ const ProjectDetails = () => {
             task: {
               name: '',
             },
+            
           },
         }));
       }
 
     }
   };
+
+  const handleListFormSubmit = (e: any) => {
+    if (e.keyCode === 13 && e.target.value.trim() !== '') {
+      e.preventDefault();
+      try {
+        addList();
+      } catch (error) {
+        console.log(error)
+      } finally {
+        setState((prev) => ({
+          ...prev,
+          values: {
+            ...prev.values,
+            list: {
+              name: '',
+            },
+            
+          },
+        }));
+      }
+
+    }
+  };
+
+
   const onBlur = (e: any) => {
-    if(e.target.value.trim() !== ''){
+    if (e.target.value.trim() !== '') {
       addTask();
       setCardFormOpen(false);
-    }else{
+      setCardFormOpenList(false);
+    } else {
       setCardFormOpen(false);
+      setCardFormOpenList(false);
+    }
+  }
+
+  const onListBlur = (e: any) => {
+    if (e.target.value.trim() !== '') {
+      addList()
+      setCardFormOpenList(false);
+    } else {
+      
+      setCardFormOpenList(false);
     }
   }
 
@@ -121,7 +162,7 @@ const ProjectDetails = () => {
       if (allTasks) {
         setState((prev) => ({
           ...prev,
-          tasks: allTasks, 
+          tasks: allTasks,
         }));
       }
 
@@ -148,7 +189,7 @@ const ProjectDetails = () => {
   };
 
   // Ajouter un tâche
-  
+
   const listId = '54758fc8acf6895bbcc46819'// J'ai besoin que tu finisse ajouter liste pour ça
   const addTask = async () => {
     try {
@@ -156,13 +197,13 @@ const ProjectDetails = () => {
         ...prev,
         isLoading: true,
       }));
-  
+
       const newTask = await createTask({
         projectId: id,
         listId: listId,
         name: state.values.task.name,
       });
-  
+
       obtenirTasks();
       console.log('Voici la nouvelle tache : ' + newTask);
     } catch (error) {
@@ -174,6 +215,33 @@ const ProjectDetails = () => {
       }));
     }
   };
+
+// Ajouter une liste
+
+const addList = async () => {
+  try {
+    setState((prev) => ({
+      ...prev,
+      isLoading: true,
+    }));
+
+    const newList = await createList({
+      projectId: id,
+      listId: listId,
+      name: state.values.task.name,
+    });
+
+    getAllLists();
+    console.log('Voici la nouvelle tache : ' + newList);
+  } catch (error) {
+    console.log(error);
+  } finally {
+    setState((prev) => ({
+      ...prev,
+      isLoading: false,
+    }));
+  }
+};
 
   // Obtenir le projet initialement
   useEffect(() => {
@@ -214,14 +282,27 @@ const ProjectDetails = () => {
     //await updateProjectName(id, target.value)
   };
 
+  const handleChangeListName = async ({ target }: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setState((prev) => ({
+      ...prev,
+      values: {
+        ...prev.values,
+        list: {
+          name: target.value,
+        },
+      },
+    }));
+    //await updateProjectName(id, target.value)
+  };
+
   return (
     <div className='flex justify-between min-h-screen'>
       <div className='hidden md:flex border min-h-full w-full md:w-[20%] bg-gray-100'>
         <Calendar
-        mode="single"
-        selected={date}
-        onSelect={setDate}
-        className="rounded-md border"
+          mode="single"
+          selected={date}
+          onSelect={setDate}
+          className="rounded-md border"
         />
       </div>
 
@@ -288,34 +369,34 @@ const ProjectDetails = () => {
               </DragDropContext>
               <form>
                 <TextareaAutosize ref={textarea_ref}
-                  className={cardFormOpen ? 'mt-2 w-full min-h-[10vh] resize-none border shadow bg-whit p-2 rounded-md' : 
-                  'hidden mt-2 w-full min-h-[10vh] resize-none border shadow bg-whit p-2 rounded-md'} 
+                  className={cardFormOpen ? 'mt-2 w-full min-h-[10vh] resize-none border shadow bg-whit p-2 rounded-md' :
+                    'hidden mt-2 w-full min-h-[10vh] resize-none border shadow bg-whit p-2 rounded-md'}
                   onBlur={onBlur} name='taskName'
                   placeholder='Enter a title for this card' onKeyDown={handleFormSubmit}
-                  value={state.values.task.name} onChange={handleChangeTaskName}/>
+                  value={state.values.task.name} onChange={handleChangeTaskName} />
               </form>
             </div>
 
             <div className='flex justify-between items-center px-1 mt-1'>
               <div className='w-full'>
                 <Button
-                  type='button' onClick={() => {setCardFormOpen((prev) => !prev)}}
+                  type='button' onClick={() => { setCardFormOpen((prev) => !prev) }}
                   className='justify-start cursor-pointer px-1 rounded-md py-1 w-full hover:bg-gray-200'>
                   {
-                    !cardFormOpen ? 
-                    (
-                      <div className='flex items-center'>
-                        <IoMdAdd className='text-green-500 text-xl'/>
-                        <h4 className='ms-2 font-light text-sm'>Add new card</h4>
-                      </div>
-                    ) 
-                    : 
-                    (
-                      <div className='flex items-center'>
-                        <IoMdRemove className='text-red-500'/>
-                        <h4 className='ms-2 font-light text-sm'>Cancel modifications</h4>
-                      </div>
-                    )
+                    !cardFormOpen ?
+                      (
+                        <div className='flex items-center'>
+                          <IoMdAdd className='text-green-500 text-xl' />
+                          <h4 className='ms-2 font-light text-sm'>Add new card</h4>
+                        </div>
+                      )
+                      :
+                      (
+                        <div className='flex items-center'>
+                          <IoMdRemove className='text-red-500' />
+                          <h4 className='ms-2 font-light text-sm'>Cancel modifications</h4>
+                        </div>
+                      )
                   }
                 </Button>
               </div>
@@ -323,11 +404,24 @@ const ProjectDetails = () => {
             </div>
           </div>
 
-          <button className='flex items-center border max-h-[5vh] rounded-lg py-2 px-6 bg-gray-50 hover:bg-gray-200'>
-            <IoMdAdd />
-            <p className='ms-1 font-light'>Add another list</p>
-          </button>
-          
+          <div>
+            <button className='flex items-center border max-h-[5vh] rounded-lg py-2 px-6 bg-gray-50 hover:bg-gray-200'
+              type='button' onClick={() => { setCardFormOpenList((prev) => !prev) }}>
+              <IoMdAdd />
+              <p className='ms-1 font-light'>Add another list</p>
+
+
+            </button>
+            <form>
+              <TextareaAutosize ref={textarea_ref}
+                className={cardFormOpenList ? 'mt-2 w-full min-h-[10vh] resize-none border shadow bg-whit p-2 rounded-md' :
+                  'hidden mt-2 w-full min-h-[10vh] resize-none border shadow bg-whit p-2 rounded-md'}
+                onBlur={onListBlur} name='listName'
+                placeholder='Enter a title for this list' onKeyDown={handleListFormSubmit}
+                value={state.values.list.name} onChange={handleChangeListName} />
+            </form>
+          </div>
+
         </div>
       </div>
     </div>
