@@ -63,11 +63,11 @@ const ProjectDetails = () => {
     
   });
 
-  const handleFormSubmit = (e: any) => {
-    if (e.keyCode === 13 && e.target.value.trim() !== '') {
+  const handleFormSubmit = (e: React.KeyboardEvent<HTMLTextAreaElement>, listId: any) => {
+    if (e.keyCode === 13 && e.currentTarget.value.trim() !== '') {
       e.preventDefault();
       try {
-        addTask();
+        addTask(listId);
       } catch (error) {
         console.log(error)
       } finally {
@@ -110,9 +110,9 @@ const ProjectDetails = () => {
   };
 
 
-  const onBlur = (e: any) => {
+  const onBlur = (e: React.FocusEvent<HTMLTextAreaElement>, listId: any) => {
     if (e.target.value.trim() !== '') {
-      addTask();
+      addTask(listId);
       setCardFormOpen(false);
       setCardFormOpenList(false);
     } else {
@@ -205,8 +205,8 @@ const ProjectDetails = () => {
   };
 
   // Ajouter un tâche
-  const listId = '54758fc8acf6895bbcc46819'// J'ai besoin que tu finisse ajouter liste pour ça
-  const addTask = async () => {
+  // const listId = '54758fc8acf6895bbcc46819'// J'ai besoin que tu finisse ajouter liste pour ça
+  const addTask = async (listId: any) => {
     try {
       setState((prev) => ({
         ...prev,
@@ -385,8 +385,8 @@ const addList = async () => {
                         <TextareaAutosize ref={textarea_ref}
                           className={cardFormOpen ? 'mt-2 w-full min-h-[10vh] resize-none border shadow bg-whit p-2 rounded-md' :
                             'hidden mt-2 w-full min-h-[10vh] resize-none border shadow bg-whit p-2 rounded-md'}
-                          onBlur={onBlur} name='taskName'
-                          placeholder='Enter a title for this card' onKeyDown={handleFormSubmit}
+                          onBlur={(e) => onBlur(e, list?.id)} name='taskName'
+                          placeholder='Enter a title for this card' onKeyDown={(e) => handleFormSubmit(e, list?.id)}
                           value={state.values.task.name} onChange={handleChangeTaskName} />
                       </form>
                     </div>
