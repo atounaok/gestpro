@@ -155,6 +155,22 @@ const ProjectDetails = () => {
     }
   }, [id])
 
+  const obtenirLists = useCallback(async () => {
+    try {
+      const allLists = await getAllLists(id as string);
+
+      if (allLists) {
+        setState((prev) => ({
+          ...prev,
+          lists: allLists,
+        }));
+      }
+
+    } catch (error) {
+      console.log('Obtention lists erreur:' + error);
+    }
+  }, [id])
+
   const obtenirTasks = useCallback(async () => {
     try {
       const allTasks = await getAllTasks(id);
@@ -189,7 +205,6 @@ const ProjectDetails = () => {
   };
 
   // Ajouter un tâche
-
   const listId = '54758fc8acf6895bbcc46819'// J'ai besoin que tu finisse ajouter liste pour ça
   const addTask = async () => {
     try {
@@ -217,7 +232,6 @@ const ProjectDetails = () => {
   };
 
 // Ajouter une liste
-
 const addList = async () => {
   try {
     setState((prev) => ({
@@ -225,14 +239,13 @@ const addList = async () => {
       isLoading: true,
     }));
 
-    const newList = await createList({
+    await createList({
       projectId: id,
-      listId: listId,
-      name: state.values.task.name,
+      name: state.values.list.name,
     });
 
-    getAllLists();
-    console.log('Voici la nouvelle tache : ' + newList);
+    obtenirLists();
+
   } catch (error) {
     console.log(error);
   } finally {
@@ -248,10 +261,12 @@ const addList = async () => {
     try {
       obtenirProjet();
       obtenirTasks();
+      obtenirLists();
+      console.log(state.lists)
     } catch (error) {
       console.log(error)
     }
-  }, [obtenirProjet, obtenirTasks]);
+  }, [obtenirProjet, obtenirTasks, obtenirLists]);
 
   // Modifier nom du projet
   const handleChange = async ({ target }: React.ChangeEvent<HTMLInputElement>) => {
@@ -279,7 +294,6 @@ const addList = async () => {
         },
       },
     }));
-    //await updateProjectName(id, target.value)
   };
 
   const handleChangeListName = async ({ target }: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -292,7 +306,6 @@ const addList = async () => {
         },
       },
     }));
-    //await updateProjectName(id, target.value)
   };
 
   return (
@@ -328,89 +341,91 @@ const addList = async () => {
           flex flex-col 
           md:flex-row 
           gap-4'>
-
-          <div className='md:w-[25%] border py-3 px-3 rounded-lg bg-gray-100'>
-            <div className='flex justify-between items-center'>
-              <h4 className='font-semibold text-md px-2'>Backlog</h4>
-              <BiDotsHorizontalRounded className='hover:bg-gray-100 rounded-md cursor-pointer text-4xl p-2' />
-            </div>
-
-            <div className='my-2'>
-              <DragDropContext onDragEnd={handleDragEnd}>
-                <Droppable droppableId='tasks'>
-                  {(provided) => (
-                    <ul
-                      className='flex flex-col gap-2'
-                      {...provided.droppableProps}
-                      ref={provided.innerRef}
-                    >
-                      {state.tasks.map((task: any, index: any) => (
-                        <Draggable key={index} draggableId={task.id} index={index}>
+            <>
+              {state?.lists?.map((list: any) => (
+                  <div key={list?.id} className='md:w-[25%] border py-3 px-3 rounded-lg bg-gray-100'>
+                    <div className='flex justify-between items-center'>
+                      <h4 className='font-semibold text-md px-2'>{list?.name}</h4>
+                      <BiDotsHorizontalRounded className='hover:bg-gray-100 rounded-md cursor-pointer text-4xl p-2' />
+                    </div>
+        
+                    <div className='my-2'>
+                      <DragDropContext onDragEnd={handleDragEnd}>
+                        <Droppable droppableId='tasks'>
                           {(provided) => (
-                            <li
-                              {...provided.draggableProps}
-                              {...provided.dragHandleProps}
+                            <ul
+                              className='flex flex-col gap-2'
+                              {...provided.droppableProps}
                               ref={provided.innerRef}
                             >
-                              <Task
-                                key={index}
-                                title={task.name}
-                                totalItems='3'
-                                completedItems='0'
-                              />
-                            </li>
+                              {state.tasks.map((task: any) => (
+                                <Draggable key={task?.id} draggableId={task.id} index={task?.id}>
+                                  {(provided) => (
+                                    <li
+                                      {...provided.draggableProps}
+                                      {...provided.dragHandleProps}
+                                      ref={provided.innerRef}
+                                    >
+                                      <Task
+                                        key={task?.id}
+                                        title={task.name}
+                                        totalItems='3'
+                                        completedItems='0'
+                                      />
+                                    </li>
+                                  )}
+                                </Draggable>
+                              ))}
+                              {provided.placeholder}
+                            </ul>
                           )}
-                        </Draggable>
-                      ))}
-                      {provided.placeholder}
-                    </ul>
-                  )}
-                </Droppable>
-              </DragDropContext>
-              <form>
-                <TextareaAutosize ref={textarea_ref}
-                  className={cardFormOpen ? 'mt-2 w-full min-h-[10vh] resize-none border shadow bg-whit p-2 rounded-md' :
-                    'hidden mt-2 w-full min-h-[10vh] resize-none border shadow bg-whit p-2 rounded-md'}
-                  onBlur={onBlur} name='taskName'
-                  placeholder='Enter a title for this card' onKeyDown={handleFormSubmit}
-                  value={state.values.task.name} onChange={handleChangeTaskName} />
-              </form>
-            </div>
+                        </Droppable>
+                      </DragDropContext>
+                      <form>
+                        <TextareaAutosize ref={textarea_ref}
+                          className={cardFormOpen ? 'mt-2 w-full min-h-[10vh] resize-none border shadow bg-whit p-2 rounded-md' :
+                            'hidden mt-2 w-full min-h-[10vh] resize-none border shadow bg-whit p-2 rounded-md'}
+                          onBlur={onBlur} name='taskName'
+                          placeholder='Enter a title for this card' onKeyDown={handleFormSubmit}
+                          value={state.values.task.name} onChange={handleChangeTaskName} />
+                      </form>
+                    </div>
+        
+                    <div className='flex justify-between items-center px-1 mt-1'>
+                      <div className='w-full'>
+                        <Button
+                          type='button' onClick={() => { setCardFormOpen((prev) => !prev) }}
+                          className='justify-start cursor-pointer px-1 rounded-md py-1 w-full hover:bg-gray-200'>
+                          {
+                            !cardFormOpen ?
+                              (
+                                <div className='flex items-center'>
+                                  <IoMdAdd className='text-green-500 text-xl' />
+                                  <h4 className='ms-2 font-light text-sm'>Add new card</h4>
+                                </div>
+                              )
+                              :
+                              (
+                                <div className='flex items-center'>
+                                  <IoMdRemove className='text-red-500' />
+                                  <h4 className='ms-2 font-light text-sm'>Cancel modifications</h4>
+                                </div>
+                              )
+                          }
+                        </Button>
+                      </div>
+                      <CiSquareRemove className='text-2xl me-1 text-red-400 hover:text-red-200 cursor-pointer' />
+                    </div>
+                  </div>
+              ))}
+            </>
 
-            <div className='flex justify-between items-center px-1 mt-1'>
-              <div className='w-full'>
-                <Button
-                  type='button' onClick={() => { setCardFormOpen((prev) => !prev) }}
-                  className='justify-start cursor-pointer px-1 rounded-md py-1 w-full hover:bg-gray-200'>
-                  {
-                    !cardFormOpen ?
-                      (
-                        <div className='flex items-center'>
-                          <IoMdAdd className='text-green-500 text-xl' />
-                          <h4 className='ms-2 font-light text-sm'>Add new card</h4>
-                        </div>
-                      )
-                      :
-                      (
-                        <div className='flex items-center'>
-                          <IoMdRemove className='text-red-500' />
-                          <h4 className='ms-2 font-light text-sm'>Cancel modifications</h4>
-                        </div>
-                      )
-                  }
-                </Button>
-              </div>
-              <CiSquareRemove className='text-2xl me-1 text-red-400 hover:text-red-200 cursor-pointer' />
-            </div>
-          </div>
 
           <div>
             <button className='flex items-center border max-h-[5vh] rounded-lg py-2 px-6 bg-gray-50 hover:bg-gray-200'
               type='button' onClick={() => { setCardFormOpenList((prev) => !prev) }}>
               <IoMdAdd />
               <p className='ms-1 font-light'>Add another list</p>
-
-
             </button>
             <form>
               <TextareaAutosize ref={textarea_ref}

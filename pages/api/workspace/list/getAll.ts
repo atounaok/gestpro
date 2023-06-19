@@ -7,10 +7,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
 
     try {
-        console.log("entré dans get projects")
-        const projectsList = await prismadb.listes.findMany()
+        const { projectId } = req.query;
 
-        return res.status(200).json(projectsList);
+        const lists = await prismadb.listes.findMany({
+            where: {
+                projectId: projectId as string
+            }
+        })
+
+        return res.status(200).json(lists);
     } catch (error) {
         console.log("Entré dans erreur project:")
         console.log(error)

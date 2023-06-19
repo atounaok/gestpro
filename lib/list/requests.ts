@@ -12,29 +12,19 @@ export const createList = async (data: any) => {
 }
 
 //Pour Obtenir les listes
-export const getAllLists = async () => {
+export const getAllLists = async (projectId: string) => {
     try {
-        const res = await fetch('/api/workspace/list/getAll');
+        const res: any = await fetch(`/api/workspace/list/getAll?projectId=${projectId}`);
 
         if(!res.ok){
             throw new Error('Une erreur est subvenue lors de la récupération des listes')
         }
         const data = await res.json();
+
         return data;
     } catch (error) {
-        console.log('Erreur dans getProjects:' + error)
+        console.log('Erreur dans getLists:' + error)
     }
 }
 
-// // Pour créer une liste
-// export const createList = async (data: any) => {
-//     await fetch('/api/workspace/list/create', {
-//        method: 'POST',
-//        body: JSON.stringify(data),
-//        headers: {
-//            'Content-Type': 'application/json',
-//            Accept: 'application/json',
-//        },
-//    });
-// }
 

@@ -18,8 +18,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
         return res.status(200).json(newList);
     } catch (error) {
-        console.log("Entré dans erreur:")
-        console.log(error)
+        console.log("Erreur createList: " + error)
         res.status(400).end();
     }
 }
