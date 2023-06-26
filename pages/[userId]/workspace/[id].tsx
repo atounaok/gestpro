@@ -16,6 +16,7 @@ import { Calendar } from "@/components/ui/calendar"
 // Mes dépendances
 import Task from '@components/Task'
 import { getProjectById, updateProjectName } from '@lib/project/requests';
+import { updateTasktName } from '@lib/task/requests';
 import { createTask, getAllTasks } from '@lib/task/requests';
 
 // Imports icones
@@ -294,6 +295,8 @@ const addList = async () => {
         },
       },
     }));
+
+    await updateTasktName(user.id, id, target.value)
   };
 
   const handleChangeListName = async ({ target }: React.ChangeEvent<HTMLTextAreaElement>) => {

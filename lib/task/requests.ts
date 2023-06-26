@@ -10,6 +10,26 @@ export const createTask = async (data: any) => {
    });
 }
 
+export const updateTasktName = async (listId: any, id: any, name: string) => {
+    try {
+        const response = await fetch(`/api/workspace/task/update?id=${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ name }),
+        });
+
+        if(!response.ok){
+            throw new Error('Erreur lors de la mise à jour du nom de la tache')
+        }
+
+        // return getAllTasks(listId)
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 // Temporaire car il faudra liste plus tard
 export const getAllTasks = async (projectId: any) => {
     try {
