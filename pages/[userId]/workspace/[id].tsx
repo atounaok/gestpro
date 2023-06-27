@@ -61,7 +61,7 @@ const ProjectDetails = () => {
   const textarea_ref: any = useRef();
   useEffect(() => {
     textarea_ref.current.focus();
-    
+
   });
 
   const handleFormSubmit = (e: React.KeyboardEvent<HTMLTextAreaElement>, listId: any) => {
@@ -79,7 +79,7 @@ const ProjectDetails = () => {
             task: {
               name: '',
             },
-            
+
           },
         }));
       }
@@ -102,7 +102,7 @@ const ProjectDetails = () => {
             list: {
               name: '',
             },
-            
+
           },
         }));
       }
@@ -127,7 +127,7 @@ const ProjectDetails = () => {
       addList()
       setCardFormOpenList(false);
     } else {
-      
+
       setCardFormOpenList(false);
     }
   }
@@ -232,30 +232,30 @@ const ProjectDetails = () => {
     }
   };
 
-// Ajouter une liste
-const addList = async () => {
-  try {
-    setState((prev) => ({
-      ...prev,
-      isLoading: true,
-    }));
+  // Ajouter une liste
+  const addList = async () => {
+    try {
+      setState((prev) => ({
+        ...prev,
+        isLoading: true,
+      }));
 
-    await createList({
-      projectId: id,
-      name: state.values.list.name,
-    });
+      await createList({
+        projectId: id,
+        name: state.values.list.name,
+      });
 
-    obtenirLists();
+      obtenirLists();
 
-  } catch (error) {
-    console.log(error);
-  } finally {
-    setState((prev) => ({
-      ...prev,
-      isLoading: false,
-    }));
-  }
-};
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setState((prev) => ({
+        ...prev,
+        isLoading: false,
+      }));
+    }
+  };
 
   // Obtenir le projet initialement
   useEffect(() => {
@@ -267,7 +267,7 @@ const addList = async () => {
     } catch (error) {
       console.log(error)
     }
-  }, [obtenirProjet, obtenirTasks, obtenirLists]);
+  }, [obtenirProjet, obtenirTasks, obtenirLists, state.lists]);
 
   // Modifier nom du projet
   const handleChange = async ({ target }: React.ChangeEvent<HTMLInputElement>) => {
@@ -344,84 +344,84 @@ const addList = async () => {
           flex flex-col 
           md:flex-row 
           gap-4'>
-            <>
-              {state?.lists?.map((list: any) => (
-                  <div key={list?.id} className='md:w-[25%] border py-3 px-3 rounded-lg bg-gray-100'>
-                    <div className='flex justify-between items-center'>
-                      <h4 className='font-semibold text-md px-2'>{list?.name}</h4>
-                      <BiDotsHorizontalRounded className='hover:bg-gray-100 rounded-md cursor-pointer text-4xl p-2' />
-                    </div>
-        
-                    <div className='my-2'>
-                      <DragDropContext onDragEnd={handleDragEnd}>
-                        <Droppable droppableId='tasks'>
-                          {(provided) => (
-                            <ul
-                              className='flex flex-col gap-2'
-                              {...provided.droppableProps}
-                              ref={provided.innerRef}
-                            >
-                              {state.tasks.map((task: any) => (
-                                <Draggable key={task?.id} draggableId={task.id} index={task?.id}>
-                                  {(provided) => (
-                                    <li
-                                      {...provided.draggableProps}
-                                      {...provided.dragHandleProps}
-                                      ref={provided.innerRef}
-                                    >
-                                      <Task
-                                        key={task?.id}
-                                        title={task.name}
-                                        totalItems='3'
-                                        completedItems='0'
-                                      />
-                                    </li>
-                                  )}
-                                </Draggable>
-                              ))}
-                              {provided.placeholder}
-                            </ul>
-                          )}
-                        </Droppable>
-                      </DragDropContext>
-                      <form>
-                        <TextareaAutosize ref={textarea_ref}
-                          className={cardFormOpen ? 'mt-2 w-full min-h-[10vh] resize-none border shadow bg-whit p-2 rounded-md' :
-                            'hidden mt-2 w-full min-h-[10vh] resize-none border shadow bg-whit p-2 rounded-md'}
-                          onBlur={(e) => onBlur(e, list?.id)} name='taskName'
-                          placeholder='Enter a title for this card' onKeyDown={(e) => handleFormSubmit(e, list?.id)}
-                          value={state.values.task.name} onChange={handleChangeTaskName} />
-                      </form>
-                    </div>
-        
-                    <div className='flex justify-between items-center px-1 mt-1'>
-                      <div className='w-full'>
-                        <Button
-                          type='button' onClick={() => { setCardFormOpen((prev) => !prev) }}
-                          className='justify-start cursor-pointer px-1 rounded-md py-1 w-full hover:bg-gray-200'>
-                          {
-                            !cardFormOpen ?
-                              (
-                                <div className='flex items-center'>
-                                  <IoMdAdd className='text-green-500 text-xl' />
-                                  <h4 className='ms-2 font-light text-sm'>Add new card</h4>
-                                </div>
-                              )
-                              :
-                              (
-                                <div className='flex items-center'>
-                                  <IoMdRemove className='text-red-500' />
-                                  <h4 className='ms-2 font-light text-sm'>Cancel modifications</h4>
-                                </div>
-                              )
-                          }
-                        </Button>
-                      </div>
-                      <CiSquareRemove className='text-2xl me-1 text-red-400 hover:text-red-200 cursor-pointer' />
-                    </div>
+          <>
+            {state?.lists?.map((list: any) => (
+              <div key={list?.id} className='md:w-[25%] border py-3 px-3 rounded-lg bg-gray-100'>
+                <div className='flex justify-between items-center'>
+                  <h4 className='font-semibold text-md px-2'>{list?.name}</h4>
+                  <BiDotsHorizontalRounded className='hover:bg-gray-100 rounded-md cursor-pointer text-4xl p-2' />
+                </div>
+
+                <div className='my-2'>
+                  <DragDropContext onDragEnd={handleDragEnd}>
+                    <Droppable droppableId='tasks'>
+                      {(provided) => (
+                        <ul
+                          className='flex flex-col gap-2'
+                          {...provided.droppableProps}
+                          ref={provided.innerRef}
+                        >
+                          {state.tasks.map((task: any) => (
+                            <Draggable key={task?.id} draggableId={task.id} index={task?.id}>
+                              {(provided) => (
+                                <li
+                                  {...provided.draggableProps}
+                                  {...provided.dragHandleProps}
+                                  ref={provided.innerRef}
+                                >
+                                  <Task
+                                    key={task?.id}
+                                    title={task.name}
+                                    totalItems='3'
+                                    completedItems='0'
+                                  />
+                                </li>
+                              )}
+                            </Draggable>
+                          ))}
+                          {provided.placeholder}
+                        </ul>
+                      )}
+                    </Droppable>
+                  </DragDropContext>
+                  <form>
+                    <TextareaAutosize ref={textarea_ref}
+                      className={cardFormOpen ? 'mt-2 w-full min-h-[10vh] resize-none border shadow bg-whit p-2 rounded-md' :
+                        'hidden mt-2 w-full min-h-[10vh] resize-none border shadow bg-whit p-2 rounded-md'}
+                      onBlur={(e) => onBlur(e, list?.id)} name='taskName'
+                      placeholder='Enter a title for this card' onKeyDown={(e) => handleFormSubmit(e, list?.id)}
+                      value={state.values.task.name} onChange={handleChangeTaskName} />
+                  </form>
+                </div>
+
+                <div className='flex justify-between items-center px-1 mt-1'>
+                  <div className='w-full'>
+                    <Button
+                      type='button' onClick={() => { setCardFormOpen((prev) => !prev) }}
+                      className='justify-start cursor-pointer px-1 rounded-md py-1 w-full hover:bg-gray-200'>
+                      {
+                        !cardFormOpen ?
+                          (
+                            <div className='flex items-center'>
+                              <IoMdAdd className='text-green-500 text-xl' />
+                              <h4 className='ms-2 font-light text-sm'>Add new card</h4>
+                            </div>
+                          )
+                          :
+                          (
+                            <div className='flex items-center'>
+                              <IoMdRemove className='text-red-500' />
+                              <h4 className='ms-2 font-light text-sm'>Cancel modifications</h4>
+                            </div>
+                          )
+                      }
+                    </Button>
                   </div>
-              ))}
-            </>
+                  <CiSquareRemove className='text-2xl me-1 text-red-400 hover:text-red-200 cursor-pointer' />
+                </div>
+              </div>
+            ))}
+          </>
 
 
           <div>

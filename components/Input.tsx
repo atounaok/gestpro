@@ -11,7 +11,7 @@ interface InputProps {
 }
 
 const Input: React.FunctionComponent<InputProps> = ({
-    id, onChange, value, label, type, width, height
+    id, onChange=null, value, label, type, width, height
 }) => {
   return (
     <div className='sm:relative'>
