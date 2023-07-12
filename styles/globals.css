@@ -100,3 +100,32 @@
   margin: 10px 0;
   width: 50%;
 }
+
+.image{
+  /* background-image: url(https://trello.com/assets/14cda5dc635d1f13bc48.svg); */
+  width: 70%;
+  height: auto;
+}
+
+.image-container {
+  overflow-x: auto;
+  white-space: nowrap;
+  width: 100%;
+}
+
+.image-scroll {
+  display: inline-flex;
+  gap: 10px;
+}
+
+/* .image-scroll img:hover {
+  filter: blur(1px); 
+} */
+
+.image-scroll img {
+  transition: filter 0.3s;
+}
+
+.image-scroll img:hover {
+  filter: brightness(80%) blur(1px); /* Ajustez les valeurs selon vos préférences */
+}
