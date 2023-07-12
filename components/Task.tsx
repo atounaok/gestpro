@@ -1,12 +1,10 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { BsCheck2Square, BsTextParagraph } from 'react-icons/bs'
 import { TfiPencil } from 'react-icons/tfi'
 import { Button } from "@/components/ui/button"
-import Input from "@/components/Input"
+import  Input from "@/components/Input"
 import handleChange from "@pages/[userId]/workspace/[id]"
-import handleChangeTaskName from "@pages/[userId]/workspace/[id]"
-import initState from "@pages/[userId]/workspace/[id]"
-
+import handleTaskChange from "@pages/[userId]/workspace/[id]"
 
 import {
   Dialog,
@@ -19,10 +17,7 @@ import {
 } from "@/components/ui/dialog"
 
 
-
-
 const Task = ({ title, totalItems, completedItems }: { title: string, totalItems: string, completedItems: string }) => {
-  
   return (
     <Dialog>
       <DialogTrigger>
@@ -46,22 +41,20 @@ const Task = ({ title, totalItems, completedItems }: { title: string, totalItems
       <DialogContent>
         <DialogHeader>
           <DialogTitle>
-            <div className="flex">
-              <input
-                className='
+          <input
+              className='
                 text-2xl 
                 font-semibold 
                 max-w-fit
                 px-2 rounded-md
                 py-1
                 border'
-                onChange={handleChangeTaskName}
-                onFocus={(e) => e.target.select()}
-                value={title} name="titleTask" />
-            </div>
+              onChange={handleTaskChange}
+              onFocus={(e) => e.target.select()}
+              value={title} name="titleTask" />
           </DialogTitle>
           <DialogDescription>
-
+           
           </DialogDescription>
         </DialogHeader>
         <DialogFooter>
